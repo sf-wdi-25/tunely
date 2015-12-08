@@ -27,11 +27,29 @@ $(document).ready(function() {
     }
   });
 
-  $("#album-form from").on("submit", function (event){
+  //CREATE album from server
+
+  $("#album-form form").on("submit", function (event){
     event.preventDefault();
     var formData = $(this).serialize();
-    console.log("Your form data:" + formData);
+    
+    console.log("Your form data client side:" + formData);
+
+    $.ajax({
+    method: "POST",
+    url:"/api/albums",
+    data:formData,
+    success: function (res){
+      console.log("Post Response from Server: " , res);
+      renderAlbum(res);
+    },
+    error: function(){
+      console.log("Error with /api/albums Post");
+    }
+    });
+    
     $(this).trigger("reset");
+
   });
 });
 

@@ -5,9 +5,13 @@ var express = require('express');
 // generate a new express app and call it 'app'
 var app = express();
 var mongoose = require("mongoose");
+var bodyParser = require('body-parser');
 
 //Umm, this does something.....
 var db = require("./models");
+
+//use body parser
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // serve static files from public folder
 app.use(express.static(__dirname + '/public'));
@@ -51,6 +55,22 @@ app.get("/api/albums", function get_Albums (req, res){
   });
 });
 
+app.post("/api/albums", function post_Albums (req, res){
+  console.log("What you requested from client" , req.body);
+
+  var genres = req.body.genres.split(",").map(function(item){
+    return item.trim(); //takes genres splits them where the commas are and makes an array
+  });
+  req.body.genres = genres;
+
+  db.Album.create(req.body, function(err, album){
+    if(err){console.log("Here's the error for db create: ", err);}
+    console.log(album);
+    res.json(album);
+  //copied from solutions
+  });
+
+});
 /**********
  * SERVER *
  **********/
