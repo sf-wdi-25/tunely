@@ -39,6 +39,11 @@ sampleAlbums.push({
 
 $(document).ready(function() {
   console.log('app.js loaded!');
+
+  sampleAlbums.forEach(function (element, index){
+    renderAlbum(element);
+  });
+  //renderAlbum(sampleAlbums[0]);
 });
 
 
@@ -64,15 +69,15 @@ function renderAlbum(album) {
   "                    <ul class='list-group'>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Album Name:</h4>" +
-  "                        <span class='album-name'>" + "HARDCODED ALBUM NAME" + "</span>" +
+  "                        <span class='album-name'>" + album.artistName + "</span>" +
   "                      </li>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Artist Name:</h4>" +
-  "                        <span class='artist-name'>" + "HARDCODED ARTIST NAME" + "</span>" +
+  "                        <span class='artist-name'>" + album.name + "</span>" +
   "                      </li>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Released date:</h4>" +
-  "                        <span class='album-releaseDate'>" + "HARDCODED RELEASE DATE" + "</span>" +
+  "                        <span class='album-releaseDate'>" + album.releaseDate + "</span>" +
   "                      </li>" +
   "                    </ul>" +
   "                  </div>" +
@@ -88,5 +93,8 @@ function renderAlbum(album) {
   "          </div>" +
   "          <!-- end one album -->";
 
+  $("#albums").append(albumHtml);
   // render to the page with jQuery
 }
+
+
