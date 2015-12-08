@@ -73,7 +73,7 @@ app.get('/api', function api_index (req, res){
   });
 });
 
-app.get("api/albums", function get_Albums (req, res){
+app.get("/api/albums", function get_Albums (req, res){
   console.log(albums);
   res.json(albums);
 });

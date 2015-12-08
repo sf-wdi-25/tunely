@@ -43,7 +43,20 @@ $(document).ready(function() {
   sampleAlbums.forEach(function (element, index){
     renderAlbum(element);
   });
-  //renderAlbum(sampleAlbums[0]);
+
+  //READ albums from server and appends to html
+  $.ajax({
+    method: "GET",
+    url:"/api/albums",
+    success: function (res){
+      res.forEach(function (element, index){
+        renderAlbum(element);
+      });
+    },
+    error: function(){
+      console.log("Error with /api/albums GET");
+    }
+  });
 });
 
 
