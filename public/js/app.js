@@ -5,7 +5,6 @@
  *
  */
 
-
 /* hard-coded data! */
 var sampleAlbums = [];
 sampleAlbums.push({
@@ -34,20 +33,15 @@ sampleAlbums.push({
            });
 /* end of hard-coded data */
 
-
-
-
 $(document).ready(function() {
   console.log('app.js loaded!');
+  renderAlbum(sampleAlbums[0]);
 });
-
-
-
-
 
 // this function takes a single album and renders it to the page
 function renderAlbum(album) {
   console.log('rendering album:', album);
+  
 
   var albumHtml =
   "        <!-- one album -->" +
@@ -89,4 +83,7 @@ function renderAlbum(album) {
   "          <!-- end one album -->";
 
   // render to the page with jQuery
+  sampleAlbums.forEach(function (element) {
+   $('#albums').append(albumHtml);
+  });
 }
