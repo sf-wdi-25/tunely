@@ -87,3 +87,18 @@ function renderAlbum(album) {
    $('#albums').append(albumHtml);
   });
 }
+
+//Step 2
+
+$.ajax({
+  method: 'GET',
+  url: '/api/albums',
+  success: function show_albums (data) {
+    sampleAlbums.forEach(function (element){
+      $("#albums").append("<p>" + "Artist Name: " + element.artistName + "</p>" );
+      $("#albums").append("<p>" + "Name: " + element.name + "</p>");
+      $("#albums").append("<p>" + "Release Date: " + element.releaseDate + "</p>");
+      $("#albums").append("<p>" + "Genres: " + element.genres + "</p><br>");
+    });
+  }
+});
