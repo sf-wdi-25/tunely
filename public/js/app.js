@@ -5,7 +5,6 @@
  *
  */
 
-
 /* hard-coded data! */
 var sampleAlbums = [];
 sampleAlbums.push({
@@ -39,7 +38,8 @@ sampleAlbums.push({
 
 $(document).ready(function() {
   console.log('app.js loaded!');
-});
+
+renderAlbum(sampleAlbums[0]);
 
 
 
@@ -51,7 +51,7 @@ function renderAlbum(album) {
 
   var albumHtml =
   "        <!-- one album -->" +
-  "        <div class='row album' data-album-id='" + "HARDCODED ALBUM ID" + "'>" +
+  "        <div class='row album' data-album-id='" + album.id + "'>" +
   "          <div class='col-md-10 col-md-offset-1'>" +
   "            <div class='panel panel-default'>" +
   "              <div class='panel-body'>" +
@@ -64,15 +64,15 @@ function renderAlbum(album) {
   "                    <ul class='list-group'>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Album Name:</h4>" +
-  "                        <span class='album-name'>" + "HARDCODED ALBUM NAME" + "</span>" +
+  "                        <span class='album-name'>" + album.name + "</span>" +
   "                      </li>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Artist Name:</h4>" +
-  "                        <span class='artist-name'>" + "HARDCODED ARTIST NAME" + "</span>" +
+  "                        <span class='artist-name'>" + album.artistName + "</span>" +
   "                      </li>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Released date:</h4>" +
-  "                        <span class='album-releaseDate'>" + "HARDCODED RELEASE DATE" + "</span>" +
+  "                        <span class='album-releaseDate'>" + album.releaseDate + "</span>" +
   "                      </li>" +
   "                    </ul>" +
   "                  </div>" +
@@ -90,3 +90,5 @@ function renderAlbum(album) {
 
   // render to the page with jQuery
 }
+
+});
