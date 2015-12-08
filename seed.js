@@ -23,11 +23,17 @@ albumsList.push({
               releaseDate: '1994, July 4',
               genres: [ 'electronica', 'breakbeat hardcore', 'rave', 'jungle' ]
             });
+// albumsList.push({
+//               artistName: 'Johnny Cash',
+//               name: 'Unchained',
+//               releaseDate: '1996, November 5',
+//               genres: [ 'country', 'rock' ]
+//             });
 albumsList.push({
-              artistName: 'Johnny Cash',
-              name: 'Unchained',
-              releaseDate: '1996, November 5',
-              genres: [ 'country', 'rock' ]
+              artistName: 'test',
+              name: 'test',
+              releaseDate: 'test',
+              genres: [ 'test', 'test' ]
             });
 
 db.Album.remove({}, function(err, albums){

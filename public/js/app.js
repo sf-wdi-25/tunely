@@ -40,9 +40,9 @@ sampleAlbums.push({
 $(document).ready(function() {
   console.log('app.js loaded!');
 
-  sampleAlbums.forEach(function (element, index){
-    renderAlbum(element);
-  });
+  // sampleAlbums.forEach(function (element, index){
+  //   renderAlbum(element);
+  // });
 
   //READ albums from server and appends to html
   $.ajax({
