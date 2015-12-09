@@ -20,9 +20,13 @@ $(document).ready(function() {
     event.preventDefault();
     var formData = $(this).serialize();
     console.log('formData', formData);
+    $.post('/api/albums', formData, function (album) {
+      console.log('album after POST', album);
+      renderAlbum(album); //renders the server's response
+    });
     $(this).trigger("reset");
   });
-  
+
 });
 
 

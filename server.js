@@ -52,7 +52,13 @@ app.get('/api/albums', function albumsIndex (req, res) {
 });
 
 app.post('/api/albums', function albumCreate (req, res) {
-  console.log(req.body);
+  console.log('body', req.body);
+
+  db.Album.create(req.body, function (err, album) {
+    if (err) { console.log('error', err); }
+    console.log(album);
+    res.json(album);
+  });
 });
 
 /**********
