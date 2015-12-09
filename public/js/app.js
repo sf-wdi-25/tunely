@@ -18,18 +18,16 @@ function getAndRenderAll() {
       //   sampleAlbums.push(element);
       //   console.log(element);
       // });
-      // console.log(data);
+      console.log(data);
 
       data.forEach( function ( element, index) {
         var songs = "";
-        count = 0;
         element.songs.forEach ( function (element, index){
           var name = element.name;
-          count = count + 1;
-          songs = songs + (renderSong(element.name, count));
+          songs = songs + (renderSong(element.name, element.trackNumber));
         });
         renderAlbum(element, songs);
-        console.log(songs);
+        // console.log(songs);
       });
 
       // {name: "Swamped", trackNumber: 1, _id: "56678bfd318047be62e12e66"}
@@ -77,13 +75,68 @@ $addAlbum.on('submit', function (event) {
   $addAlbum.find('input').first().focus();
 });
 
+//for adding new songs
+$('#albums').on('click', '.add-song', function(e) {
+  var id = $(this).parents('.album').data('album-id');
+  console.log('id',id);
+
+  //adds the current album id data to the song modal
+  $('#songModal').data('album-id', id);
+  // console.log($('#songModal').data('album-id', id));
+
+  //calls the song modal to add a song
+  $('#songModal').modal();
+
+  $('#saveSong').on('click', handleNewSongSubmit() ,function() {
+    console.log('yes');
+  });
+});
+
+
+// handles the modal fields and POSTing the form to the server
+function handleNewSongSubmit(e) {
+  var albumId = $('#songModal').data('album-id');
+  // console.log(albumId);
+
+  var songName = $('#songName').val();
+  var trackNumber = $('#trackNumber').val();
+
+  var formData = {
+    name: songName,
+    trackNumber: trackNumber
+  };
+
+
+  var postUrl = '/api/albums/' + albumId + '/songs';
+  console.log('posting to ', postUrl, ' with data ', formData);
+
+  $.post(postUrl, formData)
+    .success(function(song) {
+      // console.log('song', song);
+
+      // re-get full album and render on page
+      $.get('/api/albums/' + albumId).success(function(album) {
+        //remove old entry
+        $('[data-album-id='+ albumId + ']').remove();
+        // render a replacement
+        getAndRenderAll();
+      });
+
+    });
+
+  //clear form
+  $('#songName').val('');
+  $('#trackNumber').val('');
+  $('#songModal').modal('hide');
+}
+
 // this function takes a single album and renders it to the page
 function renderAlbum(album, songs) {
   // console.log('rendering album:', album);
 
     var albumHtml =
     "        <!-- one album -->" +
-    "        <div class='row album' data-album-id='" + album.id + "'>" +
+    "        <div class='row album' data-album-id='" + album._id + "'>" +
     "          <div class='col-md-10 col-md-offset-1'>" +
     "            <div class='panel panel-default'>" +
     "              <div class='panel-body'>" +
@@ -108,8 +161,6 @@ function renderAlbum(album, songs) {
     "                      </li>" +
     "                      <li class='list-group-item'>" +
     "                       <h4 class='inline-header'>Songs:</h4>" +
-    "                         <li class='list-group-item'>" +
-    "                         <h4 class='inline-header'>Songs:</h4>" +
                             songs +
     "                    </li></ul>" +
     "                  </div>" +
@@ -119,6 +170,7 @@ function renderAlbum(album, songs) {
     "              </div>" + // end of panel-body
 
     "              <div class='panel-footer'>" +
+    "                <button class='btn btn-primary add-song'>Add Song</button>" +
     "              </div>" +
 
     "            </div>" +

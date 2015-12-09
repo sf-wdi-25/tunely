@@ -58,7 +58,7 @@ app.get('/api/albums', function (req, res) {
 
 //https://github.com/sf-wdi-25/notes/tree/master/week-04-mongo-database/day-01-mongo/dusk-schemas_and_embedding
 app.post('/api/albums', function create(req, res) {
-  console.log(req.body);
+  // console.log(req.body);
 
   var genres = req.body.genres.split(',').map(function(item) {
     return item.trim(); } );
@@ -66,26 +66,46 @@ app.post('/api/albums', function create(req, res) {
 
   db.Album.create(req.body, function (err, newAlbum) {
     if (err) { console.log('error', err); }
-    console.log(newAlbum);
+    // console.log(newAlbum);
     res.json(newAlbum);
   });
 
 });
 
-app.post('/api/albums', function albumCreate(req, res) {
+
+app.get('/api/albums/:id', function albumShow(req, res) {
+  console.log('requested album id=', req.params.id);
+  db.Album.findOne({_id: req.params.id}, function(err, album) {
+    res.json(album);
+  });
+});
+
+app.post('/api/albums/:albumId/songs', function songsCreate(req, res) {
   console.log('body', req.body);
 
-  // split at comma and remove and trailing space
-  var genres = req.body.genres.split(',').map(function(item) { return item.trim(); } );
-  req.body.genres = genres;
-
-  db.Album.create(req.body, function(err, album) {
+  db.Album.findOne({_id: req.params.albumId}, function(err, album) {
     if (err) { console.log('error', err); }
-    console.log(album);
-    res.json(album);
+
+    var song = new db.Song(req.body);
+    album.songs.push(song);
+    album.save(function(err, savedAlbum) {
+      if (err) { console.log('error', err); }
+      console.log('album with new song saved:', savedAlbum);
+      res.json(song);
+    });
   });
 
 });
+
+app.delete('/api/albums/:id', function deleteAlbum(req, res) {
+  console.log('deleting id: ', req.params.id);
+  db.Album.remove({_id: req.params.id}, function(err) {
+    if (err) { return console.log(err); }
+    console.log("removal of id=" + req.params.id  + " successful.");
+    res.status(200).send(); // everything is a-OK
+  });
+});
+
 
 /**********
  * SERVER *
