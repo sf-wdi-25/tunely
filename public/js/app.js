@@ -8,24 +8,56 @@
 $(document).ready(function() {
   console.log('app.js loaded!');
 
-$.ajax({
-  method: "GET",
-  url: "/api/albums",
-  success: function (data) {
+function getAndRenderAll() {
+  $.ajax({
+    method: 'GET',
+    url: '/api/albums',
+    success: function (data) {
+      // console.log(data);
+      // data.albums.forEach( function ( element, index) {
+      //   sampleAlbums.push(element);
+      //   console.log(element);
+      // });
+
+      data.forEach( function ( element, index) {
+        renderAlbum(element);
+      });
+
+    },
+    error: function () {
+      console.log("uh oh...");
+    }
+  });
+}
+
+getAndRenderAll();
+
+// Form Input
+//to create new design Project
+var $addAlbum = $('.form-horizontal');
+
+$addAlbum.on('submit', function (event) {
+  event.preventDefault();
+
+  // serialze form data
+  // var newAlbum = $(this).serialize();
+
+  var newAlbum = $(this).serialize();
+
+   console.log(newAlbum);
+
+  // POST request to create new designProject
+  $.post('/api/albums', newAlbum, function (data) {
     console.log(data);
-    // data.albums.forEach( function ( element, index) {
-    //   sampleAlbums.push(element);
-    //   console.log(element);
-    // });
 
-    // data.forEach( function ( element, index) {
-    //   renderAlbum(element);
-    // });
+    // render all designProjects to view
+    getAndRenderAll();
 
-  },
-  error: function () {
-    console.log("uh oh...");
-  }
+  });
+
+  // // reset the form
+  // $addAlbum[0].reset();
+  // $addAlbum.find('input').first().focus();
 });
 
 // this function takes a single album and renders it to the page

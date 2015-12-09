@@ -8,9 +8,7 @@ var app = express();
 // serve static files from public folder
 app.use(express.static(__dirname + '/public'));
 
-var db = require("./models/index.js");
-
-var album = db.Album;
+var mongoos = require('mongoose');
 
 /*
  * HTML Endpoints
@@ -24,6 +22,8 @@ app.get('/', function (req, res) {
 /************
  * DATABASE *
  ************/
+
+var db = require("./models/index.js");
 
 /**********
  * ROUTES *
@@ -45,9 +45,8 @@ app.get('/api', function api_index (req, res){
 });
 
 app.get('/api/albums', function (req, res) {
-  res.json({"albums": album});
-  album.find(function (err, Album) {
-    res.json({albums: Album});
+  db.Album.find(function (err, Album) {
+    res.json(Album);
   });
 });
 
