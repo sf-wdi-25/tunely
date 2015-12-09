@@ -39,8 +39,43 @@ sampleAlbums.push({
 
 $(document).ready(function() {
   console.log('app.js loaded!');
-});
 
+  $.ajax({
+    method: 'GET',
+    url: '/api/albums',
+    success: function (data){
+      console.log(data);
+      data.forEach(function (x){
+        renderAlbum(x);
+      });
+    }
+  });
+
+
+
+  $("#album-form form").on("submit", function (event){
+    event.preventDefault();
+    var formData = $(this).serialize();
+    console.log($(this).serialize());
+  
+
+    $.ajax({
+    method: 'POST',
+    url: '/api/albums',
+    data: formData,
+    success: function (data){
+        console.log('album after POST', data);
+        renderAlbum(data);
+        }
+        });
+        $(this).trigger('reset');    
+    });
+
+
+
+
+
+});
 
 
 
@@ -64,15 +99,15 @@ function renderAlbum(album) {
   "                    <ul class='list-group'>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Album Name:</h4>" +
-  "                        <span class='album-name'>" + "HARDCODED ALBUM NAME" + "</span>" +
+  "                        <span class='album-name'>" + album.name + "</span>" +
   "                      </li>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Artist Name:</h4>" +
-  "                        <span class='artist-name'>" + "HARDCODED ARTIST NAME" + "</span>" +
+  "                        <span class='artist-name'>" + album.artistName + "</span>" +
   "                      </li>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Released date:</h4>" +
-  "                        <span class='album-releaseDate'>" + "HARDCODED RELEASE DATE" + "</span>" +
+  "                        <span class='album-releaseDate'>" + album.releaseDate + "</span>" +
   "                      </li>" +
   "                    </ul>" +
   "                  </div>" +
@@ -88,5 +123,5 @@ function renderAlbum(album) {
   "          </div>" +
   "          <!-- end one album -->";
 
-  // render to the page with jQuery
+  $('#albums').prepend(albumHtml);
 }
