@@ -18,7 +18,7 @@ function getAndRenderAll() {
       //   sampleAlbums.push(element);
       //   console.log(element);
       // });
-      console.log(data);
+      // console.log(data);
 
       data.forEach( function ( element, index) {
         var songs = "";
@@ -59,7 +59,7 @@ $addAlbum.on('submit', function (event) {
 
   var newAlbum = $(this).serialize();
 
-   console.log(newAlbum);
+   // console.log(newAlbum);
 
   // POST request to create new designProject
   $.post('/api/albums', newAlbum, function (data) {
@@ -78,7 +78,7 @@ $addAlbum.on('submit', function (event) {
 //for adding new songs
 $('#albums').on('click', '.add-song', function(e) {
   var id = $(this).parents('.album').data('album-id');
-  console.log('id',id);
+  // console.log('id',id);
 
   //adds the current album id data to the song modal
   $('#songModal').data('album-id', id);
