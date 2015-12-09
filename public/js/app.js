@@ -35,6 +35,35 @@ $(document).ready(function() {
     $('#songModal').modal();
   });
 
+  $('#albums').on('click', '.delete-album', function(e) {
+    var data= $(this).parents('.album').data('album-id');
+    var newUrl = "/api/albums/";
+    newUrl+= data;
+    console.log(newUrl);
+      $.ajax({
+        method: "delete",
+        url: newUrl,
+        success: function (result) {
+          console.log(result);
+        }
+      })
+  });
+
+  $('#albums').on('click', '.edit-album', function(e) {
+    var id = $(this).parents('.album').data('album-id');
+    console.log('id',id);
+    var newUrl = "/api/albums/";
+    newUrl += id;
+    console.log(newUrl);
+      $.ajax({
+        method: "put",
+        url: newUrl,
+        success: function (result) {
+          console.log(result);
+        }
+      })
+  });
+
   $('#saveSong').on('click', handleNewSongSubmit);
 
 });
@@ -132,8 +161,8 @@ function renderAlbum(album) {
   "              </div>" + // end of panel-body
 
   "              <div class='panel-footer'>" +
-  "                <button class='btn btn-primary add-song'>Add Song</button>" +
-  "              </div>" +
+  "                <button class='btn btn-primary add-song'>Add Song</button>" + "<br>" + "<br>" + "<button class='btn btn-primary delete-album'>Delete Album</button>" + "<br>" + "<br>" + "<button class='btn btn-info edit-album'>Edit Album</button>" +
+  "              </div>" + 
 
   "            </div>" +
   "          </div>" +

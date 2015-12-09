@@ -88,10 +88,32 @@ app.post('/api/albums/:albumId/songs', function songsCreate(req, res) {
       res.json(song);
     });
   });
-
 });
 
+app.delete('/api/albums/:id', function albumDestroy(req, res) {
+  var idToDelete = req.params.id;
+  db.Album.remove({"_id": idToDelete}, function(err, album){
+    if(err) {
+      console.log(err);
+    } 
+  console.log(album)
+  res.send("200, deleted");
+  });
+});
 
+app.put('/api/albums/:id', function albumUpdate(req, res) {
+  var idToUpdate = req.params.id;
+  console.log(idToUpdate);
+});
+  // db.Album.update({"_id": idToUpdate, function(err, album) {
+  //   if(err) {
+  //     console.log(err);
+  //   } 
+  //   console.log(album)
+  //   res.send("200, updated");
+  //   }
+  // })
+// });
 
 /**********
  * SERVER *
