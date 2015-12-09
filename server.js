@@ -50,6 +50,29 @@ app.get('/api/albums', function (req, res) {
   });
 });
 
+app.post('/api/albums', function create(req, res) {
+  var data = req.body;
+  console.log(req.body);
+});
+
+//create designProjects property
+app.post('/api/design_projects', function create(req, res) {
+  var data = req.body;
+  // console.log(req.body);
+  var newDesignProject = { 
+    _id: makeID(designProjects),
+    title: data.title,
+    description: data.description,
+    date: data.date,
+    image: data.image
+    // [
+    //   { _id: 1, title: images.title, caption: images.caption, url: images.url}
+    // ]
+  };
+  res.json(newDesignProject);
+  designProjects.push(newDesignProject);
+});
+
 /**********
  * SERVER *
  **********/
