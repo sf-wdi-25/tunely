@@ -5,43 +5,21 @@ var express = require('express');
 // generate a new express app and call it 'app'
 var app = express();
 
+var mongoose = require('mongoose');
+
+var bodyParser = require('body-parser');
+
+
 // serve static files from public folder
 app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({extended: true}));
 
 /************
  * DATABASE *
  ************/
 
 /* hard-coded data */
-var albums = [];
-albums.push({
-              _id: 132,
-              artistName: 'Nine Inch Nails',
-              name: 'The Downward Spiral',
-              releaseDate: '1994, March 8',
-              genres: [ 'industrial', 'industrial metal' ]
-            });
-albums.push({
-              _id: 133,
-              artistName: 'Metallica',
-              name: 'Metallica',
-              releaseDate: '1991, August 12',
-              genres: [ 'heavy metal' ]
-            });
-albums.push({
-              _id: 134,
-              artistName: 'The Prodigy',
-              name: 'Music for the Jilted Generation',
-              releaseDate: '1994, July 4',
-              genres: [ 'electronica', 'breakbeat hardcore', 'rave', 'jungle' ]
-            });
-albums.push({
-              _id: 135,
-              artistName: 'Johnny Cash',
-              name: 'Unchained',
-              releaseDate: '1996, November 5',
-              genres: [ 'country', 'rock' ]
-            });
+
 
 
 
@@ -52,6 +30,7 @@ albums.push({
 /*
  * HTML Endpoints
  */
+var db = require('./models');
 
 app.get('/', function homepage (req, res) {
   res.sendFile(__dirname + '/views/index.html');
@@ -73,6 +52,21 @@ app.get('/api', function api_index (req, res){
   });
 });
 
+app.get('/api/albums', function (req, res){
+  db.Album.find({}, function (err, albums){
+    res.json(albums);
+  });
+});
+
+app.post('/api/albums', function (req,res){
+  console.log(req.body);
+  //res.json(data.genres);
+  db.Album.create(req.body, function (err, album) {
+    if (err) {console.log('error, err');}
+    console.log(album);
+    res.json(album);
+  });
+});
 /**********
  * SERVER *
  **********/
