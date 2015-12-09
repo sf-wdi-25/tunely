@@ -1,5 +1,5 @@
 // SERVER-SIDE JAVASCRIPT
-
+var mongoose = require('mongoose');
 //require express in our app
 var express = require('express');
 // generate a new express app and call it 'app'
@@ -13,16 +13,14 @@ app.use(bodyParser.urlencoded({extended: true}));
 // serve static files from public folder
 app.use(express.static(__dirname + '/public'));
 
-var mongoos = require('mongoose');
-
 /*
  * HTML Endpoints
  */
-
 //for client req to server, res 'Hello World'
 app.get('/', function (req, res) {
   res.sendFile('views/index.html' , { root : __dirname});
 });
+
 
 /************
  * DATABASE *

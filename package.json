@@ -20,7 +20,8 @@
   "dependencies": {
     "express": "~4.13.3",
     "mongoose": "~4.2.10",
-    "body-parser": "~1.14.1"
+    "body-parser": "~1.14.1",
+    "mongodb": "~2.1.0"
   },
   "directories": {
     "doc": "docs"
