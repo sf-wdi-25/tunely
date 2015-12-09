@@ -9,11 +9,13 @@
 $(document).ready(function() {
   console.log('app.js loaded!');
 
-  // sampleAlbums.forEach(function (element, index){
-  //   renderAlbum(element);
+  // $.get('/api/albums').success(function (albums) {
+  //   $('#albums').on('click', '.delete-album', handleDeleteAlbumClick);
+  //   $('#albums').on('click', '.edit-album', handleEditAlbumClick);
   // });
 
-  //READ albums from server and appends to html
+  //Taken from solution may have to replace my ajax get
+
   $.ajax({
     method: "GET",
     url:"/api/albums",
@@ -60,17 +62,80 @@ $("#albums").on("click", ".add-song", function (e){
   $("#songModal").modal();
 });
 
-$("#albums").on("click", ".delete-album", function(e){
+$("#albums").on("click", ".delete-album", function (e){
   var id = $(this).parents(".album").data("album-id");
   console.log("ID of Album Deleted: " , id);
+  userURL ="/api/albums/" + id; //Need to make sure the correct url ID gets plugged in
+
+  $.ajax({
+    method:"DELETE",
+    url:userURL,
+    success:function(res){
+      console.log("Album was succesfully deleted!");
+    },
+    error: function(){
+      console.log("There's an error with your clientside delete.");
+    }
+  });
+});
+
+$("#albums").on("click", ".edit-album", function (e){
+  var id = $(this).parents(".album").data("album-id");
+  console.log("ID of Editted Album: " , id);
+
+  // $(".edit-album").toggle(display);
+
+  // if (display === true){
+  //   $(".edit-album").show();
+  //   $(".saveChanges-album").hide();
+  // }else if (display === false) {
+  //   $(".edit-album").hide();
+  //   $(".saveChanges-album").show();
+  //}
 });
 
 $("#saveSong").on("click", handleNewSongSubmit);
+
+//might need to comment some of these out
+//$("#albums").on("click", ".delete-album", handleDeleteAlbumClick);
+
+$("#albums").on("click", ".edit-album", handleEditAlbumClick);
+
+$("#albums").on("click", ".pub-album", handleSaveChangesClick);
 
 });
 
 // Post to the server on click I think
 // Taken from solutions
+
+function getAlbumRowById(id){
+  return $('[data-album-id=' + id + ']');
+}
+
+function handleEditAlbumClick (e) {
+  var albumId = $(this).parents('.album').data('album-id');
+  var $albumRow = getAlbumRowById(albumId);
+
+  console.log('attempt to edit id', albumId);
+
+  $(this).parent().find('.btn').hide(); //hides the save changes button, I think?
+  $(this).parent().find('.default-hidden').show(); //shows edit button?
+
+  var albumName = $albumRow.find('span.album-name').text();
+  $albumRow.find('span.album-name').html('<input class="edit-album-name" value="' + albumName + '"></input>');
+
+  var artistName = $albumRow.find('span.artist-name').text();
+  $albumRow.find('span.artist-name').html('<input class="edit-artist-name" value="' + artistName + '"></input>');
+
+  var releaseDate = $albumRow.find('span.album-releaseDate').text();
+  $albumRow.find('span.album-releaseDate').html('<input class="edit-album-name" value="' + releaseDate + '"></input>');
+} 
+
+function handleSaveChangesClick(e){
+
+}
+
+
 function handleNewSongSubmit(e) {
   var albumId = $('#songModal').data('album-id');
   var songName = $('#songName').val();
@@ -158,6 +223,8 @@ function renderAlbum(album) {
   "              <div class='panel-footer'>" +
                 "<button class='btn btn-primary add-song'>Add Song</button>" +
                 "<button class='btn btn-primary delete-album'>Delete Album</button>" +
+                "<button class='btn btn-info edit-album'>Edit Album</button>" +
+                "<button class='btn btn-info put-album default-hidden'>Save Changes</button>" +
   "              </div>" +
 
   "            </div>" +

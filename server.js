@@ -92,7 +92,15 @@ app.post('/api/albums/:albumId/songs', function songsCreate(req, res) {
       res.json(song);
     });
   });
+});
 
+app.delete("/api/albums/:id", function albumDelete(req, res){
+  console.log("deleting id: ", req.params.id);
+  db.Album.remove({_id: req.params.id}, function (err){
+    if(err){return console.log(err);}
+    console.log("remove id: " + req.params.id + "worked!");
+    res.status(200).send(); //this methods set the HTTP status response, 200 is OK
+  });
 });
 /**********
  * SERVER *
