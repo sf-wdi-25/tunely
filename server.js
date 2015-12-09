@@ -5,8 +5,12 @@ var express = require('express');
 // generate a new express app and call it 'app'
 var app = express();
 
+var bodyParser = require('body-parser');
+
 // serve static files from public folder
 app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({ extended: true }));
+var db = require('./models');
 
 /************
  * DATABASE *
@@ -70,6 +74,26 @@ app.get('/api', function api_index (req, res){
     endpoints: [
       {method: "GET", path: "/api", description: "Describes available endpoints"}
     ]
+  });
+});
+
+app.get('/api/albums', function index (req, res){
+  db.Album.find({}, function(err, albums) {
+  console.log(albums);  
+  res.json(albums);
+  }); 
+});
+
+app.post('/api/albums', function (req, res) {
+  console.log(req.body);
+
+  // splitting items in the array
+  var genres = req.body.genres.split(',').map(function(item) {return item.trim(); } );
+  req.body.genres = genres;
+  db.Album.create(req.body, function(err, album){
+    if (err) { return console.log('ERROR', err); }
+    console.log('album=',album);
+    res.json(album);
   });
 });
 
