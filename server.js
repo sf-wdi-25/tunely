@@ -59,7 +59,27 @@ app.post('/api/albums', function albumCreate (req, res) {
     console.log(album);
     res.json(album);
   });
+  
 });
+
+
+app.post('/api/albums/:album_id/songs', function songsCreate(req, res) {
+  console.log('body', req.body);
+  db.Album.findOne({_id: req.params.albumId}, function (err, album) {
+    if (err) { console.log('error', err); }
+
+    var song = new db.Song(req.body);
+    album.songs.push(song);
+    album.save(function(err, savedAlbum) {
+      if (err) { console.log('error', err); }
+      console.log('album with new song saved:', savedAlbum);
+      res.json(song);
+    });
+  });
+
+});
+
+
 
 /**********
  * SERVER *
