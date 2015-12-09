@@ -18,16 +18,33 @@ function getAndRenderAll() {
       //   sampleAlbums.push(element);
       //   console.log(element);
       // });
+      // console.log(data);
 
       data.forEach( function ( element, index) {
-        renderAlbum(element);
+        var songs = "";
+        count = 0;
+        element.songs.forEach ( function (element, index){
+          var name = element.name;
+          count = count + 1;
+          songs = songs + (renderSong(element.name, count));
+        });
+        renderAlbum(element, songs);
+        console.log(songs);
       });
+
+      // {name: "Swamped", trackNumber: 1, _id: "56678bfd318047be62e12e66"}
 
     },
     error: function () {
       console.log("uh oh...");
     }
   });
+}
+
+function renderSong(name, count) {
+  var songsHtml =
+"    <br><span>" + count + ". " + name + " </span>";
+  return songsHtml;
 }
 
 getAndRenderAll();
@@ -61,7 +78,7 @@ $addAlbum.on('submit', function (event) {
 });
 
 // this function takes a single album and renders it to the page
-function renderAlbum(album) {
+function renderAlbum(album, songs) {
   // console.log('rendering album:', album);
 
     var albumHtml =
@@ -89,7 +106,12 @@ function renderAlbum(album) {
     "                        <h4 class='inline-header'>Released date:</h4>" +
     "                        <span class='album-releaseDate'>" + album.releaseDate + "</span>" +
     "                      </li>" +
-    "                    </ul>" +
+    "                      <li class='list-group-item'>" +
+    "                       <h4 class='inline-header'>Songs:</h4>" +
+    "                         <li class='list-group-item'>" +
+    "                         <h4 class='inline-header'>Songs:</h4>" +
+                            songs +
+    "                    </li></ul>" +
     "                  </div>" +
     "                </div>" +
     "                <!-- end of album internal row -->" +

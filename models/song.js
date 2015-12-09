@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var SongSchema = new Schema({
   name: String,
-  trackNumber: String
+  trackNumber: Number,
 });
 
 var Song = mongoose.model('Song', SongSchema);
