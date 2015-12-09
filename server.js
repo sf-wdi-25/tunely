@@ -59,7 +59,15 @@ app.post('/api/albums', function albumCreate (req, res) {
     console.log(album);
     res.json(album);
   });
-  
+
+});
+
+
+app.get('/api/albums/:id', function albumShow (req, res) {
+  console.log('requested album id=', req.params.id);
+  db.Album.findOne({_id: req.params.id}, function(err, album) {
+    res.json(album);
+  });
 });
 
 
