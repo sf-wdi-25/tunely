@@ -51,7 +51,7 @@ $(document).ready(function() {
     $(this).trigger("reset");
 
   });
-});
+
 
 $("#albums").on("click", ".add-song", function (e){
   var id = $(this).parents(".album").data("album-id");
@@ -60,6 +60,39 @@ $("#albums").on("click", ".add-song", function (e){
   $("#songModal").modal();
 });
 
+$("#saveSong").on("click", handleNewSongSubmit);
+
+});
+
+// Post to the server on click I think
+// Taken from solutions
+function handleNewSongSubmit(e) {
+  var albumId = $('#songModal').data('album-id');
+  var songName = $('#songName').val();
+  var trackNumber = $('#trackNumber').val();
+
+  var formData = {
+    name: songName,
+    trackNumber: trackNumber
+  };
+
+  var postUrl = '/api/albums/' + albumId + '/songs';
+  console.log('posting to ', postUrl, ' with data ', formData);
+
+  $.post(postUrl, formData)
+    .success(function(song) {
+      console.log('song', song);
+        $.get('/api/albums/' + albumId).success(function(album) {
+        //remove old entry
+        $('[data-album-id='+ albumId + ']').remove();
+       // render a replacement
+        renderAlbum(album);
+      });
+      $('#songName').val('');
+      $('#trackNumber').val('');
+      $('#songModal').modal('hide');
+    });
+}
 
 function buildSongsHtml(songs){
   var songText=" &ndash; ";
