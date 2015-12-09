@@ -60,6 +60,11 @@ $("#albums").on("click", ".add-song", function (e){
   $("#songModal").modal();
 });
 
+$("#albums").on("click", ".delete-album", function(e){
+  var id = $(this).parents(".album").data("album-id");
+  console.log("ID of Album Deleted: " , id);
+});
+
 $("#saveSong").on("click", handleNewSongSubmit);
 
 });
@@ -152,6 +157,7 @@ function renderAlbum(album) {
 
   "              <div class='panel-footer'>" +
                 "<button class='btn btn-primary add-song'>Add Song</button>" +
+                "<button class='btn btn-primary delete-album'>Delete Album</button>" +
   "              </div>" +
 
   "            </div>" +
