@@ -60,6 +60,12 @@ sampleSongs.push({ name: 'Tight Rope',
                    trackNumber: 7
 });
 
+//Every album will get all these songs
+albumsList.forEach(function(album){
+  album.songs = sampleSongs;
+});
+
+
 db.Album.remove({}, function(err, albums){
 
   db.Album.create(albumsList, function(err, albums){
