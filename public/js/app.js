@@ -55,9 +55,9 @@ $addAlbum.on('submit', function (event) {
 
   });
 
-  // // reset the form
-  // $addAlbum[0].reset();
-  // $addAlbum.find('input').first().focus();
+  // reset the form
+  $addAlbum[0].reset();
+  $addAlbum.find('input').first().focus();
 });
 
 // this function takes a single album and renders it to the page

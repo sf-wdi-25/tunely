@@ -5,6 +5,11 @@ var express = require('express');
 // generate a new express app and call it 'app'
 var app = express();
 
+// configure bodyParser (for receiving form data)
+var bodyParser = require("body-parser");
+// parse POSTed data
+app.use(bodyParser.urlencoded({extended: true}));
+
 // serve static files from public folder
 app.use(express.static(__dirname + '/public'));
 
@@ -50,27 +55,36 @@ app.get('/api/albums', function (req, res) {
   });
 });
 
+
+//https://github.com/sf-wdi-25/notes/tree/master/week-04-mongo-database/day-01-mongo/dusk-schemas_and_embedding
 app.post('/api/albums', function create(req, res) {
-  var data = req.body;
   console.log(req.body);
+
+  var genres = req.body.genres.split(',').map(function(item) {
+    return item.trim(); } );
+    req.body.genres = genres;
+
+  db.Album.create(req.body, function (err, newAlbum) {
+    if (err) { console.log('error', err); }
+    console.log(newAlbum);
+    res.json(newAlbum);
+  });
+
 });
 
-//create designProjects property
-app.post('/api/design_projects', function create(req, res) {
-  var data = req.body;
-  // console.log(req.body);
-  var newDesignProject = { 
-    _id: makeID(designProjects),
-    title: data.title,
-    description: data.description,
-    date: data.date,
-    image: data.image
-    // [
-    //   { _id: 1, title: images.title, caption: images.caption, url: images.url}
-    // ]
-  };
-  res.json(newDesignProject);
-  designProjects.push(newDesignProject);
+app.post('/api/albums', function albumCreate(req, res) {
+  console.log('body', req.body);
+
+  // split at comma and remove and trailing space
+  var genres = req.body.genres.split(',').map(function(item) { return item.trim(); } );
+  req.body.genres = genres;
+
+  db.Album.create(req.body, function(err, album) {
+    if (err) { console.log('error', err); }
+    console.log(album);
+    res.json(album);
+  });
+
 });
 
 /**********
