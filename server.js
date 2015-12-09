@@ -8,6 +8,8 @@ var app = express();
 // serve static files from public folder
 app.use(express.static(__dirname + '/public'));
 
+module.exports.album = require("./album.js");
+
 /************
  * DATABASE *
  ************/
