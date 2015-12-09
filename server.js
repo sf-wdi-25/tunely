@@ -4,46 +4,18 @@
 var express = require('express');
 // generate a new express app and call it 'app'
 var app = express();
+var mongoose = require('mongoose');
+var bodyParser = require('body-parser');
 
 // serve static files from public folder
 app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 /************
  * DATABASE *
  ************/
 
-/* hard-coded data */
-var albums = [];
-albums.push({
-              _id: 132,
-              artistName: 'Nine Inch Nails',
-              name: 'The Downward Spiral',
-              releaseDate: '1994, March 8',
-              genres: [ 'industrial', 'industrial metal' ]
-            });
-albums.push({
-              _id: 133,
-              artistName: 'Metallica',
-              name: 'Metallica',
-              releaseDate: '1991, August 12',
-              genres: [ 'heavy metal' ]
-            });
-albums.push({
-              _id: 134,
-              artistName: 'The Prodigy',
-              name: 'Music for the Jilted Generation',
-              releaseDate: '1994, July 4',
-              genres: [ 'electronica', 'breakbeat hardcore', 'rave', 'jungle' ]
-            });
-albums.push({
-              _id: 135,
-              artistName: 'Johnny Cash',
-              name: 'Unchained',
-              releaseDate: '1996, November 5',
-              genres: [ 'country', 'rock' ]
-            });
-
-
+var db = require("./models");
 
 /**********
  * ROUTES *
@@ -70,6 +42,24 @@ app.get('/api', function api_index (req, res){
     endpoints: [
       {method: "GET", path: "/api", description: "Describes available endpoints"}
     ]
+  });
+});
+
+app.get('/api/albums', function albums_index (req, res){
+  db.Album.find(function(err, albums){
+    if(err) {console.log(err); }
+    res.send(albums);
+  });
+});
+
+app.post('/api/albums', function albums_create (req, res){
+  console.log('body', req.body);
+  var genres = req.body.genres.split(', ').map(function(item) { return item.trim(); } );
+  req.body.genres = genres;
+  db.Album.create(req.body, function(err, album){
+    if(err) { console.log(err); }
+    console.log(album);
+    res.json(album);
   });
 });
 
