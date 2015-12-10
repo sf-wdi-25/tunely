@@ -102,8 +102,10 @@ app.delete('/api/albums/:id', function albumDestroy(req, res) {
 });
 
 app.put('/api/albums/:id', function albumUpdate(req, res) {
+  console.log(req.body);
   var idToUpdate = req.params.id;
   console.log(idToUpdate);
+  res.send("200 okay");
 });
   // db.Album.update({"_id": idToUpdate, function(err, album) {
   //   if(err) {
