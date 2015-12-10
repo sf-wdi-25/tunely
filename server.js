@@ -114,15 +114,19 @@ app.put('/api/albums/:id', function albumUpdate(req, res) {
       res.send("200 okay");
   });
 });
-  // db.Album.update({"_id": idToUpdate, function(err, album) {
-  //   if(err) {
-  //     console.log(err);
-  //   } 
-  //   console.log(album)
-  //   res.send("200, updated");
-  //   }
-  // })
-// });
+
+app.delete('/api/albums/:album_id/songs/:id', function songDelete(req, res) {
+  console.log(req.body);
+  console.log(req.params.id);
+  res.send("200 okay");
+});
+
+app.put('/api/albums/:album_id/songs/:id', function songUpdate(req, res) {
+  console.log(req.body);
+  console.log(req.params.id);
+  res.send("200 okay");
+});
+
 
 /**********
  * SERVER *

@@ -49,6 +49,14 @@ $(document).ready(function() {
       })
   });
 
+  $('#albums').on('click', '.edit-songs', function(e) {
+    var id = $(this).parents('.album').data('album-id');
+    console.log('id', id);
+    $('#editSongsModal').data('album-id', id);
+    $('#editSongsModal').modal();
+    
+  });
+
   $('#albums').on('click', '.edit-album', function(e) {
     var id = $(this).parents('.album').data('album-id');
     console.log('id',id);
@@ -109,13 +117,6 @@ function handleAlbumEdit(e) {
       }
     });
   }
-
-
-
-
-
-
-
 
 // handles the modal fields and POSTing the form to the server
 function handleNewSongSubmit(e) {
