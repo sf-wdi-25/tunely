@@ -74,16 +74,16 @@ $(document).ready(function() {
 //handles the modal fields and POSTing the form to the server for album edit
 function handleAlbumEdit(e) {
   var albumId = $('#albumModal').data('album-id');
-  var albumName = $('#albumName').val();
-  var releaseDate = $('#releaseDate').val();
   var artistName = $('#artistName').val();
+  var albumName = $('#albumName').val();
+  var releaseDate = $('#releaseDate2').val();
 
 
   var formData = {
     artistName: artistName,
     name: albumName,
     releaseDate: releaseDate
-  } //why is the releaseDate not coming through
+  } //why is the releaseDate not coming through?
 
   console.log("the release date is " + releaseDate);
   var postUrl = '/api/albums/' + albumId;
