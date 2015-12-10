@@ -102,6 +102,29 @@ app.delete("/api/albums/:id", function albumDelete(req, res){
     res.status(200).send(); //this methods set the HTTP status response, 200 is OK
   });
 });
+
+// app.put("/api/albums/:id", function albumEdit(req, res){
+//   reqId = req.params.id;
+//   console.log(reqId);
+//   db.Album.put
+//}
+
+app.put('/api/albums/:id', function updateAlbum(req, res) {
+  console.log('updating id ', req.params.id);
+  console.log('received body ', req.body);
+
+  db.Album.findOne({_id: req.params.id}, function(err, foundAlbum) {
+    if (err) { console.log('error', err); }
+    foundAlbum.artistname = req.body.artistName;
+    foundAlbum.name = req.body.name;
+    foundAlbum.releaseDate = req.body.releaseDate;
+    foundAlbum.save(function(err, saved) {
+      if(err) { console.log('error', err); }
+      res.json(saved);
+    });
+  });
+});
+
 /**********
  * SERVER *
  **********/

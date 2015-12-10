@@ -79,20 +79,32 @@ $("#albums").on("click", ".delete-album", function (e){
   });
 });
 
-$("#albums").on("click", ".edit-album", function (e){
-  var id = $(this).parents(".album").data("album-id");
-  console.log("ID of Editted Album: " , id);
+// $("#albums").on("click", ".edit-album", function (e){
+//   var id = $(this).parents(".album").data("album-id");
+//   console.log("ID of Editted Album: " , id);
 
-  // $(".edit-album").toggle(display);
+// });
 
-  // if (display === true){
-  //   $(".edit-album").show();
-  //   $(".saveChanges-album").hide();
-  // }else if (display === false) {
-  //   $(".edit-album").hide();
-  //   $(".saveChanges-album").show();
-  //}
-});
+// $("#albums").on("click", ".put-album", function (e){
+//   var id = $(this).parents(".album").data("album-id");
+//   console.log("ID of Album Editting: " , id);
+//   userURL ="/api/albums/" + id;
+
+//   $.ajax({
+//       method:"PUT",
+//       url:userURL,
+//       success:function(res){
+//         console.log("Album was editted");
+//       },
+//       error: function(){
+//         console.log("There's an error with your clientside put.");
+//       }
+//   });
+
+//   $(this).parent().find('.btn').show();
+//   $(this).parent().find('.default-hidden').hide();
+
+// });
 
 $("#saveSong").on("click", handleNewSongSubmit);
 
@@ -102,11 +114,10 @@ $("#saveSong").on("click", handleNewSongSubmit);
 $("#albums").on("click", ".edit-album", handleEditAlbumClick);
 
 $("#albums").on("click", ".pub-album", handleSaveChangesClick);
+//Some reason handle change is not getting called
 
 });
 
-// Post to the server on click I think
-// Taken from solutions
 
 function getAlbumRowById(id){
   return $('[data-album-id=' + id + ']');
@@ -132,6 +143,30 @@ function handleEditAlbumClick (e) {
 } 
 
 function handleSaveChangesClick(e){
+  var albumId = $(this).parents('.album').data('album-id');
+  var $albumRow = getAlbumRowById(albumId);
+
+  var data = {
+    name: $albumRow.find('.edit-album-name').val(),
+    artistName: $albumRow.find('.edit-artist-name').val(),
+    releaseDate: $albumRow.find('.edit-album-releaseDate').val()
+  };
+
+  $.ajax({
+    method: 'PUT',
+    url: '/api/albums/' + albumId,
+    data: data,
+    success: function(data) {
+      console.log("Editted data: " , data);
+      $albumRow.replaceWith(generateAlbumHtml(data));
+      
+      $(this).parent().find('.btn').show();
+      $(this).parent().find('.default-hidden').hide();
+    },
+    error: function(){
+        console.log("There's an error with your clientside put.");
+    }
+  });
 
 }
 
@@ -182,7 +217,7 @@ function buildSongsHtml(songs){
 
 
 // this function takes a single album and renders it to the page
-function renderAlbum(album) {
+function generateAlbumHtml(album) {
   console.log('rendering album:', album);
 
   var albumHtml =
@@ -231,8 +266,17 @@ function renderAlbum(album) {
   "          </div>" +
   "          <!-- end one album -->";
 
-  $("#albums").append(albumHtml);
+  return albumHtml;
+  //$("#albums").append(albumHtml);
   // render to the page with jQuery
 }
+
+function renderAlbum(album){
+  var html = generateAlbumHtml(album);
+  console.log('rendering album:', album);
+
+  $('#albums').prepend(html);
+}
+
 
 
