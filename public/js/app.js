@@ -5,7 +5,6 @@
  *
  */
 
-
 /* hard-coded data! */
 var sampleAlbums = [];
 sampleAlbums.push({
@@ -34,20 +33,15 @@ sampleAlbums.push({
            });
 /* end of hard-coded data */
 
-
-
-
 $(document).ready(function() {
   console.log('app.js loaded!');
+  renderAlbum(sampleAlbums[0]);
 });
-
-
-
-
 
 // this function takes a single album and renders it to the page
 function renderAlbum(album) {
   console.log('rendering album:', album);
+  
 
   var albumHtml =
   "        <!-- one album -->" +
@@ -89,4 +83,22 @@ function renderAlbum(album) {
   "          <!-- end one album -->";
 
   // render to the page with jQuery
+  sampleAlbums.forEach(function (element) {
+   $('#albums').append(albumHtml);
+  });
 }
+
+//Step 2
+
+$.ajax({
+  method: 'GET',
+  url: '/api/albums',
+  success: function show_albums (data) {
+    sampleAlbums.forEach(function (element){
+      $("#albums").append("<p>" + "Artist Name: " + element.artistName + "</p>" );
+      $("#albums").append("<p>" + "Name: " + element.name + "</p>");
+      $("#albums").append("<p>" + "Release Date: " + element.releaseDate + "</p>");
+      $("#albums").append("<p>" + "Genres: " + element.genres + "</p><br>");
+    });
+  }
+});

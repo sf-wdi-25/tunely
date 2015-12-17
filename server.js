@@ -57,6 +57,10 @@ app.get('/', function homepage (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
+app.get('/api/albums', function albums_api (req, res){
+  res.json({albums: albums});
+});
+
 
 /*
  * JSON API Endpoints
