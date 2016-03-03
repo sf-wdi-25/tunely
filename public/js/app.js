@@ -98,12 +98,12 @@ function renderAlbum(album) {
   // render to the page with jQuery
   $('#albums').append(albumHtml);
 }
-
-$.ajax({
-  type: "GET",
-  url: '/',
-  success: function(data){
-    renderAlbums();
-  }
-
-});
+// 
+// $.ajax({
+//   type: "GET",
+//   url: '/',
+//   success: function(data){
+//     renderAlbums();
+//   }
+//
+// });

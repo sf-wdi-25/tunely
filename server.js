@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(methodOverride('_method'));
 app.use(logger('dev'));
-app.set('views', path.join(__dirname + 'views'));
+app.set('views', path.join(__dirname + '/views'));
 app.set('view engine', 'hbs');
 
 /************
@@ -29,44 +29,47 @@ var Album = require('./models/album');
 
 
 
-
 /**********
  * ROUTES *
  **********/
 
- /*
-  * HTML Endpoints
-  */
+/*
+ * HTML Endpoints
+ */
 
- app.get('/', function homepage (req, res) {
-   res.sendFile(__dirname + '/views/index.html');
- });
+app.get('/', function homepage (req, res) {
+  res.render('./partials/albums/home');
+});
 
- /*
-  * JSON API Endpoints
-  */
+app.get('/albums', function homepage (req, res) {
+  Album.find({}, function(err, albums){
+    if (err) return console.log(err);
+    res.render('./partials/albums/index', {albums:albums});
+  });
+});
 
- app.get('/api', function api_index (req, res){
-   res.json({
-     message: "Welcome to tunely!",
-     documentation_url: "https://github.com/tgaff/tunely/api.md",
-     base_url: "http://tunely.herokuapp.com",
-     endpoints: [
-       {method: "GET", path: "/api", description: "Describes available endpoints"}
-     ]
-   });
- });
+/*
+ * JSON API Endpoints
+ */
 
- app.get('/api/albums', function api_albums (req, res){
-   Album.find({}, function(err, albums){
-     if (err) return console.log(err);
-     res.json(albums);
-   });
+app.get('/api', function api_index (req, res){
+  res.json({
+    message: "Welcome to tunely!",
+    documentation_url: "https://github.com/tgaff/tunely/api.md",
+    base_url: "http://tunely.herokuapp.com",
+    endpoints: [
+      {method: "GET", path: "/api", description: "Describes available endpoints"}
+    ]
+  });
+});
 
- });
+app.get('/api/albums', function api_albums (req, res){
+  Album.find({}, function(err, albums){
+    if (err) return console.log(err);
+    res.json(albums);
+  });
 
-//var routes = require('./config/routes');
-//app.use(routes);
+});
 
 /**********
  * SERVER *
