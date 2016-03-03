@@ -5,6 +5,7 @@
  *
  */
 
+//var Album = require('../models/album');
 
 /* hard-coded data! */
 var sampleAlbums = [];
