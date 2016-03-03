@@ -110,4 +110,5 @@ function renderAlbum(album) {
   });
 }
 
-$.ajax('/api/albums');
+
+// $.ajax('/api/albums');
