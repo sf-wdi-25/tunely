@@ -4,8 +4,17 @@
 var express = require('express');
 // generate a new express app and call it 'app'
 var app = express();
+var bodyParser = require('body-parser');
 var models = require('./models');
 var Album = require('./models/album');
+var path = require('path');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+
+app.set('views', path.join(__dirname, 'views'));
+app.engine('ejs', require('ejs').renderFile);
+app.set('view engine', 'ejs');
 
 // serve static files from public folder
 app.use(express.static(__dirname + '/public'));
@@ -56,7 +65,7 @@ app.use(express.static(__dirname + '/public'));
  */
 
 app.get('/', function homepage (req, res) {
-  res.sendFile(__dirname + '/views/index.html');
+  res.render(__dirname + '/views/index.ejs');
 });
 
 
