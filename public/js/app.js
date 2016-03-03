@@ -102,14 +102,20 @@ function renderAlbum(album) {
   //   albumDiv.attr("id", "album-"+i);
   // }
 
+
     // render to the page with jQuery
   sampleAlbums.forEach(function(album) {
-    $("#albums").append(albumHtml);
-    $(".album-name").html("ciao");
-    $(".artist-name").html(sampleAlbums.artistName);
-    $(".album-releaseDate").html(sampleAlbums.releaseDate);
+    // console.log(album);
+    var $albumDiv = $("#albums");
+    var $albumName = $(".album-name");
+    var $artistName = $(".artist-name");
+    var $albumReleaseDate = $(".album-releaseDate");
 
-   
+    $albumDiv.append(albumHtml);
+
+    $albumName.last().html(album.name);
+    $artistName.last().html(album.artistName);
+    $albumReleaseDate.last().html(album.releaseDate); 
   });
 
   
