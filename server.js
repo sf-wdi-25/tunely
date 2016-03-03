@@ -64,9 +64,12 @@ app.use(express.static(__dirname + '/public'));
  * HTML Endpoints
  */
 
+//
 app.get('/', function homepage (req, res) {
   res.render(__dirname + '/views/index.ejs');
 });
+
+
 
 
 /*
@@ -84,6 +87,7 @@ app.get('/api', function api_index (req, res){
   });
 });
 
+//SHOW ALL ALBUMS (index)
 app.get('/api/albums', function album_index (req, res) {
   Album.find(function(err, albums){
     if (err) {
@@ -93,6 +97,28 @@ app.get('/api/albums', function album_index (req, res) {
     }
   });
 });
+
+//CREATE
+app.post('/api/albums', function create (req, res) {
+
+  var name = req.body.name;
+  var artistName = req.body.artistName;
+  var releaseDate = req.body.releaseDate;
+  var genres = req.body.genres;
+  var description = req.body.description;
+
+  Album.create({name: name, artistName: artistName, releaseDate: releaseDate,
+    genres: genres, description: description}, function(err, albums){
+    if(err){
+      console.log("OH FUCK AN ERROR! ", err);
+    }
+    else{
+      // res.render(__dirname + '/views/index.ejs');
+      res.json({albums: albums});
+    }
+  });
+});
+
 
 /**********
  * SERVER *
