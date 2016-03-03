@@ -102,7 +102,11 @@ function renderAlbum(album) {
 
     $albumName.last().html(album.name);
     $artistName.last().html(album.artistName);
+
+    $albumReleaseDate.last().html(album.releaseDate); 
+
     $albumReleaseDate.last().html(album.releaseDate);
+
   });
 }
 
