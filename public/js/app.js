@@ -89,17 +89,8 @@ function renderAlbum(album) {
   "          </div>" +
   "          <!-- end one album -->";
 
+  // render to the page with jQuery
 
-  //   var panelBody = $("#albums");
-
-  // for(var i=0; i<sampleAlbums.length; i++){
-  //   var albumDiv = $(".album");
-  //   panelBody.append(albumDiv);
-  //   albumDiv.attr("id", "album-"+i);
-  // }
-
-
-    // render to the page with jQuery
   sampleAlbums.forEach(function(album) {
     console.log(album);
     var $albumDiv = $("#albums");
@@ -111,8 +102,12 @@ function renderAlbum(album) {
 
     $albumName.last().html(album.name);
     $artistName.last().html(album.artistName);
-    $albumReleaseDate.last().html(album.releaseDate); 
-  });
 
-  
+    $albumReleaseDate.last().html(album.releaseDate); 
+
+    $albumReleaseDate.last().html(album.releaseDate);
+
+  });
 }
+
+$.ajax('/api/albums');
