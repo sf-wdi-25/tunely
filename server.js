@@ -73,6 +73,10 @@ app.get('/api', function api_index (req, res){
   });
 });
 
+app.get('/api/albums', function album_index (req, res) {
+  res.json({albums});
+});
+
 /**********
  * SERVER *
  **********/
