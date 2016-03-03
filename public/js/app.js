@@ -95,5 +95,18 @@ function renderAlbum(album) {
 
   // render to the page with jQuery
 
+  sampleAlbums.forEach(function(album) {
+    // console.log(album);
+    var $albumDiv = $("#albums");
+    var $albumName = $(".album-name");
+    var $artistName = $(".artist-name");
+    var $albumReleaseDate = $(".album-releaseDate");
+
+    $albumDiv.append(albumHtml);
+
+    $albumName.last().html(album.name);
+    $artistName.last().html(album.artistName);
+    $albumReleaseDate.last().html(album.releaseDate);
+  });
 
 }
