@@ -4,6 +4,8 @@
 var express = require('express');
 // generate a new express app and call it 'app'
 var app = express();
+var models = require('./models');
+var Album = require('./models/album');
 
 // serve static files from public folder
 app.use(express.static(__dirname + '/public'));
@@ -74,7 +76,13 @@ app.get('/api', function api_index (req, res){
 });
 
 app.get('/api/albums', function album_index (req, res) {
-  res.json({albums});
+  Album.find(function(err, albums){
+    if (err) {
+      console.log("OH FUCK AN ERROR!" + err);
+    } else {
+      res.json({albums: albums});
+    }
+  });
 });
 
 /**********
