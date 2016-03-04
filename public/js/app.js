@@ -14,7 +14,9 @@ $(document).ready(function() {
       //we are added an entire div to the Albums div with our data embedded in jQuery
       renderAlbum(album);  
     });
+   handleNewSongButtonClick();
   });
+  
 });
 
 
@@ -23,7 +25,7 @@ function renderAlbum(album) {
   //our HTML that we are appending in a forEach loop
   var albumHtml =
   "        <!-- one album -->" +
-  "        <div class='row album' data-album-id='" + "'>" +
+  "        <div class='row album' data-album-id='" + album._id + "'>" +
   "          <div class='col-md-10 col-md-offset-1'>" +
   "            <div class='panel panel-default'>" +
   "              <div class='panel-body'>" +
@@ -55,6 +57,7 @@ function renderAlbum(album) {
   "              </div>" + // end of panel-body
 
   "              <div class='panel-footer'>" +
+                  "<button class='btn btn-primary add-song'>"+ "Add Song" + "</button>" +
   "              </div>" +
 
   "            </div>" +
@@ -70,14 +73,15 @@ function renderAlbum(album) {
       var $artistName = $(".artist-name");
       var $albumReleaseDate = $(".album-releaseDate");
       // var $deleteButton = $("<input method='POST' action='/' type='submit' class='.btn-danger' value='Delete'></input>");
-      var $albumId = album._id;
-      $albumDiv.attr('id', $albumId);
+     
       // console.log($albumId);
 
       $albumName.last().html(album.name);
       $artistName.last().html(album.artistName);
 
       $albumReleaseDate.last().html(album.releaseDate); 
+
+      
 }
 
 
@@ -94,6 +98,24 @@ function buildSongsHtml (songs) {
         "<span>" + songStr + "</span>" + 
       "</li>";
     return songHtml;
+}
+
+function handleNewSongButtonClick() {
+  $('#albums').on('click', '.add-song', function(e) {
+   
+
+
+
+    var id= $(this).parents('.album').data('album-id'); // "5665ff1678209c64e51b4e7b"
+    console.log('id',id);
+    console.log(id);
+     $('#songModal').modal();
+    $('#songModal').data('album-id', id);
+});
+  // get the current album's id from the row the button is in
+  // set the album-id data attribute on the modal (jquery)
+  
+  // display the modal
 }
 
 
