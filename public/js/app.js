@@ -4,8 +4,6 @@
  * into functions and objects as needed.
  *
  */
-
-
 /* hard-coded data! */
 var sampleAlbums = [];
 sampleAlbums.push({
@@ -39,11 +37,35 @@ sampleAlbums.push({
 
 $(document).ready(function() {
   console.log('app.js loaded!');
+  sampleAlbums.forEach(renderAlbum);
+
+  //ajax get method
+  $.get('/api/albums').success(function (albums) {
+    albums.forEach(function(album) {
+      renderAlbum(album);
+    });
+  });
+
+  // ajax post method
+  $('#album-form form').on('submit', function(e) {
+    e.preventDefault();
+    var formData = $(this).serialize();
+    console.log('formData', formData);
+    $.post('/api/albums', formData, function(album) {
+      console.log('album after POST', album);
+      renderAlbum(album);  //render the server's response
+    });
+    $(this).trigger("reset");
+  });
+  
+  //serializes form data logs it and clears form
+  $("form").on("submit", function(event) {
+    event.preventDefault();
+    console.log($(this).serialize());
+    $("form").trigger("reset");
+  });
+
 });
-
-
-
-
 
 // this function takes a single album and renders it to the page
 function renderAlbum(album) {
@@ -88,5 +110,6 @@ function renderAlbum(album) {
   "          </div>" +
   "          <!-- end one album -->";
 
-  // render to the page with jQuery
+  $("#albums").append(albumHtml);
 }
+
