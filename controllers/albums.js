@@ -5,13 +5,13 @@ var Album = require('../models/album');
 
 
 function renderHome (req, res) {
-res.render('./partials/home');
+  res.render('./partials/home');
 }
 
 function renderAlbums (req, res) {
   Album.find({}, function(err, albums){
     if (err) returnError(err);
-    res.render('./partials/albums/index', {albums:albums});
+    res.render('./partials/index', {albums:albums});
   });
 }
 
@@ -19,30 +19,32 @@ function renderAlbum (req, res) {
   var id = req.params.id;
   Album.find({_id: id}, function(err, album){
     if (err) returnError(err);
-    res.render('./partials/albums/show', {album:album});
+    res.render('./partials/show', {album:album});
   });
 }
 
 function newAlbum (req, res) {
-  res.render('./partials/albums/new');
+  res.render('./partials/new');
 }
 
 function createAlbum (req, res) {
   var name = req.body.name;
   var artistName = req.body.artistName;
   var releaseDate = req.body.releaseDate;
+  var photoUrl = req.body.photoUrl;
   Album.create({
     name: name,
     artistName: artistName,
-    releaseDate: releaseDate
+    releaseDate: releaseDate,
+    photoUrl: photoUrl
   }, function(err, album){
     if (err) return returnError(err);
-    res.redirect('/albums/'+album._id, {album: album});
+    res.redirect('/albums/:id', {album: album});
   });
 }
 
 function editAlbum (req, res) {
-  res.render('./partials/albums/edit');
+  res.render('./partials/edit');
 }
 
 function updateAlbum (req, res) {
@@ -52,6 +54,7 @@ function updateAlbum (req, res) {
     if (req.body.name) album.name = req.body.name;
     if (req.body.artistName) album.artistName = req.body.artistName;
     if (req.body.releaseDate) album.releaseDate = req.body.releaseDate;
+    if (req.body.photoUrl) album.photoUrl = req.body.photoUrl;
     res.redirect('/albums/'+album._id, {album: album});
   });
 }
