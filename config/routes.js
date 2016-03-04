@@ -40,6 +40,10 @@ router.route('/albums/:id/edit')
 
 router.route('/deathmetal')
   .get(albumsController.deathMetal);
+
+// Search
+router.route('/search')
+  .get(albumsController.search);
 /*
  * JSON API Endpoints
  */
