@@ -5,7 +5,7 @@
  *
  */
 
-var Album = require('./models/album');
+// var Album = require('./models/album');
 
 /* hard-coded data! */
 // var sampleAlbums = [];
@@ -37,8 +37,8 @@ var Album = require('./models/album');
 
 
 $(document).ready(function() {
-  console.log('app.js loaded!');
-  renderAlbum(sampleAlbums);
+ 
+  renderAlbum(albums);
 });
 
 
@@ -94,7 +94,7 @@ function renderAlbum(album) {
 // });
 
 $.getJSON( "/api/albums", function( data ) {
-    console.log("here are my albums:", data);
+    console.log("here are my albums:", data.albums);
 
 
     data.albums.forEach(function(album) {
