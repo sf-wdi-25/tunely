@@ -99,7 +99,7 @@ app.get('/api/albums', function album_index (req, res) {
 });
 
 //CREATE
-app.post('/api/albums', function create (req, res) {
+app.post('/', function create (req, res) {
 
   var name = req.body.name;
   var artistName = req.body.artistName;
@@ -111,10 +111,10 @@ app.post('/api/albums', function create (req, res) {
     genres: genres, description: description}, function(err, albums){
     if(err){
       console.log("OH FUCK AN ERROR! ", err);
-    }
-    else{
+    } else {
       // res.render(__dirname + '/views/index.ejs');
-      res.json({albums: albums});
+      // res.json({albums: albums});
+      res.redirect('/api/albums');
     }
   });
 });

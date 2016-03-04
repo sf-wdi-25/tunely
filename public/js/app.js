@@ -5,7 +5,6 @@
  *
  */
 
-
 /* hard-coded data! */
 var sampleAlbums = [];
 sampleAlbums.push({
@@ -35,15 +34,10 @@ sampleAlbums.push({
 /* end of hard-coded data */
 
 
-
-
 $(document).ready(function() {
   console.log('app.js loaded!');
   renderAlbum(sampleAlbums);
 });
-
-
-
 
 
 // this function takes a single album and renders it to the page
@@ -102,8 +96,8 @@ function renderAlbum(album) {
 
     $albumName.last().html(album.name);
     $artistName.last().html(album.artistName);
-    $albumReleaseDate.last().html(album.releaseDate);
 
+    $albumReleaseDate.last().html(album.releaseDate); 
   });
 }
 
