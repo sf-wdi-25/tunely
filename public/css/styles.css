@@ -1,19 +1,40 @@
-#newForm {
+/*#newForm {
 	background-color: gray;
 	background-image: url('/images/motown-featured.png');
-	/*background-size: cover;*/
-/*  background-repeat: no-repeat;*/
-}
-.jumbotron {
-  background-image: url(/images/magic-of-motown.png);
-  background-size: cover;
+	background-size: cover;
   background-repeat: no-repeat;
+}*/
+body {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#main-content {
+	background-image: url('../images/magic-of-motown.png');
+	background-size: cover;
+  background-repeat: no-repeat;
+	height: 585px;
+	text-align: center;
+}
+
+#album-form {
+	display: inline-block;
+	background-color: rgba(0,173,133, 0.5);
+	color: #000;
+	height: 100%;
+	width: 100%;
+	text-align: center;
+}
+
+.home-page {
   color: #EEE;
   margin-bottom: 0px;
+	height: 100%;
+	width: 100%;
 }
-.jumbotron .container {
-  height: 600px;
-}
+
 
 .inline-header {
   display: inline-block;
@@ -146,12 +167,39 @@ ul.navbar-right {
   font-family: 'Asap', sans-serif;
 }
 
+/*media queries*/
+/*@media (max-width: 1000px) {
+  #showpage_container {
+    width: 100%;
+  }
+  #showpage_image_div {
+    display: block;
+    width: 500px;
+    float: none;
+    margin: 0 auto;
+  }
+  #showpage_content_div {
+    display: block;
+    clear: left;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 767px) {
+  #return_to_albums_button {
+    top: 244px;
+    left: 20px;
+  }
+}*/
+
 
 /* NEW FORM STYLES */
 
+
+
 .newAlbum {
 	margin: 4% auto;
-	background-color: black;
+	background-color: #002156;
 	color: white;
 	font-size: 2em;
 	font-weight: bold;
@@ -168,7 +216,7 @@ ul.navbar-right {
 	font-size: 1.5em;
 }
 #saveAlbumBtn {
-	background-color: black;
+	background-color: #002156;
 	border-radius: 10px;
 	font-size: 1.2em;
 	color: white;
