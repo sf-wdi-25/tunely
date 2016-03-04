@@ -24,6 +24,7 @@ app.use(methodOverride('_method'));
 //views
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.engine('ejs', require('ejs').renderFile);
 
 /************
  * DATABASE *
@@ -81,6 +82,20 @@ app.post('/api/albums', function create(req, res) {
   });
 
 });
+
+//delete 
+app.delete('/api/albums/:id', function deleteAlbum(req, res) {
+  console.log('deleting id: ', req.params.id);
+
+  //grabs the album's id
+  var id = req.params.id;
+  db.Album.remove({_id: id}, function(err) {
+    if (err) { return console.log(err); }
+    console.log(req.params.id  + "was removed");
+    res.status(200).send(); // everything is a-OK
+  });
+});
+
 /**********
  * SERVER *
  **********/
