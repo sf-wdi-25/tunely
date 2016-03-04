@@ -1,11 +1,12 @@
 .jumbotron {
-  background-image: url(/images/background1.jpg);
+  background-image: url(/images/magic-of-motown.png);
   background-size: cover;
   background-repeat: no-repeat;
   color: #EEE;
+  margin-bottom: 0px;
 }
 .jumbotron .container {
-  height: 350px;
+  height: 600px;
 }
 
 .inline-header {
@@ -14,3 +15,134 @@
   margin-right: 12px;
 }
 
+.navbar {
+	margin-bottom: 0px;
+}
+
+.browse_button_div {
+	position: relative;
+    top: 440px;
+}
+
+#browse_albums_button {
+	width: 350px;
+	opacity: 0.8;
+	font-size: 20px;
+	background-color: #00AD85;
+  color: white;
+}
+#browse_albums_button:hover {
+  background-color: #fff;
+  color: #00AD85;
+}
+.single-item {
+    width: 40%;
+}
+
+/*TEXT DETAILS*/
+.header_md {
+  font-size: 24px;
+}
+.header_sm {
+  font-size: 22px;
+}
+.text_lg {
+  font-size: 18px;
+}
+.text_md {
+  font-size: 16px;
+}
+.text_sm {
+  font-size: 14px;
+}
+/*SHOWPAGE CSS*/
+
+#showpage_container {
+  width: 1000px;
+  margin: 0 auto;
+  padding-top: 48px;
+}
+#showpage_image_div {
+/*  position: relative;*/
+  display: inline-block;
+  width: 500px;
+  float: left;
+/*  vertical-align: middle;*/
+}
+
+#showpage_content_div{
+  position: relative;
+  display: inline-block;
+  width: 500px;
+/*  vertical-align: middle;*/
+}
+
+#showpage_image {
+  display: block;
+  margin: 0 auto;
+  width: 90%;
+}
+
+#showpage_edit_buttons_div {
+  text-align: center;
+}
+.showpage_edit_button {
+  font-size: 15px;
+  background-color: #00AD85;
+  margin: 10px;
+  color: white;
+}
+.showpage_edit_button:hover {
+  color: #00AD85;
+  background: white;
+}
+#return_to_albums_button_div{
+  text-align: center;
+  padding: 10px;
+}
+#return_to_albums_button {
+  position: absolute;
+  top: 70px;
+  left: 20px;
+  width: 200px;
+  color: #00AD85;
+  background-color: white;
+  font-size: 16px;
+}
+#return_to_albums_button:hover {
+  color: white;
+  background-color: #00AD85;
+}
+
+/*NAVBAR CSS*/
+.navbar-default .navbar-nav>li>a:hover {
+    color: #00AD85;
+}
+.navbar-default .navbar-brand:hover {
+    color: #00AD85;
+}
+
+/*media queries*/
+@media (max-width: 1000px) {
+  #showpage_container {
+    width: 100%;
+  }
+  #showpage_image_div {
+    display: block;
+    width: 500px;
+    float: none;
+    margin: 0 auto;
+  }
+  #showpage_content_div {
+    display: block;
+    clear: left;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 767px) {
+  #return_to_albums_button {
+    top: 244px;
+    left: 20px;
+  }
+}
