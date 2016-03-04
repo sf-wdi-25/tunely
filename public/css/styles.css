@@ -192,10 +192,30 @@ ul.navbar-right {
   }
 }*/
 
+/*SEARCH CSS*/
+
+#white {
+  background-color: white;
+}
+#search_bar_div {
+
+  margin: 0 auto;
+}
+#search-bar {
+  width: 300px;
+}
+#search-button {
+  margin: 10px;
+  color: #00AD85;
+}
+#search-button:hover {
+  margin: 10px;
+  color: white;
+  background: #00AD85;
+}
+
 
 /* NEW FORM STYLES */
-
-
 
 .newAlbum {
 	margin: 4% auto;

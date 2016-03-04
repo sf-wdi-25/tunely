@@ -92,6 +92,10 @@ function deathMetal (req, res){
   res.render("deathmetal_layout");
 }
 
+function search (req, res) {
+  res.render("./partials/search");
+}
+
 // shows specific album -- NOT REALLY PRACTICAL UNLESS YOU KNOW THE GENERATED _ID
 // function apiAlbum (req, res){
 //   var id = req.params.id;
@@ -116,5 +120,6 @@ module.exports = {
   deleteAlbum: deleteAlbum,
   apiRoot: apiRoot,
   apiAlbums: apiAlbums,
-  deathMetal: deathMetal
+  deathMetal: deathMetal,
+  search: search
 };
