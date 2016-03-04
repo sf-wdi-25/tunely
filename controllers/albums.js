@@ -85,6 +85,10 @@ function apiAlbums (req, res){
   });
 }
 
+function deathMetal (req, res){
+  res.render("deathmetal_layout");
+}
+
 // shows specific album -- NOT REALLY PRACTICAL UNLESS YOU KNOW THE GENERATED _ID
 // function apiAlbum (req, res){
 //   var id = req.params.id;
@@ -108,5 +112,6 @@ module.exports = {
   updateAlbum: updateAlbum,
   deleteAlbum: deleteAlbum,
   apiRoot: apiRoot,
-  apiAlbums: apiAlbums
+  apiAlbums: apiAlbums,
+  deathMetal: deathMetal
 };

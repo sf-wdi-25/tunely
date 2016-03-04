@@ -45,28 +45,37 @@
     width: 40%;
 }
 
+/* BUTTON CSS */
+.btn {
+  font-family: 'Asap', sans-serif;
+}
 /*TEXT DETAILS*/
 .header_md {
   font-size: 24px;
+  font-family: 'Asap', sans-serif;
 }
 .header_sm {
   font-size: 22px;
+  font-family: 'Asap', sans-serif;
 }
 .text_lg {
   font-size: 18px;
+  font-family: 'Asap', sans-serif;
 }
 .text_md {
   font-size: 16px;
+  font-family: 'Asap', sans-serif;
 }
 .text_sm {
   font-size: 14px;
+  font-family: 'Asap', sans-serif;
 }
 /*SHOWPAGE CSS*/
 
 #showpage_container {
   width: 1000px;
   margin: 0 auto;
-  padding-top: 48px;
+  padding-top: 58px;
 }
 #showpage_image_div {
 /*  position: relative;*/
@@ -128,30 +137,15 @@
     color: #00AD85;
 }
 
-/*media queries*/
-@media (max-width: 1000px) {
-  #showpage_container {
-    width: 100%;
-  }
-  #showpage_image_div {
-    display: block;
-    width: 500px;
-    float: none;
-    margin: 0 auto;
-  }
-  #showpage_content_div {
-    display: block;
-    clear: left;
-    margin: 0 auto;
-  }
+/*changes navbar font*/
+a.navbar-brand {
+  font-family: 'Asap', sans-serif;
 }
 
-@media (max-width: 767px) {
-  #return_to_albums_button {
-    top: 244px;
-    left: 20px;
-  }
+ul.navbar-right {
+  font-family: 'Asap', sans-serif;
 }
+
 
 /* NEW FORM STYLES */
 
@@ -179,4 +173,29 @@
 	font-size: 1.2em;
 	color: white;
 	font-weight: bold;
+}
+
+/*media queries*/
+@media (max-width: 1000px) {
+  #showpage_container {
+    width: 100%;
+  }
+  #showpage_image_div {
+    display: block;
+    width: 500px;
+    float: none;
+    margin: 0 auto;
+  }
+  #showpage_content_div {
+    display: block;
+    clear: left;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 767px) {
+  #return_to_albums_button {
+    top: 244px;
+    left: 20px;
+  }
 }

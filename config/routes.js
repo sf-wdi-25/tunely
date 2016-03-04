@@ -36,6 +36,10 @@ router.route('/albums/:id')
 router.route('/albums/:id/edit')
   .get(albumsController.editAlbum);
 
+// DeathMetal
+
+router.route('/deathmetal')
+  .get(albumsController.deathMetal);
 /*
  * JSON API Endpoints
  */
