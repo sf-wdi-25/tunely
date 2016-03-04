@@ -17,10 +17,11 @@
   },
   "homepage": "https://github.com/tgaff/tunely#readme",
   "dependencies": {
-    "express": "^4.13.3",
-    "mongoose": "^4.4.6",
     "body-parser": "^1.15.0",
-    "path": "^0.12.7",
-    "method-override": "^2.3.4"
+    "ejs": "^2.4.1",
+    "express": "^4.13.3",
+    "method-override": "^2.3.4",
+    "mongoose": "^4.4.6",
+    "path": "^0.12.7"
   }
 }
