@@ -5,7 +5,7 @@ var express = require('express');
 // generate a new express app and call it 'app'
 var app = express();
 var bodyParser = require('body-parser');
-var models = require('./models');
+var db = require('./models');
 var Album = require('./models/album');
 var path = require('path');
 
@@ -112,9 +112,10 @@ app.post('/', function create (req, res) {
     if(err){
       console.log("OH FUCK AN ERROR! ", err);
     } else {
-      // res.render(__dirname + '/views/index.ejs');
+      // res.render(__dirname + '/views/index');
       // res.json({albums: albums});
-      res.redirect('/api/albums');
+
+      res.redirect('/');
     }
   });
 });
