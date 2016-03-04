@@ -61,8 +61,6 @@ function renderAlbum(album) {
   "          </div>" +
   "          <!-- end one album -->";
 
-
-
       //getting album div in order to append the HTML
       var $albumDiv = $("#albums");
       
@@ -71,16 +69,17 @@ function renderAlbum(album) {
       var $albumName = $(".album-name");
       var $artistName = $(".artist-name");
       var $albumReleaseDate = $(".album-releaseDate");
+      // var $deleteButton = $("<input method='POST' action='/' type='submit' class='.btn-danger' value='Delete'></input>");
+      var $albumId = album._id;
+      $albumDiv.attr('id', $albumId);
+      // console.log($albumId);
 
       $albumName.last().html(album.name);
       $artistName.last().html(album.artistName);
 
       $albumReleaseDate.last().html(album.releaseDate); 
-
-
-
-
 }
+
 
 function buildSongsHtml (songs) {
   var songStr = "";
@@ -96,6 +95,18 @@ function buildSongsHtml (songs) {
       "</li>";
     return songHtml;
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
