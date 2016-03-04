@@ -1,3 +1,9 @@
+#newForm {
+	background-color: gray;
+	background-image: url('/images/motown-featured.png');
+	/*background-size: cover;*/
+/*  background-repeat: no-repeat;*/
+}
 .jumbotron {
   background-image: url(/images/magic-of-motown.png);
   background-size: cover;
@@ -15,6 +21,33 @@
   margin-right: 12px;
 }
 
+.newAlbum {
+	margin: 4% auto;
+	background-color: black;
+	color: white;
+	font-size: 2em;
+	font-weight: bold;
+	text-align: center;
+	border-bottom: none;
+	width: 35%;
+	padding: .5% 0;
+	border-radius: 10px;
+}
+
+.control-label {
+	color: white;
+	font-weight: bold;
+	font-size: 1.5em;
+}
+#saveAlbumBtn {
+	background-color: black;
+	border-radius: 10px;
+	font-size: 1.2em;
+	color: white;
+	font-weight: bold;
+}
+
+=======
 .navbar {
 	margin-bottom: 0px;
 }
@@ -146,3 +179,4 @@
     left: 20px;
   }
 }
+

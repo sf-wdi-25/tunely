@@ -5,6 +5,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var logger = require('morgan');
+
 var routes = require('./config/routes');
 
 
@@ -15,12 +16,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(methodOverride('_method'));
 app.use(logger('dev'));
+
+
 app.set('views', path.join(__dirname + '/views'));
 app.set('view engine', 'hbs');
+
 var hbs = require('hbs');
 var hbsutils = require('hbs-utils')(hbs);
-
 hbs.registerPartials(__dirname + '/views/partials');
+
 hbsutils.registerWatchedPartials(__dirname + '/views/partials');
 
 

@@ -13,25 +13,36 @@ Album.remove({}, function(err) {
 
 var albumsList = [
               {
-                artistName: 'Nine Inch Nails',
-                name: 'The Downward Spiral',
-                releaseDate: '1994, March 8'
-              },
-              {
-                artistName: 'Metallica',
-                name: 'Metallica',
-                releaseDate: '1991, August 12'
-              },
-              {
-                artistName: 'The Prodigy',
-                name: 'Music for the Jilted Generation',
-                releaseDate: '1994, July 4'
-              },
-              {
-                artistName: 'Johnny Cash',
-                name: 'Unchained',
-                releaseDate: '1996, November 5'
+                artistName: 'Marvin Gaye',
+                name: 'What\'s Going On',
+                releaseDate: '1971, May 21',
+                photoUrl: '/images/marvin-gaye.png'
               }
+              {
+                artistName: 'Stevie Wonder',
+                name: 'Songs in the Key of Life',
+                releaseDate: '1976, September 28',
+                photoUrl: '/images/stevie-wonder.png'
+              }
+              {
+                artistName: 'Diana Ross',
+                name: 'Diana',
+                releaseDate: '1980, May 5',
+                photoUrl: '/images/diana.png'
+              }
+               {
+                artistName: 'The Temptations',
+                name: 'The Temptations Wish It Would Rain',
+                releaseDate: '1968, April 29',
+                photoUrl: 'http://www.oliverferrer.com/wp-content/uploads/2014/11/temptations_OF_REMIX.jpg'
+              }
+              {
+                artistName: 'Lionel Richie',
+                name: 'Lionel Richie',
+                releaseDate: '1982, October 6',
+                photoUrl: 'https://upload.wikimedia.org/wikipedia/en/9/90/Lionel_Richie_(self-titled_album_-_cover_art).jpg'
+              }
+
 ];
 
 Album.create(albumsList, function(err, docs) {
