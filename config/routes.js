@@ -21,13 +21,20 @@ router.route('/')
 
 router.route('/albums')
   // gets albums index
-  .get(albumsController.renderAlbums);
+  .get(albumsController.renderAlbums)
+  .post(albumsController.createAlbum);
+
+router.route('/albums/new')
+  .get(albumsController.newAlbum);
 
 router.route('/albums/:id')
   // Show album
-  .get(albumsController.renderAlbum);
+  .get(albumsController.renderAlbum)
+  .patch(albumsController.updateAlbum)
+  .delete(albumsController.deleteAlbum);
 
-
+router.route('/albums/edit')
+  .get(albumsController.editAlbum);
 
 /*
  * JSON API Endpoints
@@ -38,6 +45,9 @@ router.route('/api')
 
 router.route('/api/albums')
   .get(albumsController.apiAlbums);
+
+// router.route('/api/albums/:id')
+//   .get(albumsController.apiAlbum);
 
 
 module.exports = router;
