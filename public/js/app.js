@@ -69,10 +69,8 @@ function renderAlbum(album) {
       var $albumName = $(".album-name");
       var $artistName = $(".artist-name");
       var $albumReleaseDate = $(".album-releaseDate");
-      // var $deleteButton = $("<input method='POST' action='/' type='submit' class='.btn-danger' value='Delete'></input>");
-      var $albumId = album._id;
-      $albumDiv.attr('id', $albumId);
-      // console.log($albumId);
+      var $deleteButton = "<input method='POST' action='/' type='submit' class='.btn-danger' value='Delete'></input>";
+      
 
       $albumName.last().html(album.name);
       $artistName.last().html(album.artistName);
