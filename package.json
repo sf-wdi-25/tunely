@@ -19,6 +19,8 @@
   "dependencies": {
     "express": "^4.13.3",
     "mongoose": "^4.4.6",
-    "body-parser": "^1.15.0"
+    "body-parser": "^1.15.0",
+    "path": "^0.12.7",
+    "method-override": "^2.3.4"
   }
 }

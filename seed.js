@@ -1,5 +1,8 @@
 // This file allows us to seed our application with data
 // simply run: `node seed.js` from the root of this project folder.
+var Album = require("./models/album");
+var mongoose = require('mongoose');
+var db = require('./models');
 
 var albumsList =[];
 /* hard-coded data */
@@ -28,13 +31,17 @@ albumsList.push({
               genres: [ 'country', 'rock' ]
             });
 
-db.Album.remove({}, function(err, albums){
+Album.remove({}, function(err, albums){
 
-  db.Album.create(albumsList, function(err, albums){
-    if (err) { return console.log('ERROR', err); }
-    console.log("all albums:", albums);
-    console.log("created", albums.length, "albums");
-    process.exit();
+  Album.create(albumsList, function(err, albums){
+    if (err) { 
+    	console.log('ERROR', err); 
+    } else {
+	    console.log("all albums:", albums);
+	    console.log("created", albums.length, "albums");
+	    process.exit();
+	    mongoose.connection.close();
+	}
   });
 
 });

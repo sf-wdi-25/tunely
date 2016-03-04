@@ -3,8 +3,12 @@
 var express = require('express');
 // generate a new express app and call it 'app'
 var app = express();
-var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+//user bodyParser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+// var path = require('path');
 // serve static files from public folder
 app.use(express.static(__dirname + '/public'));
 
@@ -42,42 +46,42 @@ app.get('/api', function api_index (req, res){
   });
 });
 
-app.get('/api/albums', function search (req,res) {
+app.get('/api/albums', function index (req,res) {
   db.Album.find(function(err, albums) {
     res.json(albums);
   });
 });
 
 app.post('/api/albums', function create(req, res) {
-  //   var genres = req.body.genres.split(',').map(function(item) { return item.trim(); } );
-  // req.body.genres = genres;
+  console.log('body', req.body);
 
-  // db.Album.create(req.body, function(err, album) {
-  //   if (err) { console.log('error', err); }
-  //   console.log(album);
-  //   res.json(album);
-  // });
+  // split at comma and remove and trailing space
+  var genres = req.body.genres.split(',').map(function(item) { return item.trim(); } );
+  req.body.genres = genres;
+
+  db.Album.create(req.body, function(err, album) {
+    if (err) { console.log('error', err); }
+    console.log(album);
+    res.json(album);
+  });
   // var artistName = req.body.artistName;
   // var name = req.body.name;
   // var releaseDate = req.body.releaseDate;
   // var genres = req.body.genres;
   // var album = {artistName: artistName, name: name, releaseDate: releaseDate, genres: genres};
-
-  // db.Album.create(req.body, function(err, albums) {
+  // console.log(artistName);
+  // db.Album.create(album, function(err, albums) {
   //   if (err) {
-  //     res.json({message: "Could not create album"});
+  //     console.log( "Could not create album");
   //   } else {
-  //     res.json({albums: albums});
+  //     // res.json({albums: albums});
+  //     res.redirect("/");
   //   }
   // });
 });
 /**********
  * SERVER *
  **********/
-
-//user bodyParser
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
 // listen on port 3000
 app.listen(process.env.PORT || 3000, function () {
