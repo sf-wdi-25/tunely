@@ -14,3 +14,24 @@
   margin-right: 12px;
 }
 
+.newAlbum {
+	color: purple;
+	font-size: 2em;
+	font-weight: bold;
+	text-align: center;
+	border-bottom: none;
+}
+
+
+.control-label {
+	font-weight: bold;
+	font-size: 1.5em;
+}
+.coolBtn {
+	background-color: black;
+	border-radius: 10px;
+	font-size: 1.2em;
+	color: white;
+	font-weight: bold;
+}
+

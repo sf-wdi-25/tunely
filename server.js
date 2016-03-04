@@ -10,6 +10,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var logger = require('morgan');
+var hbs = require('hbs');
 
 
 // serve static files from public folder
@@ -18,8 +19,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(methodOverride('_method'));
 app.use(logger('dev'));
+
+
 app.set('views', path.join(__dirname + '/views'));
 app.set('view engine', 'hbs');
+
+hbs.registerPartials(__dirname + '/views/partials');
 
 /************
  * DATABASE *
@@ -70,6 +75,7 @@ app.get('/api/albums', function api_albums (req, res){
   });
 
 });
+
 
 /**********
  * SERVER *
