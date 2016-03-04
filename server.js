@@ -4,12 +4,9 @@ var express = require('express');
 // generate a new express app and call it 'app'
 var app = express();
 var mongoose = require('mongoose');
-// var path = require('path');
+var bodyParser = require('body-parser');
 // serve static files from public folder
 app.use(express.static(__dirname + '/public'));
-
-// app.set("views", path.join(__dirname,"views"));
-// app.set("view engine", "html");
 
 /************
  * DATABASE *
@@ -17,7 +14,6 @@ app.use(express.static(__dirname + '/public'));
 
 //require models
 var db = require("./models");
-
 
 /**********
  * ROUTES *
@@ -30,8 +26,6 @@ var db = require("./models");
 app.get('/', function homepage (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
-
-
 
 /*
  * JSON API Endpoints
@@ -48,18 +42,42 @@ app.get('/api', function api_index (req, res){
   });
 });
 
-app.get('/api/albums', function api_albums (req,res) {
+app.get('/api/albums', function search (req,res) {
   db.Album.find(function(err, albums) {
     res.json(albums);
   });
+});
 
-  //   if(err) res.json({message: "Could not find any album"});
-  // res.render("/", {albums: albums});
+app.post('/api/albums', function create(req, res) {
+  //   var genres = req.body.genres.split(',').map(function(item) { return item.trim(); } );
+  // req.body.genres = genres;
+
+  // db.Album.create(req.body, function(err, album) {
+  //   if (err) { console.log('error', err); }
+  //   console.log(album);
+  //   res.json(album);
+  // });
+  // var artistName = req.body.artistName;
+  // var name = req.body.name;
+  // var releaseDate = req.body.releaseDate;
+  // var genres = req.body.genres;
+  // var album = {artistName: artistName, name: name, releaseDate: releaseDate, genres: genres};
+
+  // db.Album.create(req.body, function(err, albums) {
+  //   if (err) {
+  //     res.json({message: "Could not create album"});
+  //   } else {
+  //     res.json({albums: albums});
+  //   }
   // });
 });
 /**********
  * SERVER *
  **********/
+
+//user bodyParser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // listen on port 3000
 app.listen(process.env.PORT || 3000, function () {

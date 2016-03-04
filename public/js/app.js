@@ -4,8 +4,6 @@
  * into functions and objects as needed.
  *
  */
-
-
 /* hard-coded data! */
 var sampleAlbums = [];
 sampleAlbums.push({
@@ -41,17 +39,21 @@ $(document).ready(function() {
   console.log('app.js loaded!');
   sampleAlbums.forEach(renderAlbum);
 
-  //TODO check function
-  $.ajax({
-    type: 'GET',
-    url: "/api/albums",
-    data: albums,
-    success: function(albums) {
-      renderAlbum(albums);
-    }
+  //ajax
+  $.get('/api/albums').success(function (albums) {
+    albums.forEach(function(album) {
+      renderAlbum(album);
+    });
   });
-});
+  
+  //serializes form data logs it and clears form
+  $("form").on("submit", function(event) {
+    event.preventDefault();
+    console.log($(this).serialize());
+    $("form").trigger("reset");
+  });
 
+});
 
 // this function takes a single album and renders it to the page
 function renderAlbum(album) {
