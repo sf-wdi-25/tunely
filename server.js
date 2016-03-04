@@ -21,8 +21,10 @@ app.use(logger('dev'));
 app.set('views', path.join(__dirname + '/views'));
 app.set('view engine', 'hbs');
 var hbs = require('hbs');
+var hbsutils = require('hbs-utils')(hbs);
 
 hbs.registerPartials(__dirname + '/views/partials');
+hbsutils.registerWatchedPartials(__dirname + '/views/partials');
 
 /************
  * DATABASE *
