@@ -42,7 +42,7 @@ $(document).ready(function() {
 
 // this function takes a single album and renders it to the page
 function renderAlbum(album) {
-  console.log('rendering album:', album);
+ 
 
   var albumHtml =
   "        <!-- one album -->" +
@@ -85,20 +85,43 @@ function renderAlbum(album) {
 
   // render to the page with jQuery
 
-  sampleAlbums.forEach(function(album) {
-    console.log(album);
-    var $albumDiv = $("#albums");
-    var $albumName = $(".album-name");
-    var $artistName = $(".artist-name");
-    var $albumReleaseDate = $(".album-releaseDate");
 
-    $albumDiv.append(albumHtml);
+//   $.get( "ajax/test.html", function( data ) {
+//   $( ".result" ).html( data );
+//   alert( "Load was performed." );
+// });
 
-    $albumName.last().html(album.name);
-    $artistName.last().html(album.artistName);
+$.getJSON( "/api/albums", function( data ) {
+    console.log("here are my albums:", data);
 
-    $albumReleaseDate.last().html(album.releaseDate); 
-  });
+
+    data.albums.forEach(function(album) {
+    
+
+      console.log(album);
+      var $albumDiv = $("#albums");
+      
+      $albumDiv.append(albumHtml);
+      
+      var $albumName = $(".album-name");
+      var $artistName = $(".artist-name");
+      var $albumReleaseDate = $(".album-releaseDate");
+
+      $albumName.last().html(album.name);
+      $artistName.last().html(album.artistName);
+
+      $albumReleaseDate.last().html(album.releaseDate); 
+
+    });
+
+});
+    
+
+
+
+
+
+  
 }
 
 
