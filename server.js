@@ -1,14 +1,17 @@
 // SERVER-SIDE JAVASCRIPT
+
 //require express in our app
 var express = require('express');
+
 // generate a new express app and call it 'app'
 var app = express();
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+
 //user bodyParser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// var path = require('path');
+
 // serve static files from public folder
 app.use(express.static(__dirname + '/public'));
 
@@ -46,12 +49,14 @@ app.get('/api', function api_index (req, res){
   });
 });
 
+//index
 app.get('/api/albums', function index (req,res) {
   db.Album.find(function(err, albums) {
     res.json(albums);
   });
 });
 
+//create
 app.post('/api/albums', function create(req, res) {
   console.log('body', req.body);
 
@@ -64,20 +69,7 @@ app.post('/api/albums', function create(req, res) {
     console.log(album);
     res.json(album);
   });
-  // var artistName = req.body.artistName;
-  // var name = req.body.name;
-  // var releaseDate = req.body.releaseDate;
-  // var genres = req.body.genres;
-  // var album = {artistName: artistName, name: name, releaseDate: releaseDate, genres: genres};
-  // console.log(artistName);
-  // db.Album.create(album, function(err, albums) {
-  //   if (err) {
-  //     console.log( "Could not create album");
-  //   } else {
-  //     // res.json({albums: albums});
-  //     res.redirect("/");
-  //   }
-  // });
+
 });
 /**********
  * SERVER *
