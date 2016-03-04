@@ -70,8 +70,7 @@ function renderAlbum(album) {
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Released date:</h4>" +
   "                        <span class='album-releaseDate'>" + "</span>" +
-  "                      </li>" +
-                         buildSongsHtml(album.songs);
+  "                      </li>" + buildSongsHtml(album.songs) +
   "                    </ul>" +
   "                  </div>" +
   "                </div>" +
