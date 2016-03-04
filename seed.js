@@ -17,25 +17,25 @@ var albumsList = [
                 name: 'What\'s Going On',
                 releaseDate: '1971, May 21',
                 photoUrl: '/images/marvin-gaye.png'
-              }
+              },
               {
                 artistName: 'Stevie Wonder',
                 name: 'Songs in the Key of Life',
                 releaseDate: '1976, September 28',
                 photoUrl: '/images/stevie-wonder.png'
-              }
+              },
               {
                 artistName: 'Diana Ross',
                 name: 'Diana',
                 releaseDate: '1980, May 5',
                 photoUrl: '/images/diana.png'
-              }
+              },
                {
                 artistName: 'The Temptations',
                 name: 'The Temptations Wish It Would Rain',
                 releaseDate: '1968, April 29',
                 photoUrl: 'http://www.oliverferrer.com/wp-content/uploads/2014/11/temptations_OF_REMIX.jpg'
-              }
+              },
               {
                 artistName: 'Lionel Richie',
                 name: 'Lionel Richie',
