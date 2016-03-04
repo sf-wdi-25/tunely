@@ -1,0 +1,39 @@
+/*DEATH METAL CSS*/
+
+#death_metal_image {
+  /* Set rules to fill background */
+  min-height: 100%;
+  min-width: 1024px;
+  
+  /* Set up proportionate scaling */
+  width: 100%;
+  height: auto;
+  
+  /* Set up positioning */
+  position: fixed;
+  top: 52px;
+  left: 0;
+}
+
+/*NAVBAR CSS*/
+.navbar-default .navbar-nav>li>a:hover {
+    color: #00AD85;
+}
+.navbar-default .navbar-brand:hover {
+    color: #00AD85;
+}
+
+/*changes navbar font*/
+a.navbar-brand {
+  font-family: 'Asap', sans-serif;
+}
+
+ul.navbar-right {
+  font-family: 'Asap', sans-serif;
+}
+
+#death_metal_header {
+	font-family: 'Nosifer', cursive;
+	position: absolute;
+	top: ;
+}
