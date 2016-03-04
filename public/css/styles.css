@@ -11,6 +11,12 @@ body {
 	padding: 0;
 }
 
+#page-title {
+	color: #fff;
+	margin: 0;
+	padding-top: 20px;
+}
+
 #main-content {
 	background-image: url('../images/magic-of-motown.png');
 	background-size: cover;
@@ -26,6 +32,43 @@ body {
 	height: 100%;
 	width: 100%;
 	text-align: center;
+}
+
+.multiple-items {
+	margin: 0 auto;
+	padding-top: 80px;
+	width: 70%;
+	color: #fff;
+}
+
+.single-album {
+	margin: 0 auto;
+	position: relative;
+}
+
+#name-artist {
+	position: absolute;
+	bottom: 20px;
+	left: -0px;
+	display: inline;
+	float: left;
+	clear: both;
+	padding: 0 5px;
+	margin: 0;
+	background-color: #000;
+}
+
+#name-artist p {
+	display: inline;
+	float: left;
+	clear: both;
+	padding: 0 5px;
+	margin: 0;
+}
+
+.index-cover {
+	height: 240px;
+	width: 240px;
 }
 
 .home-page {
@@ -167,6 +210,7 @@ ul.navbar-right {
   font-family: 'Asap', sans-serif;
 }
 
+
 /*media queries*/
 /*@media (max-width: 1000px) {
   #showpage_container {
@@ -222,6 +266,7 @@ ul.navbar-right {
 	color: white;
 	font-weight: bold;
 }
+
 
 /*media queries*/
 @media (max-width: 1000px) {
