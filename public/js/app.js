@@ -71,6 +71,7 @@ function renderAlbum(album) {
   "                        <h4 class='inline-header'>Released date:</h4>" +
   "                        <span class='album-releaseDate'>" + "</span>" +
   "                      </li>" +
+                         buildSongsHtml(album.songs);
   "                    </ul>" +
   "                  </div>" +
   "                </div>" +
@@ -124,5 +125,36 @@ function renderAlbum(album) {
   });
 }
 
+function buildSongsHtml (songs) {
+  var songStr = "";
+  songs.forEach(function(song) {
+    songStr += ("(" + song.trackNumber + ") " + song.name + "&ndash; ");
+  });
+  var songHtml = 
+    "<li class='list-group-item'>" + 
+      "<h4 class='inline-header'> Songs:</h4>" + 
+      "<span>" + songStr + "</span>" + 
+    "</li>";
+  return songHtml;
+}
 
-// $.ajax('/api/albums');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
