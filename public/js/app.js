@@ -5,7 +5,7 @@
  *
  */
 
-var Album = require('./models/album');
+// var Album = require('./models/album');
 
 /* hard-coded data! */
 var sampleAlbums = [];
@@ -37,14 +37,14 @@ sampleAlbums.push({
 
 
 $(document).ready(function() {
-  console.log('app.js loaded!');
-  renderAlbum(sampleAlbums);
+ 
+  renderAlbum(albums);
 });
 
 
 // this function takes a single album and renders it to the page
 function renderAlbum(album) {
-  console.log('rendering album:', album);
+ 
 
   var albumHtml =
   "        <!-- one album -->" +
@@ -86,42 +86,44 @@ function renderAlbum(album) {
   "          <!-- end one album -->";
 
 
-  // Album.find(function(err, albums) {
-  //   if (err) {
-  //     console.log("errors: " + err);
-  //   } else {
-  //     var $albumDiv = $("#albums");
-  //     var $albumName = $(".album-name");
-  //     var $artistName = $(".artist-name");
-  //     var $albumReleaseDate = $(".album-releaseDate");
-
-  //     $albumDiv.append(albumHtml);
-
-  //     $albumName.last().html(albums.name);
-  //     $artistName.last().html(albums.artistName);
-
-  //     $albumReleaseDate.last().html(albums.releaseDate); 
-
-  //   }
-  // });
 
 
-  // render to the page with jQuery
-  sampleAlbums.forEach(function(album) {
-    // console.log(album);
+//   $.get( "ajax/test.html", function( data ) {
+//   $( ".result" ).html( data );
+//   alert( "Load was performed." );
+// });
 
-    var $albumDiv = $("#albums");
-    var $albumName = $(".album-name");
-    var $artistName = $(".artist-name");
-    var $albumReleaseDate = $(".album-releaseDate");
+$.getJSON( "/api/albums", function( data ) {
+    console.log("here are my albums:", data.albums);
 
-    $albumDiv.append(albumHtml);
 
-    $albumName.last().html(album.name);
-    $artistName.last().html(album.artistName);
+    data.albums.forEach(function(album) {
+    
 
-    $albumReleaseDate.last().html(album.releaseDate); 
-  });
+      console.log(album);
+      var $albumDiv = $("#albums");
+      
+      $albumDiv.append(albumHtml);
+      
+      var $albumName = $(".album-name");
+      var $artistName = $(".artist-name");
+      var $albumReleaseDate = $(".album-releaseDate");
+
+      $albumName.last().html(album.name);
+      $artistName.last().html(album.artistName);
+
+      $albumReleaseDate.last().html(album.releaseDate); 
+
+    });
+
+});
+    
+
+
+
+
+
+  
 }
 
 function buildSongsHtml (songs) {
