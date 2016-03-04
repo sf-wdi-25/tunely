@@ -7,43 +7,15 @@
 
 // var Album = require('./models/album');
 
-/* hard-coded data! */
-var sampleAlbums = [];
-sampleAlbums.push({
-             artistName: 'Ladyhawke',
-             name: 'Ladyhawke',
-             releaseDate: '2008, November 18',
-             genres: [ 'new wave', 'indie rock', 'synth pop' ]
-           });
-sampleAlbums.push({
-             artistName: 'The Knife',
-             name: 'Silent Shout',
-             releaseDate: '2006, February 17',
-             genres: [ 'synth pop', 'electronica', 'experimental' ]
-           });
-sampleAlbums.push({
-             artistName: 'Juno Reactor',
-             name: 'Shango',
-             releaseDate: '2000, October 9',
-             genres: [ 'electronic', 'goa trance', 'tribal house' ]
-           });
-sampleAlbums.push({
-             artistName: 'Philip Wesley',
-             name: 'Dark Night of the Soul',
-             releaseDate: '2008, September 12',
-             genres: [ 'piano' ]
-           });
-/* end of hard-coded data */
-
 
 $(document).ready(function() {
  
-  renderAlbum(albums);
+  renderAlbum();
 });
 
 
 // this function takes a single album and renders it to the page
-function renderAlbum(album) {
+function renderAlbum() {
  
 
   var albumHtml =
@@ -70,7 +42,7 @@ function renderAlbum(album) {
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Released date:</h4>" +
   "                        <span class='album-releaseDate'>" + "</span>" +
-  "                      </li>" + buildSongsHtml(album.songs) +
+  "                      </li>" + buildSongsHtml() +
   "                    </ul>" +
   "                  </div>" +
   "                </div>" +
@@ -93,14 +65,18 @@ function renderAlbum(album) {
 //   alert( "Load was performed." );
 // });
 
+
 $.getJSON( "/api/albums", function( data ) {
-    console.log("here are my albums:", data.albums);
+    // console.log("here are my albums:", data.albums);
 
 
     data.albums.forEach(function(album) {
-    
 
-      console.log(album);
+      // console.log(album.songs[1].trackNumber);
+      buildSongsHtml(album);
+
+
+      // console.log(album);
       var $albumDiv = $("#albums");
       
       $albumDiv.append(albumHtml);
@@ -116,32 +92,52 @@ $.getJSON( "/api/albums", function( data ) {
 
     });
 
-});
-    
-
-
-
-
-
-  
-}
-
-function buildSongsHtml (songs) {
-  var songStr = "";
-  songs.forEach(function(song) {
-    songStr += ("(" + song.trackNumber + ") " + song.name + "&ndash; ");
   });
-  var songHtml = 
-    "<li class='list-group-item'>" + 
-      "<h4 class='inline-header'> Songs:</h4>" + 
-      "<span>" + songStr + "</span>" + 
-    "</li>";
-  return songHtml;
 }
 
 
 
 
+// $.getJSON( "/api/albums", function( data ) {
+
+// function buildSongsHtml(songs) {
+//  var songText = "  &ndash; ";
+//  data.albums.songs.forEach(function(song) {
+//     songText = songText + "(" + song.trackNumber + ") " + song.name + " &ndash; ";
+//  });
+//  var songsHtml  =
+//  "                      <li class='list-group-item'>" +
+//  "                        <h4 class='inline-header'>Songs:</h4>" +
+//  "                         <span>" + songText + "</span>" +
+//  "                      </li>";
+//  return songsHtml;
+// }
+// });
+
+
+
+
+
+function buildSongsHtml (album) {
+  var songStr = "";
+// console.log(songs);
+  album.songs.forEach(function(song) {
+    // console.log(song.trackNumber);
+    songStr = songStr + "(" + song.trackNumber + ") " + song.name + "&ndash; ";
+    
+    var songHtml = 
+      "<li class='list-group-item'>" + 
+        "<h4 class='inline-header'> Songs:</h4>" + 
+        "<span>" + songStr + "</span>" + 
+      "</li>";
+
+      console.log(songHtml);
+
+    return songHtml;
+
+  });
+
+}
 
 
 
