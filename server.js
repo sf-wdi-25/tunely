@@ -5,8 +5,11 @@ var express = require('express');
 
 // generate a new express app and call it 'app'
 var app = express();
+var path = require('path');
 var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
 var mongoose = require('mongoose');
+var ejs = require('ejs');
 
 //user bodyParser
 app.use(bodyParser.json());
@@ -14,6 +17,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // serve static files from public folder
 app.use(express.static(__dirname + '/public'));
+
+//app setup
+app.use(methodOverride('_method'));
+
+//views
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 /************
  * DATABASE *
@@ -31,7 +41,7 @@ var db = require("./models");
  */
 
 app.get('/', function homepage (req, res) {
-  res.sendFile(__dirname + '/views/index.html');
+  res.render('index');
 });
 
 /*
