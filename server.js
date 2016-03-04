@@ -20,6 +20,9 @@ app.use(methodOverride('_method'));
 app.use(logger('dev'));
 app.set('views', path.join(__dirname + '/views'));
 app.set('view engine', 'hbs');
+var hbs = require('hbs');
+
+hbs.registerPartials(__dirname + '/views/partials');
 
 /************
  * DATABASE *
@@ -38,7 +41,7 @@ var Album = require('./models/album');
  */
 
 app.get('/', function homepage (req, res) {
-  res.render('./partials/albums/home');
+  res.render('./partials/home');
 });
 
 app.get('/albums', function homepage (req, res) {

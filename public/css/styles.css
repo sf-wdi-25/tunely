@@ -1,11 +1,12 @@
 .jumbotron {
-  background-image: url(/images/background1.jpg);
+  background-image: url(/images/rainbow-lights.png);
   background-size: cover;
   background-repeat: no-repeat;
   color: #EEE;
+  margin-bottom: 0px;
 }
 .jumbotron .container {
-  height: 350px;
+  height: 600px;
 }
 
 .inline-header {
@@ -14,3 +15,18 @@
   margin-right: 12px;
 }
 
+.navbar {
+	margin-bottom: 0px;
+}
+
+.browse_button_div {
+	position: relative;
+    top: 330px;
+}
+
+#browse_albums_button {
+	width: 350px;
+	opacity: 0.8;
+	font-size: 20px;
+/*	background-color: #4D1635;*/
+}
