@@ -150,7 +150,9 @@ body {
 }
 
 #showpage_content_div{
-  color: white;
+/*  background-color: white;*/
+  font-weight: bold;
+  color: #97979A;
   text-align: left;
   position: relative;
   display: inline-block;
@@ -177,6 +179,15 @@ body {
   color: #00AD85;
   background: white;
 }
+
+#showpage_delete_button {
+  font-size: 15px;
+  background-color: #00AD85;
+  margin: 10px;
+  color: white;
+  border-radius: 5px;
+}
+
 #return_to_albums_button_div{
   text-align: center;
   padding: 10px;

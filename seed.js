@@ -41,7 +41,25 @@ var albumsList = [
                 name: 'Lionel Richie',
                 releaseDate: '1982, October 6',
                 photoUrl: 'https://upload.wikimedia.org/wikipedia/en/9/90/Lionel_Richie_(self-titled_album_-_cover_art).jpg'
-              }
+              },
+              {
+                artistName: 'Boyz II Men',
+                name: 'II',
+                releaseDate: '1994, August 30',
+                photoUrl: 'http://ecx.images-amazon.com/images/I/41KQ6AVNAML.jpghttp://ecx.images-amazon.com/images/I/41KQ6AVNAML.jpg'
+              },
+              {
+                artistName: 'Stevie Wonder',
+                name: 'The Woman in Red',
+                releaseDate: '1984, August 28',
+                photoUrl: 'http://cps-static.rovicorp.com/3/JPG_400/MI0001/529/MI0001529257.jpg'
+              },
+              {
+                artistName: 'Four Tops',
+                name: 'Still Waters Run Deep',
+                releaseDate: '1970, March ',
+                photoUrl: 'http://images.shazam.com/coverart/t10828684-a0075021015418_s400.jpg'
+              },
 
 ];
 
