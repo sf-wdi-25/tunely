@@ -2,6 +2,7 @@
  * DATABASE *
  ************/
 var Album = require('../models/album');
+var Song = require('../models/song');
 
 
 function renderHome (req, res) {
