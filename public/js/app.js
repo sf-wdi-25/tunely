@@ -37,12 +37,21 @@ sampleAlbums.push({
 
 $(document).ready(function() {
   console.log('app.js loaded!');
-  sampleAlbums.forEach(renderAlbum);
+  // sampleAlbums.forEach(renderAlbum);
 
-  //ajax get method
+  //ajax get album method
   $.get('/api/albums').success(function (albums) {
+    console.log(albums);
     albums.forEach(function(album) {
       renderAlbum(album);
+    });
+  });
+
+  //ajax get genre method
+  $.get('/api/genres/index').success(function (genres) {
+    console.log(genres);
+    genres.forEach(function(genre) {
+      renderGenre(genre);
     });
   });
 
@@ -65,15 +74,35 @@ $(document).ready(function() {
     $("form").trigger("reset");
   });
 
+  //on click, the delete button will run the delete function
+  $('#albums').on('click', '.delete-album', DeleteAlbum);
+
+
 });
 
+//This function deletes album
+function DeleteAlbum(e) {
+//this grabs the album id from the hard-coded html
+  var albumId = $(this).parents('.album').data('album-id');
+  console.log('deleting album with id =' + albumId );
+//jquery does not have a delete method, so we just use ajax
+  $.ajax({
+    method: 'DELETE',
+    url: ('/api/albums/' + albumId),
+    success: function() {
+      console.log("just deleted album");
+      //concatenates the album ID to grab the html data for specific album
+      $('[data-album-id='+ albumId + ']').remove();
+    }
+  });
+}
 // this function takes a single album and renders it to the page
 function renderAlbum(album) {
   console.log('rendering album:', album);
 
   var albumHtml =
   "        <!-- one album -->" +
-  "        <div class='row album' data-album-id='" + "HARDCODED ALBUM ID" + "'>" +
+  "        <div class='row album' data-album-id='" + album._id + "'>" +
   "          <div class='col-md-10 col-md-offset-1'>" +
   "            <div class='panel panel-default'>" +
   "              <div class='panel-body'>" +
@@ -86,15 +115,15 @@ function renderAlbum(album) {
   "                    <ul class='list-group'>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Album Name:</h4>" +
-  "                        <span class='album-name'>" + "HARDCODED ALBUM NAME" + "</span>" +
+  "                        <span class='album-name'>" + album.name + "</span>" +
   "                      </li>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Artist Name:</h4>" +
-  "                        <span class='artist-name'>" + "HARDCODED ARTIST NAME" + "</span>" +
+  "                        <span class='artist-name'>" + album.artistName + "</span>" +
   "                      </li>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Released date:</h4>" +
-  "                        <span class='album-releaseDate'>" + "HARDCODED RELEASE DATE" + "</span>" +
+  "                        <span class='album-name'>" + album.releaseDate + "</span>" +
   "                      </li>" +
   "                    </ul>" +
   "                  </div>" +
@@ -104,6 +133,7 @@ function renderAlbum(album) {
   "              </div>" + // end of panel-body
 
   "              <div class='panel-footer'>" +
+  "                <button class='btn btn-danger delete-album'>Delete Album</button>" +
   "              </div>" +
 
   "            </div>" +
@@ -111,5 +141,42 @@ function renderAlbum(album) {
   "          <!-- end one album -->";
 
   $("#albums").append(albumHtml);
+}
+
+function renderGenre(genre){
+
+  var genreHtml = "        <!-- one genre -->" +
+  "        <div class='row genre' data-genre-id='" + genre._id + "'>" +
+  "          <div class='col-md-10 col-md-offset-1'>" +
+  "            <div class='panel panel-default'>" +
+  "              <div class='panel-body'>" +
+  "              <!-- begin genre internal row -->" +
+  "                <div class='row'>" +
+  "                  <div class='col-md-3 col-xs-12 thumbnail genre-art'>" +
+  "                     <img src='" + "http://placehold.it/400x400'" +  " alt='genre image'>" +
+  "                  </div>" +
+  "                  <div class='col-md-9 col-xs-12'>" +
+  "                    <ul class='list-group'>" +
+  "                      <li class='list-group-item'>" +
+  "                        <h4 class='inline-header'>genre Name:</h4>" +
+  "                        <span class='genre-name'>" + genre.name + "</span>" +
+  "                      </li>" +
+  "                    </ul>" +
+  "                  </div>" +
+  "                </div>" +
+  "              <!-- end of genre internal row -->" +
+
+  "              </div>" + // end of panel-body
+
+  "              <div class='panel-footer'>" +
+  "                <button class='btn btn-danger delete-genre'>Delete Genre</button>" +
+  "              </div>" +
+
+  "            </div>" +
+  "          </div>" +
+  "         </div>" +
+  "          <!-- end one genre -->";
+
+  $("#genres").append(genreHtml);
 }
 
