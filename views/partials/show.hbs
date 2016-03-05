@@ -3,11 +3,13 @@
 		<div id="return_to_albums_button_div">
 			<a href="/albums" class="btn btn-default" id="return_to_albums_button">Return to all albums</a>
 		</div>
-		<img src="/images/bright-cover-art.png" id="showpage_image">
+		<img src={{album.photoUrl}} id="showpage_image">
 		<div id="showpage_edit_buttons_div">
-
-			<a href="/albums/:id/edit" class="btn btn-default showpage_edit_button" id="edit_album_button">Edit Album</a>
-			<a href="/albums/:id/delete" class="btn btn-default showpage_edit_button" id="delete_album_button">Delete Album</a>
+		
+			<a href="/albums/{{album._id}}/edit" class="btn btn-default showpage_edit_button" id="edit_album_button">Edit Album</a>
+<!-- 			<a href="/albums/{{album._id}}/delete" class="btn btn-default showpage_edit_button" id="delete_album_button">Delete Album</a> -->
+			<form method="POST" action="/albums/{{album._id}}?_method=delete" class="form-horizontal">
+			<button id="saveAlbumBtn">Delete Album</button>
 		</div>
 	</div>
 <!-- 	<div id="showpage_content_div">

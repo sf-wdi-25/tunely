@@ -17,11 +17,11 @@ function renderAlbums (req, res) {
 
 function renderAlbum (req, res) {
   var id = req.params.id;
-
+  console.log(id)
   Album.find({_id: id}, function(err, album){
     if (err) returnError(err);
     console.log('album ', album);
-    res.render('./partials/show', {album:album[0]});
+    res.render('./partials/show', {album: album[0]});
   });
 }
 
@@ -46,27 +46,46 @@ function createAlbum (req, res) {
 }
 
 function editAlbum (req, res) {
-  res.render('./partials/edit');
-}
+  var id = req.params.id;
+  Album.find({_id: id}, function(err, album){
+    if (err) returnError(err);
+    console.log('album ', album);
+    res.render('./partials/edit', {album: album[0]});
+  });
+} 
 
 function updateAlbum (req, res) {
   var id = req.params.id;
+
   Album.find({_id: id}, function(err, album){
     if (err) returnError(err);
     if (req.body.name) album.name = req.body.name;
     if (req.body.artistName) album.artistName = req.body.artistName;
     if (req.body.releaseDate) album.releaseDate = req.body.releaseDate;
     if (req.body.photoUrl) album.photoUrl = req.body.photoUrl;
-    res.redirect('/albums/'+album._id, {album: album});
+    var obj = {
+      name: album.name,
+      artistName: album.artistName,
+      releaseDate: album.releaseDate,
+      photoUrl: album.photoUrl
+    }
+    //save 
+    Album.update({_id: id}, obj, function(err, album) {
+      if (err) returnError(err);
+      res.redirect('/albums/'+ id);
+    });
   });
 }
 
 function deleteAlbum (req, res) {
   var id = req.params.id;
-  Album.find({_id: id}, function(err, album){
+  // console.log(id)
+  Album.findOne({_id: id}, function(err, album){
     if (err) returnError(err);
-    Album.remove(album);
-    res.redirect('/albums/');
+    console.log(album)
+    album.remove(function(){
+    res.redirect('/albums');
+    });
   });
 }
 
