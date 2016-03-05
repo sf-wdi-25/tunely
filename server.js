@@ -41,10 +41,12 @@ var db = require("./models");
  * HTML Endpoints
  */
 
+//render album index page
 app.get('/', function homepage (req, res) {
   res.render('index');
 });
 
+//render genre page
 app.get('/api/genres', function genrespage (req, res) {
   res.render('genres');
 });
@@ -68,6 +70,13 @@ app.get('/api', function api_index (req, res){
 app.get('/api/albums', function index (req,res) {
   db.Album.find(function(err, albums) {
     res.json(albums);
+  });
+});
+
+//genre index
+app.get('/api/genres/index', function genreIndex (req, res) {
+  db.Genre.find(function(err, genres) {
+    res.json(genres);
   });
 });
 

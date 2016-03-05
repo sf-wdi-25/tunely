@@ -39,11 +39,19 @@ $(document).ready(function() {
   console.log('app.js loaded!');
   // sampleAlbums.forEach(renderAlbum);
 
-  //ajax get method
+  //ajax get album method
   $.get('/api/albums').success(function (albums) {
     console.log(albums);
     albums.forEach(function(album) {
       renderAlbum(album);
+    });
+  });
+
+  //ajax get genre method
+  $.get('/api/genres/index').success(function (genres) {
+    console.log(genres);
+    genres.forEach(function(genre) {
+      renderGenre(genre);
     });
   });
 
@@ -133,5 +141,42 @@ function renderAlbum(album) {
   "          <!-- end one album -->";
 
   $("#albums").append(albumHtml);
+}
+
+function renderGenre(genre){
+
+  var genreHtml = "        <!-- one genre -->" +
+  "        <div class='row genre' data-genre-id='" + genre._id + "'>" +
+  "          <div class='col-md-10 col-md-offset-1'>" +
+  "            <div class='panel panel-default'>" +
+  "              <div class='panel-body'>" +
+  "              <!-- begin genre internal row -->" +
+  "                <div class='row'>" +
+  "                  <div class='col-md-3 col-xs-12 thumbnail genre-art'>" +
+  "                     <img src='" + "http://placehold.it/400x400'" +  " alt='genre image'>" +
+  "                  </div>" +
+  "                  <div class='col-md-9 col-xs-12'>" +
+  "                    <ul class='list-group'>" +
+  "                      <li class='list-group-item'>" +
+  "                        <h4 class='inline-header'>genre Name:</h4>" +
+  "                        <span class='genre-name'>" + genre.name + "</span>" +
+  "                      </li>" +
+  "                    </ul>" +
+  "                  </div>" +
+  "                </div>" +
+  "              <!-- end of genre internal row -->" +
+
+  "              </div>" + // end of panel-body
+
+  "              <div class='panel-footer'>" +
+  "                <button class='btn btn-danger delete-genre'>Delete Genre</button>" +
+  "              </div>" +
+
+  "            </div>" +
+  "          </div>" +
+  "         </div>" +
+  "          <!-- end one genre -->";
+
+  $("#genres").append(genreHtml);
 }
 
