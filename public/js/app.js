@@ -14,7 +14,9 @@ $(document).ready(function() {
       //we are added an entire div to the Albums div with our data embedded in jQuery
       renderAlbum(album);  
     });
+      handleNewSongButtonClick(data.albums);
   });
+  
 });
 
 
@@ -23,7 +25,7 @@ function renderAlbum(album) {
   //our HTML that we are appending in a forEach loop
   var albumHtml =
   "        <!-- one album -->" +
-  "        <div class='row album' data-album-id='" + "'>" +
+  "        <div class='row album' data-album-id='" + album._id + "'>" +
   "          <div class='col-md-10 col-md-offset-1'>" +
   "            <div class='panel panel-default'>" +
   "              <div class='panel-body'>" +
@@ -55,6 +57,7 @@ function renderAlbum(album) {
   "              </div>" + // end of panel-body
 
   "              <div class='panel-footer'>" +
+                  "<button class='btn btn-primary add-song'>"+ "Add Song" + "</button>" +
   "              </div>" +
 
   "            </div>" +
@@ -69,14 +72,15 @@ function renderAlbum(album) {
       var $albumName = $(".album-name");
       var $artistName = $(".artist-name");
       var $albumReleaseDate = $(".album-releaseDate");
+
       var $deleteButton = "<input method='POST' action='/' type='submit' class='.btn-danger' value='Delete'></input>";
-      
 
       $albumName.last().html(album.name);
       $artistName.last().html(album.artistName);
 
       $albumReleaseDate.last().html(album.releaseDate); 
 }
+
 
 
 function buildSongsHtml (songs) {
@@ -93,6 +97,53 @@ function buildSongsHtml (songs) {
       "</li>";
     return songHtml;
 }
+
+
+
+function handleNewSongButtonClick(albums) {
+  $('#albums').on('click', '.add-song', function(e) {
+    
+    var id= $(this).parents('.album').data('album-id'); // "5665ff1678209c64e51b4e7b"
+
+    $('#songModal').attr('album-id', id);
+    $('#songModal').modal();
+
+    handleNewSongSubmit(albums, id);
+
+  });
+}
+
+
+function handleNewSongSubmit(albums, id) {
+  $('#saveSong').on('click', function(event) {
+    event.preventDefault();
+
+    var album = albums.filter(function(selectedAlbum){
+
+      if(id == selectedAlbum._id){
+        return selectedAlbum;
+        // console.log(selectedAlbum._id);
+      }
+    });
+
+    
+    console.log(album[0].songs);
+
+
+    var $songName = $("#songName").val();
+    var $trackNumber = $("#trackNumber").val();
+
+    var songObject = {
+      name: $songName,
+      trackNumber: $trackNumber
+    };
+    // console.log(songObject);
+    // $.postJSON( "/api/albums", function( data ) {
+      album[0].songs.push(songObject);
+    // });
+  });
+}
+
 
 
 
