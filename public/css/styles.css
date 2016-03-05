@@ -21,7 +21,7 @@ body {
 	background-image: url('../images/magic-of-motown.png');
 	background-size: cover;
   background-repeat: no-repeat;
-	height: 585px;
+	height: 649px;
 	text-align: center;
 }
 
@@ -150,6 +150,8 @@ body {
 }
 
 #showpage_content_div{
+  color: white;
+  text-align: left;
   position: relative;
   display: inline-block;
   width: 500px;

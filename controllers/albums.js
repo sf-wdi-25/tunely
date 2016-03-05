@@ -17,9 +17,11 @@ function renderAlbums (req, res) {
 
 function renderAlbum (req, res) {
   var id = req.params.id;
+
   Album.find({_id: id}, function(err, album){
     if (err) returnError(err);
-    res.render('./partials/show', {album:album});
+    console.log('album ', album);
+    res.render('./partials/show', {album:album[0]});
   });
 }
 
