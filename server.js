@@ -96,7 +96,7 @@ app.post('/api/albums', function create(req, res) {
 
 });
 
-//delete 
+//delete for albums
 app.delete('/api/albums/:id', function deleteAlbum(req, res) {
   console.log('deleting id: ', req.params.id);
 
@@ -109,6 +109,18 @@ app.delete('/api/albums/:id', function deleteAlbum(req, res) {
   });
 });
 
+// delete for genres
+app.delete('/api/genres/:id', function deleteGenre(req, res) {
+  console.log('deleting id: ', req.params.id);
+
+  //grabs the genres's id
+  var id = req.params.id;
+  db.Genre.remove({_id: id}, function(err) {
+    if (err) { return console.log(err); }
+    console.log(req.params.id  + "was removed");
+    res.status(200).send(); // everything is a-OK
+  });
+});
 /**********
  * SERVER *
  **********/
