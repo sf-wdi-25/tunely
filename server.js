@@ -55,6 +55,9 @@ app.get('/api/genres', function genrespage (req, res) {
  * JSON API Endpoints
  */
 
+//ALBUM
+
+//api
 app.get('/api', function api_index (req, res){
   res.json({
     message: "Welcome to tunely!",
@@ -66,21 +69,14 @@ app.get('/api', function api_index (req, res){
   });
 });
 
-//index
+//album index
 app.get('/api/albums', function index (req,res) {
   db.Album.find(function(err, albums) {
     res.json(albums);
   });
 });
 
-//genre index
-app.get('/api/genres/index', function genreIndex (req, res) {
-  db.Genre.find(function(err, genres) {
-    res.json(genres);
-  });
-});
-
-//create
+//create album
 app.post('/api/albums', function create(req, res) {
   console.log('body', req.body);
 
@@ -93,16 +89,48 @@ app.post('/api/albums', function create(req, res) {
     console.log(album);
     res.json(album);
   });
-
 });
 
-//delete 
+//delete album
 app.delete('/api/albums/:id', function deleteAlbum(req, res) {
   console.log('deleting id: ', req.params.id);
 
   //grabs the album's id
   var id = req.params.id;
   db.Album.remove({_id: id}, function(err) {
+    if (err) { return console.log(err); }
+    console.log(req.params.id  + "was removed");
+    res.status(200).send(); // everything is a-OK
+  });
+});
+
+//GENRE
+
+//genre index
+app.get('/api/genres/index', function genreIndex (req, res) {
+  db.Genre.find(function(err, genres) {
+    res.json(genres);
+  });
+});
+
+//create genre
+app.post('/api/genres/index', function create(req, res) {
+
+  db.Genre.create(req.body, function(err, genre) {
+    if (err) { console.log('error', err); }
+    console.log(genre);
+    res.json(genre);
+  });
+
+});
+
+// delete for genres
+app.delete('/api/genres/:id', function deleteGenre(req, res) {
+  console.log('deleting id: ', req.params.id);
+
+  //grabs the genres's id
+  var id = req.params.id;
+  db.Genre.remove({_id: id}, function(err) {
     if (err) { return console.log(err); }
     console.log(req.params.id  + "was removed");
     res.status(200).send(); // everything is a-OK

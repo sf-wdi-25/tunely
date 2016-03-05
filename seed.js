@@ -58,6 +58,15 @@ genresList.push({
                genres: [ 'industrial', 'industrial metal' ]
              }]
            });
+genresList.push({
+             name: 'VaporWave',
+             albums: [
+             { artistName: 'Metallica',
+               name: 'Metallica',
+               releaseDate: '1991, August 12',
+               genres: [ 'heavy metal' ]
+             }]
+           });
 
 
 Genre.remove({}, function(err, genres){

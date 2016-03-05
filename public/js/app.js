@@ -32,30 +32,18 @@ sampleAlbums.push({
            });
 /* end of hard-coded data */
 
-
-
-
 $(document).ready(function() {
   console.log('app.js loaded!');
-  // sampleAlbums.forEach(renderAlbum);
 
-  //ajax get album method
+// AJAX album methods
+  //get method
   $.get('/api/albums').success(function (albums) {
     console.log(albums);
     albums.forEach(function(album) {
       renderAlbum(album);
     });
   });
-
-  //ajax get genre method
-  $.get('/api/genres/index').success(function (genres) {
-    console.log(genres);
-    genres.forEach(function(genre) {
-      renderGenre(genre);
-    });
-  });
-
-  // ajax post method
+  //post method
   $('#album-form form').on('submit', function(e) {
     e.preventDefault();
     var formData = $(this).serialize();
@@ -66,16 +54,39 @@ $(document).ready(function() {
     });
     $(this).trigger("reset");
   });
-  
+  //on click, the genre delete button will run the DeleteAlbum function
+  $('#albums').on('click', '.delete-album', DeleteAlbum);
+
+// AJAX genre methods
+  //get method
+  $.get('/api/genres/index').success(function (genres) {
+    genres.forEach(function(genre) {
+      renderGenre(genre);
+    });
+  });
+
+  //post method
+  $('#genre-form form').on('submit', function(e) {
+    e.preventDefault();
+    var formData = $(this).serialize();
+    // console.log('formData', formData);
+    $.post('/api/genres/index', formData, function(genre) {
+      // console.log('genre after POST', genre);
+      renderGenre(genre);  //render the server's response
+    });
+    $(this).trigger("reset");
+  });
+
+
+  //on click, the genre delete button will run the DeleteGenre function
+  $('#genres').on('click', '.delete-genre', DeleteGenre);
+
   //serializes form data logs it and clears form
   $("form").on("submit", function(event) {
     event.preventDefault();
-    console.log($(this).serialize());
+    $(this).serialize();
     $("form").trigger("reset");
   });
-
-  //on click, the delete button will run the delete function
-  $('#albums').on('click', '.delete-album', DeleteAlbum);
 
 
 });
@@ -96,6 +107,26 @@ function DeleteAlbum(e) {
     }
   });
 }
+
+//This function deletes genre
+function DeleteGenre(e) {
+//this grabs the album id from the hard-coded html
+  var genreId = $(this).parents('.genre').data('genre-id');
+  console.log('deleting genre with id =' + genreId );
+//jquery does not have a delete method, so we just use ajax
+  $.ajax({
+    method: 'DELETE',
+    url: ('/api/genres/' + genreId),
+    success: function() {
+      console.log("just deleted genre");
+      //concatenates the album ID to grab the html data for specific album
+      $('[data-genre-id='+ genreId + ']').remove();
+    }
+  });
+}
+// end delete genre here
+
+
 // this function takes a single album and renders it to the page
 function renderAlbum(album) {
   console.log('rendering album:', album);
