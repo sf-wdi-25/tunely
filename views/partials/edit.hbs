@@ -1,0 +1,45 @@
+<div id="album-form">
+
+    <!-- Form Name -->
+    <h2 class="newAlbum">Edit Album</h2>
+    <form method="POST" action="/albums/{{album._id}}?_method=patch" class="form-horizontal">
+    <!-- Text input-->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="name">Album Name:</label>
+      <div class="col-md-4">
+        <input id="name" name="name" type="text" class="form-control input-md" required value="{{album.name}}">
+      </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="artistName">Artist Name:</label>
+      <div class="col-md-4">
+      <input id="textinput" name="artistName" type="text" class="form-control input-md" value="{{album.artistName}}">
+      </div>
+    </div>
+
+    <!-- Text input-->
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="releaseDate">Release Date:</label>
+      <div class="col-md-4">
+      <input id="releaseDate" name="releaseDate" type="text" class="form-control input-md" value="{{album.releaseDate}}">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-md-4 control-label" for="coverArt">Cover Art Url:</label>
+      <div class="col-md-4">
+      <input id="coverArt" name="photoUrl" type="text" class="form-control input-md" value="{{album.photoUrl}}">
+    	</div>
+    </div>
+
+    <div class="form-group">
+      <div class="text-center">
+          <button id="saveAlbumBtn">Update Album</button>
+      </div>
+    </div>
+
+</form>
+
+</div>

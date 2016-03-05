@@ -1,0 +1,50 @@
+<div id="showpage_container">
+	<div id="showpage_image_div">
+		<div id="return_to_albums_button_div">
+			<a href="/albums" class="btn btn-default" id="return_to_albums_button">Return to all albums</a>
+		</div>
+		<img src={{album.photoUrl}} id="showpage_image">
+		<div id="showpage_edit_buttons_div">
+
+			<a href="/albums/{{album._id}}/edit" class="btn btn-default showpage_edit_button" id="edit_album_button">Edit Album</a>
+<!-- 			<a href="/albums/{{album._id}}/delete" class="btn btn-default showpage_edit_button" id="delete_album_button">Delete Album</a> -->
+			<form method="POST" action="/albums/{{album._id}}?_method=delete" class="form-horizontal">
+			<button id="showpage_delete_button">Delete Album</button>
+		</div>
+	</div>
+<!-- 	<div id="showpage_content_div">
+		<div class="showpage_album_details">
+			<h2 class="header_md album_detail_title">Greatest Hits, Vol. 2</h2>
+			<p class="text_md album_detail"><span style="font-weight: bold">Artist: </span>Smokey Robinson & the Miracles</p>
+			<p class="text_md album_detail"><span style="font-weight: bold">Release Date: </span>January 26, 1968</p>
+			<p class="text_md album_detail"><span style="font-weight: bold">Song Count: </span>12</p>
+		</div> -->
+
+		<div id="showpage_content_div">
+			<div class="showpage_album_details">
+				<h2 class="header_md album_detail_title">{{album.name}}</h2>
+				<p class="text_md album_detail"><span style="font-weight: bold">Artist: </span>{{album.artistName}}</p>
+				<p class="text_md album_detail"><span style="font-weight: bold">Release Date: </span>{{album.releaseDate}}</p>
+				<!-- <p class="text_md album_detail"><span style="font-weight: bold">Song Count: </span>12</p> -->
+		</div>
+
+		<!-- use each method to list songs -->
+		<div class="showpage_song_details text_md">
+			<h2 class="header_sm album_detail_title">Songs</h2>
+			<ol>
+				<li>Going to a Go-Go</li>
+				<li>The Tracks of My Tears</li>
+				<li>I Second That Emotion</li>
+				<li>Ooo Baby Baby</li>
+				<li>My Girl Has Gone</li>
+				<li>Come On Do The Jerk</li>
+				<li>Whole Lot Of Shakin' In My Heart (Since I Met You)</li>
+				<li>The Love I Saw in You Was Just a Mirage</li>
+				<li>(Come 'Round Here) I'm the One You Need</li>
+				<li>More Love</li>
+				<li>Choosey Beggar</li>
+				<li>Save Me</li>
+			</ol>
+		</div>
+	</div>
+</div>

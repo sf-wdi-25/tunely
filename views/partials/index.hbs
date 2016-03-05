@@ -1,0 +1,14 @@
+<h2 id="page-title">Motown Albums</h2>
+<div class="multiple-items">
+  {{#each albums}}
+    <div class="single-album">
+      <a href="/albums/{{this._id}}">
+        <img src="{{this.photoUrl}}" alt="album cover photo" class="index-cover">
+      </a>
+        <div id="name-artist">
+          <p>{{this.artistName}}</p>
+          <p>{{this.name}}</p>
+        </div>
+    </div>
+  {{/each}}
+</div>
