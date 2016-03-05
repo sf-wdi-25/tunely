@@ -54,7 +54,7 @@ $(document).ready(function() {
     });
     $(this).trigger("reset");
   });
-  //delete method
+  //on click, the genre delete button will run the DeleteAlbum function
   $('#albums').on('click', '.delete-album', DeleteAlbum);
 
 // AJAX genre methods
@@ -68,6 +68,8 @@ $(document).ready(function() {
 
   //post method
 
+  //on click, the genre delete button will run the DeleteGenre function
+  $('#genres').on('click', '.delete-genre', DeleteGenre);
 
   //serializes form data logs it and clears form
   $("form").on("submit", function(event) {
@@ -75,6 +77,8 @@ $(document).ready(function() {
     console.log($(this).serialize());
     $("form").trigger("reset");
   });
+
+
 });
 
 //This function deletes album
@@ -93,6 +97,26 @@ function DeleteAlbum(e) {
     }
   });
 }
+
+//This function deletes genre
+function DeleteGenre(e) {
+//this grabs the album id from the hard-coded html
+  var genreId = $(this).parents('.genre').data('genre-id');
+  console.log('deleting genre with id =' + genreId );
+//jquery does not have a delete method, so we just use ajax
+  $.ajax({
+    method: 'DELETE',
+    url: ('/api/genres/' + genreId),
+    success: function() {
+      console.log("just deleted genre");
+      //concatenates the album ID to grab the html data for specific album
+      $('[data-genre-id='+ genreId + ']').remove();
+    }
+  });
+}
+// end delete genre here
+
+
 // this function takes a single album and renders it to the page
 function renderAlbum(album) {
   console.log('rendering album:', album);
