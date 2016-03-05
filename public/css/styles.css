@@ -17,19 +17,39 @@ body {
 	padding-top: 20px;
 }
 
-#main-content {
+/*#main-content {
 	background-image: url('../images/magic-of-motown.png');
 	background-size: cover;
   background-repeat: no-repeat;
-	height: 585px;
+	height: 649px;
+	bottom: 0px;
 	text-align: center;
+}*/
+
+#motown-background-image {
+  /* Set rules to fill background */
+  min-height: 100%;
+  min-width: 1024px;
+
+  /* Set up proportionate scaling */
+  width: 100%;
+  height: auto;
+
+  /* Set up positioning */
+  position: fixed;
+  top: 52px;
+  left: 0;
+	z-index: -999;
 }
+
 
 #album-form {
 	display: inline-block;
 	background-color: rgba(0,173,133, 0.5);
 	color: #000;
-	height: 100%;
+	position: absolute;
+	bottom: 0;
+	top: 52px;
 	width: 100%;
 	text-align: center;
 }
@@ -261,9 +281,9 @@ ul.navbar-right {
 
 /* NEW FORM STYLES */
 
-.newAlbum {
+#newAlbum {
 	margin: 4% auto;
-	background-color: #002156;
+	background-color: rgba(0, 0, 0, 0.3);
 	color: white;
 	font-size: 2em;
 	font-weight: bold;
@@ -280,11 +300,12 @@ ul.navbar-right {
 	font-size: 1.5em;
 }
 #saveAlbumBtn {
-	background-color: #002156;
+	background-color: rgba(0, 0, 0, 0.5);
 	border-radius: 10px;
 	font-size: 1.2em;
 	color: white;
 	font-weight: bold;
+	border: none;
 }
 
 
@@ -311,4 +332,10 @@ ul.navbar-right {
     top: 244px;
     left: 20px;
   }
+	#album-form {
+	  top: 227px;
+	}
+	#motown-background-image {
+		top: 200px;
+	}
 }

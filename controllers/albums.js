@@ -44,7 +44,12 @@ function createAlbum (req, res) {
 }
 
 function editAlbum (req, res) {
-  res.render('./partials/edit');
+  var id = req.params.id;
+  Album.find({_id: id}, function(err, album){
+    if (err) returnError(err);
+    res.render('./partials/edit', {album:album});
+  });
+
 }
 
 function updateAlbum (req, res) {
@@ -55,7 +60,7 @@ function updateAlbum (req, res) {
     if (req.body.artistName) album.artistName = req.body.artistName;
     if (req.body.releaseDate) album.releaseDate = req.body.releaseDate;
     if (req.body.photoUrl) album.photoUrl = req.body.photoUrl;
-    res.redirect('/albums/'+album._id, {album: album});
+    res.redirect('/albums/'+ req.params.id + 'edit', {album: album});
   });
 }
 

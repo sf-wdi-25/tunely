@@ -15,6 +15,15 @@
 $(document).ready(function() {
   console.log('app.js loaded!');
   var app = new App();
+  function setBodyMinHeight() {
+    // var ele =document.getElementByTagName('body');
+    var ele =document.body;
+    var windowHeight =window.outerHeight;
+    ele.style.minHeight =windowHeight+'px';
+  }
+  window.onresize =function() {
+      setBodyMinHeight();
+  };
 
   $('.multiple-items').slick({
     infinite: true,
