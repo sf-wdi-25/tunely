@@ -60,13 +60,23 @@ $(document).ready(function() {
 // AJAX genre methods
   //get method
   $.get('/api/genres/index').success(function (genres) {
-    console.log(genres);
     genres.forEach(function(genre) {
       renderGenre(genre);
     });
   });
 
   //post method
+  $('#genre-form form').on('submit', function(e) {
+    e.preventDefault();
+    var formData = $(this).serialize();
+    // console.log('formData', formData);
+    $.post('/api/genres/index', formData, function(genre) {
+      // console.log('genre after POST', genre);
+      renderGenre(genre);  //render the server's response
+    });
+    $(this).trigger("reset");
+  });
+
 
   //on click, the genre delete button will run the DeleteGenre function
   $('#genres').on('click', '.delete-genre', DeleteGenre);
@@ -74,7 +84,7 @@ $(document).ready(function() {
   //serializes form data logs it and clears form
   $("form").on("submit", function(event) {
     event.preventDefault();
-    console.log($(this).serialize());
+    $(this).serialize();
     $("form").trigger("reset");
   });
 
