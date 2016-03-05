@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var logger = require('morgan');
 var albumsController = require('../controllers/albums');
+var songsController = require('../controllers/songs');
 
 /*
  * HTML Endpoints
@@ -36,6 +37,14 @@ router.route('/albums/:id')
 router.route('/albums/:id/edit')
   .get(albumsController.editAlbum);
 
+router.route('albums/:id/songs')
+  .get(songsController.songIndex)
+  .post(songsController.createSong);
+
+router.route('albums/:id/songs/:id')
+  .patch(songsController.updateSong)
+  .delete(songsController.deleteSong);
+
 // DeathMetal
 
 router.route('/deathmetal')
@@ -44,6 +53,7 @@ router.route('/deathmetal')
 // Search
 router.route('/search')
   .get(albumsController.search);
+
 /*
  * JSON API Endpoints
  */

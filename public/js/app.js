@@ -66,6 +66,8 @@ function App () {
 }
 
 // this function takes all albums and renders them to the page
+
+
 App.prototype.renderAlbums = function (){
   app.$albumList.empty();
 };
@@ -108,8 +110,5 @@ $('.responsive').slick({
         slidesToScroll: 1
       }
     }
-    // You can unslick at a given breakpoint now by adding:
-    // settings: "unslick"
-    // instead of a settings object
   ]
 });
