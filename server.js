@@ -2,48 +2,36 @@
 
 //require express in our app
 var express = require('express');
+
 // generate a new express app and call it 'app'
 var app = express();
+var path = require('path');
+var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
+var mongoose = require('mongoose');
+var ejs = require('ejs');
+
+//user bodyParser
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // serve static files from public folder
 app.use(express.static(__dirname + '/public'));
+
+//app setup
+app.use(methodOverride('_method'));
+
+//views
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
+app.engine('ejs', require('ejs').renderFile);
 
 /************
  * DATABASE *
  ************/
 
-/* hard-coded data */
-var albums = [];
-albums.push({
-              _id: 132,
-              artistName: 'Nine Inch Nails',
-              name: 'The Downward Spiral',
-              releaseDate: '1994, March 8',
-              genres: [ 'industrial', 'industrial metal' ]
-            });
-albums.push({
-              _id: 133,
-              artistName: 'Metallica',
-              name: 'Metallica',
-              releaseDate: '1991, August 12',
-              genres: [ 'heavy metal' ]
-            });
-albums.push({
-              _id: 134,
-              artistName: 'The Prodigy',
-              name: 'Music for the Jilted Generation',
-              releaseDate: '1994, July 4',
-              genres: [ 'electronica', 'breakbeat hardcore', 'rave', 'jungle' ]
-            });
-albums.push({
-              _id: 135,
-              artistName: 'Johnny Cash',
-              name: 'Unchained',
-              releaseDate: '1996, November 5',
-              genres: [ 'country', 'rock' ]
-            });
-
-
+//require models
+var db = require("./models");
 
 /**********
  * ROUTES *
@@ -53,15 +41,23 @@ albums.push({
  * HTML Endpoints
  */
 
+//render album index page
 app.get('/', function homepage (req, res) {
-  res.sendFile(__dirname + '/views/index.html');
+  res.render('index');
 });
 
+//render genre page
+app.get('/api/genres', function genrespage (req, res) {
+  res.render('genres');
+});
 
 /*
  * JSON API Endpoints
  */
 
+//ALBUM
+
+//api
 app.get('/api', function api_index (req, res){
   res.json({
     message: "Welcome to tunely!",
@@ -70,6 +66,94 @@ app.get('/api', function api_index (req, res){
     endpoints: [
       {method: "GET", path: "/api", description: "Describes available endpoints"}
     ]
+  });
+});
+
+//album index
+app.get('/api/albums', function index (req,res) {
+  db.Album.find(function(err, albums) {
+    res.json(albums);
+  });
+});
+
+//create album
+app.post('/api/albums', function create(req, res) {
+  console.log('body', req.body);
+
+  // split at comma and remove and trailing space
+  var genres = req.body.genres.split(',').map(function(item) { return item.trim(); } );
+  req.body.genres = genres;
+
+  db.Album.create(req.body, function(err, album) {
+    if (err) { console.log('error', err); }
+    console.log(album);
+    res.json(album);
+  });
+});
+
+//delete album
+app.delete('/api/albums/:id', function deleteAlbum(req, res) {
+  console.log('deleting id: ', req.params.id);
+
+  //grabs the album's id
+  var id = req.params.id;
+  db.Album.remove({_id: id}, function(err) {
+    if (err) { return console.log(err); }
+    console.log(req.params.id  + "was removed");
+    res.status(200).send(); // everything is a-OK
+  });
+});
+
+// UPDATE//
+
+
+app.put('/api/albums/:id', function updateAlbum(req, res) {
+  console.log('updating id ', req.params.id);
+  console.log('received body ', req.body);
+
+  db.Album.findOne({_id: req.params.id}, function(err, Album) {
+    if (err) { console.log('error', err); }
+    //artistname needed to be adjusted here
+    Album.artistName = req.body.artistName;
+    Album.name = req.body.name;
+    Album.releaseDate = req.body.releaseDate;
+    Album.save(function(err, saved) {
+      if(err) { console.log('error', err); }
+      res.json(saved);
+    });
+  });
+});
+
+//GENRE
+
+//genre index
+app.get('/api/genres/index', function genreIndex (req, res) {
+  db.Genre.find(function(err, genres) {
+    res.json(genres);
+  });
+});
+
+//create genre
+app.post('/api/genres/index', function create(req, res) {
+
+  db.Genre.create(req.body, function(err, genre) {
+    if (err) { console.log('error', err); }
+    console.log(genre);
+    res.json(genre);
+  });
+
+});
+
+// delete for genres
+app.delete('/api/genres/:id', function deleteGenre(req, res) {
+  console.log('deleting id: ', req.params.id);
+
+  //grabs the genres's id
+  var id = req.params.id;
+  db.Genre.remove({_id: id}, function(err) {
+    if (err) { return console.log(err); }
+    console.log(req.params.id  + "was removed");
+    res.status(200).send(); // everything is a-OK
   });
 });
 
