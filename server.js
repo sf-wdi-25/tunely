@@ -88,6 +88,38 @@ app.post('/api/albums', function create (req, res) {
   });
 });
 
+//SHOW INDIVIDUAL ALBUM
+app.get('/api/albums/:id', function show_api_album (req, res){
+  var id = req.params.id;
+  var album = Album.find({_id: id}, function(err, album){
+    if (err){
+      console.log("ERROR WITH API ID", err);
+    }
+    else{
+      res.json({album: album});
+    }
+  });
+
+});
+
+//DELETE INDIVIDUAL ALBUM
+app.delete('/api/albums/:id', function delete_album (req, res){
+  var id = req.params.id;
+  console.log("DELETE ALBUM: ", id);
+
+  Album.remove({_id: id}, function(err){
+    if(err){
+      console.log("ERROR WITH DELETE", err);
+    }
+    else{
+      console.log("REMOVING ALBUM: " + id + " THIS WORKED");
+      res.status(200).send();
+    }
+  });
+});
+
+
+
 
 
 
