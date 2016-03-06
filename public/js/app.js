@@ -43,6 +43,7 @@ $(document).ready(function() {
       renderAlbum(album);
     });
   });
+
   //post method
   $('#album-form form').on('submit', function(e) {
     e.preventDefault();
@@ -54,8 +55,65 @@ $(document).ready(function() {
     });
     $(this).trigger("reset");
   });
+
   //on click, the genre delete button will run the DeleteAlbum function
   $('#albums').on('click', '.delete-album', DeleteAlbum);
+
+  $('#albums').on('click', '.edit-album', EditAlbum);
+
+  $('#albums').on('click', '.put-album', SaveChanges);
+
+  //update method
+  function getAlbumRowById(id) {
+    return $('[data-album-id=' + id + ']');
+  }
+
+  function EditAlbum(e) {
+    var albumId = $(this).parents('.album').data('album-id');
+    var $albumRow = getAlbumRowById(albumId);
+
+    console.log('attempt to edit id', albumId);
+
+    // replace edit button with save button
+    $(this).parent().find('.btn').hide();
+    $(this).parent().find('.default-hidden').show();
+
+    // replace current spans with inputs
+    var albumName = $albumRow.find('span.album-name').text();
+    $albumRow.find('span.album-name').html('<input class="edit-album-name" value="' + albumName + '"></input>');
+
+    var artistName = $albumRow.find('span.artist-name').text();
+    $albumRow.find('span.artist-name').html('<input class="edit-artist-name" value="' + artistName + '"></input>');
+
+    var releaseDate = $albumRow.find('span.album-release-date').text();
+    $albumRow.find('span.album-release-date').html('<input class="edit-album-release-date" value="' + releaseDate + '"></input>');
+}
+
+function SaveChanges(e) {
+  var albumId = $(this).parents('.album').data('album-id');
+  var $albumRow = getAlbumRowById(albumId);
+
+  var data = {
+    name: $albumRow.find('.edit-album-name').val(),
+    artistName: $albumRow.find('.edit-artist-name').val(),
+    releaseDate: $albumRow.find('.edit-album-release-date').val()
+  };
+
+  $.ajax({
+    method: 'PUT',
+    url: '/api/albums/' + albumId,
+    data: data,
+    success: function(data) {
+      console.log(data);
+      $albumRow.replaceWith(generateAlbumHtml(data));
+    }
+  });
+
+    window.location.href = '/';
+}
+
+
+
 
 // AJAX genre methods
   //get method
@@ -154,7 +212,7 @@ function renderAlbum(album) {
   "                      </li>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Released date:</h4>" +
-  "                        <span class='album-name'>" + album.releaseDate + "</span>" +
+  "                        <span class='album-release-date'>" + album.releaseDate + "</span>" +
   "                      </li>" +
   "                    </ul>" +
   "                  </div>" +
@@ -164,6 +222,8 @@ function renderAlbum(album) {
   "              </div>" + // end of panel-body
 
   "              <div class='panel-footer'>" +
+  "                <button class='btn btn-info edit-album'>Edit Album</button>" +
+  "                <button class='btn btn-success put-album default-hidden'>Save Changes</button>" +
   "                <button class='btn btn-danger delete-album'>Delete Album</button>" +
   "              </div>" +
 
