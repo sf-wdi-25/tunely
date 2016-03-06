@@ -63,6 +63,10 @@ $(document).ready(function() {
 
   $('#albums').on('click', '.put-album', SaveChanges);
 
+   $('#genres').on('click', '.edit-genre', EditGenre);
+
+  $('#genres').on('click', '.put-genre', SaveGenre);
+
   //update method
   function getAlbumRowById(id) {
     return $('[data-album-id=' + id + ']');
@@ -111,6 +115,62 @@ function SaveChanges(e) {
 
     window.location.href = '/';
 }
+
+
+
+
+
+
+
+
+// UPDATE GENRES 
+
+ function getGenreRowById(id) {
+    return $('[data-genre-id=' + id + ']');
+  }
+
+
+function EditGenre(e) {
+    var genreId = $(this).parents('.genre').data('genre-id');
+    var $genreRow = getGenreRowById(genreId);
+
+    console.log('attempt to edit id', genreId);
+
+    // replace edit button with save button
+    $(this).parent().find('.btn').hide();
+    $(this).parent().find('.default-hidden').show();
+
+    // replace current spans with inputs
+    var genreName = $genreRow.find('span.genre-name').text();
+    $genreRow.find('span.genre-name').html('<input class="edit-genre-name" value="' + genreName + '"></input>');
+
+ 
+}
+
+function SaveGenre(e) {
+  var genreId = $(this).parents('.genre').data('genre-id');
+  var $genreRow = getGenreRowById(genreId);
+
+  var data = {
+    name: $genreRow.find('.edit-genre-name').val()
+  };
+
+
+  $.ajax({
+    method: 'PUT',
+    url: '/api/genres/' + genreId,
+    data: data,
+    success: function(data) {
+      console.log(data);
+      $genreRow.replaceWith(renderGenre(data));
+    }
+  });
+
+    window.location.href = '/api/genres';
+}
+
+
+
 
 
 
@@ -260,6 +320,8 @@ function renderGenre(genre){
   "              </div>" + // end of panel-body
 
   "              <div class='panel-footer'>" +
+  "                <button class='btn btn-info edit-genre'>Edit Album</button>" +
+  "                <button class='btn btn-success put-genre default-hidden'>Save Changes</button>" +
   "                <button class='btn btn-danger delete-genre'>Delete Genre</button>" +
   "              </div>" +
 
@@ -270,4 +332,5 @@ function renderGenre(genre){
 
   $("#genres").append(genreHtml);
 }
+
 
