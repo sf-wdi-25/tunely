@@ -1,12 +1,103 @@
-.jumbotron {
-  background-image: url(/images/background1.jpg);
-  background-size: cover;
+/*#newForm {
+	background-color: gray;
+	background-image: url('/images/motown-featured.png');
+	background-size: cover;
   background-repeat: no-repeat;
+}*/
+body {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#page-title {
+	color: #fff;
+	margin: 0;
+	padding-top: 20px;
+}
+
+/*#main-content {
+	background-image: url('../images/magic-of-motown.png');
+	background-size: cover;
+  background-repeat: no-repeat;
+	height: 649px;
+	bottom: 0px;
+	text-align: center;
+}*/
+
+#motown-background-image {
+  /* Set rules to fill background */
+  min-height: 100%;
+  min-width: 1024px;
+
+  /* Set up proportionate scaling */
+  width: 100%;
+  height: auto;
+
+  /* Set up positioning */
+  position: fixed;
+  top: 52px;
+  left: 0;
+	z-index: -999;
+}
+
+
+#album-form {
+	display: inline-block;
+	background-color: rgba(0,173,133, 0.5);
+	color: #000;
+	position: absolute;
+	bottom: 0;
+	top: 52px;
+	width: 100%;
+	text-align: center;
+}
+
+.multiple-items {
+	margin: 0 auto;
+	padding-top: 80px;
+	width: 70%;
+	color: #fff;
+}
+
+.single-album {
+	margin: 0 auto;
+	position: relative;
+}
+
+#name-artist {
+	position: absolute;
+	bottom: 20px;
+	left: -0px;
+	display: inline;
+	float: left;
+	clear: both;
+	padding: 0 5px;
+	margin: 0;
+	background-color: #000;
+}
+
+#name-artist p {
+	display: inline;
+	float: left;
+	clear: both;
+	padding: 0 5px;
+	margin: 0;
+}
+
+.index-cover {
+	height: 240px;
+	width: 240px;
+}
+
+.home-page {
   color: #EEE;
+  margin-bottom: 0px;
+	height: 100%;
+	width: 100%;
 }
-.jumbotron .container {
-  height: 350px;
-}
+
 
 .inline-header {
   display: inline-block;
@@ -14,3 +105,237 @@
   margin-right: 12px;
 }
 
+.navbar {
+	margin-bottom: 0px;
+}
+
+.browse_button_div {
+	position: relative;
+    top: 440px;
+}
+
+#browse_albums_button {
+	width: 350px;
+	opacity: 0.8;
+	font-size: 20px;
+	background-color: #00AD85;
+  color: white;
+}
+#browse_albums_button:hover {
+  background-color: #fff;
+  color: #00AD85;
+}
+.single-item {
+    width: 40%;
+}
+
+/* BUTTON CSS */
+.btn {
+  font-family: 'Asap', sans-serif;
+}
+/*TEXT DETAILS*/
+.header_md {
+  font-size: 24px;
+  font-family: 'Asap', sans-serif;
+}
+.header_sm {
+  font-size: 22px;
+  font-family: 'Asap', sans-serif;
+}
+.text_lg {
+  font-size: 18px;
+  font-family: 'Asap', sans-serif;
+}
+.text_md {
+  font-size: 16px;
+  font-family: 'Asap', sans-serif;
+}
+.text_sm {
+  font-size: 14px;
+  font-family: 'Asap', sans-serif;
+}
+/*SHOWPAGE CSS*/
+
+#showpage_container {
+  width: 1000px;
+  margin: 0 auto;
+  padding-top: 58px;
+}
+#showpage_image_div {
+/*  position: relative;*/
+  display: inline-block;
+  width: 500px;
+  float: left;
+/*  vertical-align: middle;*/
+}
+
+#showpage_content_div{
+  position: relative;
+  display: inline-block;
+  width: 500px;
+/*  vertical-align: middle;*/
+}
+
+#showpage_image {
+  display: block;
+  margin: 0 auto;
+  width: 90%;
+}
+
+#showpage_edit_buttons_div {
+  text-align: center;
+}
+.showpage_edit_button {
+  font-size: 15px;
+  background-color: #00AD85;
+  margin: 10px;
+  color: white;
+}
+.showpage_edit_button:hover {
+  color: #00AD85;
+  background: white;
+}
+#return_to_albums_button_div{
+  text-align: center;
+  padding: 10px;
+}
+#return_to_albums_button {
+  position: absolute;
+  top: 70px;
+  left: 20px;
+  width: 200px;
+  color: #00AD85;
+  background-color: white;
+  font-size: 16px;
+}
+#return_to_albums_button:hover {
+  color: white;
+  background-color: #00AD85;
+}
+
+/*NAVBAR CSS*/
+.navbar-default .navbar-nav>li>a:hover {
+    color: #00AD85;
+}
+.navbar-default .navbar-brand:hover {
+    color: #00AD85;
+}
+
+/*changes navbar font*/
+a.navbar-brand {
+  font-family: 'Asap', sans-serif;
+}
+
+ul.navbar-right {
+  font-family: 'Asap', sans-serif;
+}
+
+
+/*media queries*/
+/*@media (max-width: 1000px) {
+  #showpage_container {
+    width: 100%;
+  }
+  #showpage_image_div {
+    display: block;
+    width: 500px;
+    float: none;
+    margin: 0 auto;
+  }
+  #showpage_content_div {
+    display: block;
+    clear: left;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 767px) {
+  #return_to_albums_button {
+    top: 244px;
+    left: 20px;
+  }
+}*/
+
+/*SEARCH CSS*/
+
+#white {
+  background-color: white;
+}
+#search_bar_div {
+
+  margin: 0 auto;
+}
+#search-bar {
+  width: 300px;
+}
+#search-button {
+  margin: 10px;
+  color: #00AD85;
+}
+#search-button:hover {
+  margin: 10px;
+  color: white;
+  background: #00AD85;
+}
+
+
+/* NEW FORM STYLES */
+
+#newAlbum {
+	margin: 4% auto;
+	background-color: rgba(0, 0, 0, 0.3);
+	color: white;
+	font-size: 2em;
+	font-weight: bold;
+	text-align: center;
+	border-bottom: none;
+	width: 35%;
+	padding: .5% 0;
+	border-radius: 10px;
+}
+
+.control-label {
+	color: white;
+	font-weight: bold;
+	font-size: 1.5em;
+}
+#saveAlbumBtn {
+	background-color: rgba(0, 0, 0, 0.5);
+	border-radius: 10px;
+	font-size: 1.2em;
+	color: white;
+	font-weight: bold;
+	border: none;
+}
+
+
+/*media queries*/
+@media (max-width: 1000px) {
+  #showpage_container {
+    width: 100%;
+  }
+  #showpage_image_div {
+    display: block;
+    width: 500px;
+    float: none;
+    margin: 0 auto;
+  }
+  #showpage_content_div {
+    display: block;
+    clear: left;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 767px) {
+  #return_to_albums_button {
+    top: 244px;
+    left: 20px;
+  }
+	#album-form {
+	  top: 227px;
+	}
+	#motown-background-image {
+		top: 200px;
+	}
+}
