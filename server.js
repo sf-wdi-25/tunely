@@ -88,6 +88,32 @@ app.post('/', function create (req, res) {
   });
 });
 
+//update
+
+app.put('/api/albums/:id', function update_api_album (req, res){
+  var id = req.params.id;
+  Album.find({_id: id}, function(err, album){
+    if (err){
+        console.log("ERROR WITH API ID", err);
+
+      }
+    album.name = req.body.name;
+    album.artistName = req.body.artistName;
+    album.releaseDate = req.body.releaseDate;
+    album.save(function(err, saved) {
+      if (err) {
+        console.log(err);
+      }
+      res.json(saved);
+    });
+
+  });
+
+});
+  
+
+
+
 
 /**********
  * SERVER *
