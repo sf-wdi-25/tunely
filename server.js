@@ -92,7 +92,7 @@ app.post('/', function create (req, res) {
 
 app.put('/api/albums/:id', function update_api_album (req, res){
   var id = req.params.id;
-  Album.find({_id: id}, function(err, album){
+  Album.findOne({_id: id}, function(err, album){
     if (err){
         console.log("ERROR WITH API ID", err);
 
