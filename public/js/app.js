@@ -14,7 +14,6 @@ $(document).ready(function() {
   //     //we are added an entire div to the Albums div with our data embedded in jQuery
   //     renderAlbum(album);
   //   });
-  //     handleNewSongButtonClick(data.albums);
   // });
 
   var $albums = $('#albums');
@@ -36,10 +35,15 @@ $(document).ready(function() {
 
   // DELETE method
   $('#albums').delegate('.deleteBtn','click', function(){
+    // var $album = $(this).closest('.album');
+
+    var $albumId = $(this).attr('delete-album-id');
+
     $.ajax({
       type: 'DELETE',
-      url: '/api/albums/' + $(this).attr('delete-album-id'),
+      url: '/api/albums/' + $albumId,
       success: function(){
+        $('[data-album-id='+ $albumId + ']').remove();
         console.log("YAY DELETE");
       },
       error: function(){

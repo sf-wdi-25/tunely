@@ -100,7 +100,23 @@ app.get('/api/albums/:id', function show_api_album (req, res){
     }
   });
 
-})
+});
+
+//DELETE INDIVIDUAL ALBUM
+app.delete('/api/albums/:id', function delete_album (req, res){
+  var id = req.params.id;
+  console.log("DELETE ALBUM: ", id);
+
+  Album.remove({_id: id}, function(err){
+    if(err){
+      console.log("ERROR WITH DELETE", err);
+    }
+    else{
+      console.log("REMOVING ALBUM: " + id + " THIS WORKED");
+      res.status(200).send();
+    }
+  });
+});
 
 
 
