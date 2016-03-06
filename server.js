@@ -88,6 +88,22 @@ app.post('/', function create (req, res) {
   });
 });
 
+//SHOW INDIVIDUAL ALBUM
+app.get('/api/albums/:id', function show_api_album (req, res){
+  var id = req.params.id;
+  var album = Album.find({_id: id}, function(err, album){
+    if (err){
+      console.log("ERROR WITH API ID", err);
+    }
+    else{
+      res.json({album: album});
+    }
+  });
+
+})
+
+
+
 
 /**********
  * SERVER *

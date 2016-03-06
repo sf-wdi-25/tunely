@@ -12,11 +12,11 @@ $(document).ready(function() {
   //   //Data.albums is an array of all the albums
   //   data.albums.forEach(function(album) {
   //     //we are added an entire div to the Albums div with our data embedded in jQuery
-  //     renderAlbum(album);  
+  //     renderAlbum(album);
   //   });
   //     handleNewSongButtonClick(data.albums);
   // });
-  
+
   var $albums = $('#albums');
 
   $.ajax({
@@ -33,9 +33,23 @@ $(document).ready(function() {
     }
   });
 
-  $.ajax({
 
-  });
+  // DELETE method
+  $('#albums').delegate('.deleteBtn','click', function(){
+    $.ajax({
+      type: 'DELETE',
+      url: '/api/albums/' + $(this).attr('delete-album-id'),
+      success: function(){
+        console.log("YAY DELETE");
+      },
+      error: function(){
+        console.log("SOMETHING AINT WORKING");
+      }
+    });
+  })
+
+
+
 
 //end of document ready
 });
@@ -84,6 +98,9 @@ function renderAlbum(album) {
   "              </div>" + // end of panel-body
 
   "              <div class='panel-footer'>" +
+  "                 <div class='col-md-4'>" +
+  "                     <input id='delete-button' delete-album-id=" + album._id + " class='deleteBtn btn btn-primary' value='Delete' type='submit'></input>" +
+  "                  </div>" +
   "              </div>" +
 
   "            </div>" +
@@ -92,9 +109,9 @@ function renderAlbum(album) {
 
       // getting album div in order to append the HTML
       var $albumDiv = $("#albums");
-      
+
       $albumDiv.append(albumHtml);
-      
+
       // var $albumName = $(".album-name");
       // var $artistName = $(".artist-name");
       // var $albumReleaseDate = $(".album-releaseDate");
@@ -103,9 +120,8 @@ function renderAlbum(album) {
 
       // $albumName.last().html(album.name);
       // $artistName.last().html(album.artistName);
-      // $albumReleaseDate.last().html(album.releaseDate); 
+      // $albumReleaseDate.last().html(album.releaseDate);
 }
-
 
 
 // function buildSongsHtml (songs) {
@@ -115,10 +131,10 @@ function renderAlbum(album) {
 //     songStr = songStr + "(" + song.trackNumber + ") " + song.name + "&ndash; ";
 
 //   });
-//     var songHtml = 
-//       "<li class='list-group-item'>" + 
-//         "<h4 class='inline-header'> Songs:</h4>" + 
-//         "<span>" + songStr + "</span>" + 
+//     var songHtml =
+//       "<li class='list-group-item'>" +
+//         "<h4 class='inline-header'> Songs:</h4>" +
+//         "<span>" + songStr + "</span>" +
 //       "</li>";
 //     return songHtml;
 // }
@@ -127,7 +143,7 @@ function renderAlbum(album) {
 
 // function handleNewSongButtonClick(albums) {
 //   $('#albums').on('click', '.add-song', function(e) {
-    
+
 //     var id= $(this).parents('.album').data('album-id'); // "5665ff1678209c64e51b4e7b"
 
 //     $('#songModal').attr('album-id', id);
@@ -151,7 +167,7 @@ function renderAlbum(album) {
 //       }
 //     });
 
-    
+
 //     console.log(album[0].songs);
 
 
@@ -168,32 +184,3 @@ function renderAlbum(album) {
 //     // });
 //   });
 // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
