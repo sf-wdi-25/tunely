@@ -106,7 +106,6 @@ app.delete('/api/albums/:id', function deleteAlbum(req, res) {
 
 // UPDATE//
 
-
 app.put('/api/albums/:id', function updateAlbum(req, res) {
   console.log('updating id ', req.params.id);
   console.log('received body ', req.body);
@@ -143,6 +142,25 @@ app.post('/api/genres/index', function create(req, res) {
   });
 
 });
+
+
+
+//UPDATE genre
+
+app.put('/api/genres/:id', function updateGenre(req, res) {
+  console.log('updating id ', req.params.id);
+  console.log('received body ', req.body);
+
+  db.Genre.findOne({_id: req.params.id}, function(err, Genre) {
+    if (err) { console.log('error', err); }
+    Genre.name = req.body.name;
+    Genre.save(function(err, saved) {
+      if(err) { console.log('error', err); }
+      res.json(saved);
+    });
+  });
+});
+
 
 // delete for genres
 app.delete('/api/genres/:id', function deleteGenre(req, res) {
