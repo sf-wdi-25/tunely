@@ -67,7 +67,7 @@ app.get('/api/albums', function album_index (req, res) {
 });
 
 //CREATE
-app.post('/', function create (req, res) {
+app.post('/api/albums', function create (req, res) {
 
   var name = req.body.name;
   var artistName = req.body.artistName;
@@ -76,14 +76,14 @@ app.post('/', function create (req, res) {
   var description = req.body.description;
 
   Album.create({name: name, artistName: artistName, releaseDate: releaseDate,
-    genres: genres, description: description}, function(err, albums){
+    genres: genres, description: description}, function(err, album){
     if(err){
       console.log("OH FUCK AN ERROR! ", err);
     } else {
       // res.render(__dirname + '/views/index');
-      // res.json({albums: albums});
+      res.json(album);
 
-      res.redirect('/');
+      // res.redirect('/');
     }
   });
 });
@@ -111,6 +111,37 @@ app.put('/api/albums/:id', function update_api_album (req, res){
 
 });
   
+//SHOW INDIVIDUAL ALBUM
+app.get('/api/albums/:id', function show_api_album (req, res){
+  var id = req.params.id;
+  var album = Album.find({_id: id}, function(err, album){
+    if (err){
+      console.log("ERROR WITH API ID", err);
+    }
+    else{
+      res.json({album: album});
+    }
+  });
+
+});
+
+//DELETE INDIVIDUAL ALBUM
+app.delete('/api/albums/:id', function delete_album (req, res){
+  var id = req.params.id;
+  console.log("DELETE ALBUM: ", id);
+
+  Album.remove({_id: id}, function(err){
+    if(err){
+      console.log("ERROR WITH DELETE", err);
+    }
+    else{
+      console.log("REMOVING ALBUM: " + id + " THIS WORKED");
+      res.status(200).send();
+    }
+  });
+});
+
+
 
 
 

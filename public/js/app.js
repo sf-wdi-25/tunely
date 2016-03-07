@@ -50,12 +50,6 @@ $albums.delegate('.saveEdit', 'click', function() {
 });
 
 
-
-
-
-
-
-
   //AJAX REQUEST TO ALBUMS API
   // $.getJSON( "/api/albums", function( data ) {
   //   //Data.albums is an array of all the albums
@@ -67,12 +61,16 @@ $albums.delegate('.saveEdit', 'click', function() {
   // });
   
 
+
+
+  //this is the get call to occupy the index page with data from the db
   $.ajax({
     type: 'GET',
+    // we're pulling the data from our own api
     url: '/api/albums',
+    // data here is the JSON of albums from '/api/albums'
     success: function(data){
       $.each(data.albums, function(i, album) {
-          console.log(album);
           renderAlbum(album);
       });
     },
@@ -81,8 +79,56 @@ $albums.delegate('.saveEdit', 'click', function() {
     }
   });
 
-  $.ajax({
+  // DELETE method
+  $('#albums').delegate('.deleteBtn','click', function(){
+    // var $album = $(this).closest('.album');
 
+    var $albumId = $(this).attr('delete-album-id');
+
+    $.ajax({
+      type: 'DELETE',
+      url: '/api/albums/' + $albumId,
+      success: function(){
+        $('[data-album-id='+ $albumId + ']').remove();
+        console.log("YAY DELETE");
+      },
+      error: function(){
+        console.log("SOMETHING AINT WORKING");
+      }
+    });
+  });
+
+  // #singlebutton is the name of the submit button to make a new album
+  $('#singlebutton').on('click', function(event) {
+    event.preventDefault();
+
+    var $name = $('#name').val();
+    var $artistName = $('#artistName').val();
+    var $releaseDate = $('#releaseDate').val();
+    var $genres = $('#genres').val();
+    var $description = $('#description').val();
+
+    // here we grab the info from the form to make a new album and create
+    // a new object, newAlbum, with the input info
+    var newAlbum = {
+      name: $name, 
+      artistName: $artistName,
+      releaseDate: $releaseDate,
+      genres: $genres,
+      description: $description
+    };
+
+    $.ajax({
+      type: 'POST', 
+      url: '/api/albums',
+      data: newAlbum,
+      success: function(newAlbum){ 
+        renderAlbum(newAlbum);
+      },
+      error: function(err) {
+        alert("woah, hang on there a minute.  We've got an issue: " + err);
+      }
+    }); 
   });
 
 //end of document ready
@@ -93,10 +139,16 @@ $albums.delegate('.saveEdit', 'click', function() {
 
 // this function takes a single album and renders it to the page
 function renderAlbum(album) {
-  // console.log('rendering album:', album);
-  console.log(album);
+  // This defines a songStr that we will fill with the name and track number of each song,
+  // we will then add this onto the end of the album information
+  var songStr = "";
+  // This loops through each song on the album and adds it to songStr
+  album.songs.forEach(function(song) {
+    songStr = songStr + "(" + song.trackNumber + ") " + song.name + " &ndash; ";
+  });
 
-  var albumHtml =
+  // albumTemplate is the layout for what will be rendered for new albums
+  var albumTemplate =
   "        <!-- one album -->" +
   "        <div class='row album' data-album-id='" + album._id + "'>" +
   "          <div class='col-md-10 col-md-offset-1'>" +
@@ -129,6 +181,12 @@ function renderAlbum(album) {
   "                       <button class='editAlbum noedit'>Edit</button>" +
   "                       <button class='saveEdit edit'>Save</button>" +
   "                       <button class='cancelEdit edit'>Cancel</button>" +
+  "                        <span class='album-releaseDate'>" + album.releaseDate + "</span>" +
+  "                      </li>" +
+  "                      <li class='list-group-item'>" +
+  "                        <h4 class='inline-header'> Songs:</h4>" + 
+  "                        <span class='songsSpan'>" + songStr + "</span>" +
+  "                        <button class='songModalButton'> New Song </button>" +
   "                      </li>" +
   "                    </ul>" +
   "                  </div>" +
@@ -138,17 +196,34 @@ function renderAlbum(album) {
   "              </div>" + // end of panel-body
 
   "              <div class='panel-footer'>" +
+  "                 <div class='col-md-4'>" +
+  "                     <input id='delete-button' delete-album-id=" + album._id + " class='deleteBtn btn btn-primary' value='Delete' type='submit'></input>" +
+  "                  </div>" +
   "              </div>" +
 
   "            </div>" +
   "          </div>" +
   "          <!-- end one album -->";
 
+
       // getting album div in order to append the HTML
-      var $albumDiv = $("#albums");
-      
-      $albumDiv.append(albumHtml);
-      
+      // var $albumDiv = $("#albums");
+
+      // $albumDiv.append(albumHtml);
+  // getting album div in order to append the HTML
+  // var $albumDiv = $("#albums");
+  // Here we are appending the above template with album info filled in
+  $("#albums").append(albumTemplate);
+
+
+  // var $songs = $(".songsSpan");
+
+  // var modalBtn = $(".songModalButton");
+  // $songs.delegate('.songModalButton', 'click', function() {
+  //   $(this).modal();
+  // });
+  
+
       // var $albumName = $(".album-name");
       // var $artistName = $(".artist-name");
       // var $albumReleaseDate = $(".album-releaseDate");
@@ -157,22 +232,23 @@ function renderAlbum(album) {
 
       // $albumName.last().html(album.name);
       // $artistName.last().html(album.artistName);
-      // $albumReleaseDate.last().html(album.releaseDate); 
+      // $albumReleaseDate.last().html(album.releaseDate);
 }
 
 
+//this will build out our songs in each album and append it to the list
 
 // function buildSongsHtml (songs) {
 //   var songStr = "";
 
+//   // console.log(songs);
 //   songs.forEach(function(song) {
 //     songStr = songStr + "(" + song.trackNumber + ") " + song.name + "&ndash; ";
-
 //   });
-//     var songHtml = 
-//       "<li class='list-group-item'>" + 
-//         "<h4 class='inline-header'> Songs:</h4>" + 
-//         "<span>" + songStr + "</span>" + 
+//     var songHtml =
+//       "<li class='list-group-item'>" +
+//         "<h4 class='inline-header'> Songs:</h4>" +
+//         "<span>" + songStr + "</span>" +
 //       "</li>";
 //     return songHtml;
 // }
@@ -181,7 +257,7 @@ function renderAlbum(album) {
 
 // function handleNewSongButtonClick(albums) {
 //   $('#albums').on('click', '.add-song', function(e) {
-    
+
 //     var id= $(this).parents('.album').data('album-id'); // "5665ff1678209c64e51b4e7b"
 
 //     $('#songModal').attr('album-id', id);
@@ -205,7 +281,7 @@ function renderAlbum(album) {
 //       }
 //     });
 
-    
+
 //     console.log(album[0].songs);
 
 
@@ -265,15 +341,6 @@ function renderAlbum(album) {
 // });
 
    
-
-
-
-
-
-
-
-
-
 
 
 
