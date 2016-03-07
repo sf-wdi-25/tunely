@@ -10,6 +10,59 @@ $(document).ready(function() {
   var $albums = $('#albums');
 
 
+  $albums.delegate('.editAlbum', 'click', function() {
+  var $li = $(this).closest('li');
+  $li.find('input.album-name').val($li.find('span.album-name').html());
+  $li.find('input.artist-name').val($li.find('span.artist-name').html());
+  $li.find('input.album-releaseDate').val($li.find('span.album-releaseDate').html());
+  $li.addClass('edit');
+});
+
+$albums.delegate('.cancelEdit', 'click', function() {
+  $(this).closest('li').removeClass('edit');
+});
+
+
+$albums.delegate('.saveEdit', 'click', function() {
+  var $li = $(this).closest('li');
+  var album = {
+    artistName: $li.find('input.artist-name').val(),
+    name: $li.find('input.album-name').val(),
+    releaseDate: $li.find('input.album-releaseDate').val()
+    };
+
+    $.ajax({
+      type: 'PUT',
+      url: '/api/albums/' + $li.attr('editAlbumId'),
+      data: album,
+      success: function (newAlbum) {
+        $li.find('span.album-name').html(album.name);
+        $li.find('span.artist-name').html(album.artistName);
+        $li.find('span.album-releaseDate').html(album.releaseDate);
+        $li.removeClass('edit');
+
+      },
+      error: function() {
+        alert('error updating album');
+      }
+
+    });
+});
+
+
+  //AJAX REQUEST TO ALBUMS API
+  // $.getJSON( "/api/albums", function( data ) {
+  //   //Data.albums is an array of all the albums
+  //   data.albums.forEach(function(album) {
+  //     //we are added an entire div to the Albums div with our data embedded in jQuery
+  //     renderAlbum(album);  
+  //   });
+  //     handleNewSongButtonClick(data.albums);
+  // });
+  
+
+
+
   //this is the get call to occupy the index page with data from the db
   $.ajax({
     type: 'GET',
@@ -108,16 +161,26 @@ function renderAlbum(album) {
   "                  </div>" +
   "                  <div class='col-md-9 col-xs-12'>" +
   "                    <ul class='list-group'>" +
-  "                      <li class='list-group-item'>" +
+  "                      <li class='list-group-item' editAlbumId='"+ album._id + "''>" +
+  "                      <p>" +
   "                        <h4 class='inline-header'>Album Name:</h4>" +
-  "                        <span class='album-name'>" + album.name + "</span>" +
-  "                      </li>" +
-  "                      <li class='list-group-item'>" +
+  "                        <span class='album-name noedit'>" + album.name + "</span>" +
+  "                        <input class='edit album-name'>" +
+  "                      </p>" +
+  "                      <p>" +
   "                        <h4 class='inline-header'>Artist Name:</h4>" +
-  "                        <span class='artist-name'>" + album.artistName + "</span>" +
-  "                      </li>" +
-  "                      <li class='list-group-item'>" +
+  "                        <span class='artist-name noedit'>" + album.artistName + "</span>" +
+  "                        <input class='edit artist-name'>" +
+  "                      </p>" +
+  "                      <p>" +
   "                        <h4 class='inline-header'>Released date:</h4>" +
+  "                        <span class='album-releaseDate noedit'>" + album.releaseDate + "</span>" +
+  "                        <input class='edit album-releaseDate'>" +
+  "                      </p>" +
+
+  "                       <button class='editAlbum noedit'>Edit</button>" +
+  "                       <button class='saveEdit edit'>Save</button>" +
+  "                       <button class='cancelEdit edit'>Cancel</button>" +
   "                        <span class='album-releaseDate'>" + album.releaseDate + "</span>" +
   "                      </li>" +
   "                      <li class='list-group-item'>" +
@@ -235,3 +298,65 @@ function renderAlbum(album) {
 //     // });
 //   });
 // }
+
+
+//edit
+
+// $albums.delegate('.editAlbum', 'click', function() {
+//   var $li = $(this).closest('li');
+//   $li.find('input.album-name').val($li.find('span.album-name').html());
+//   $li.find('input.artist-name').val($li.find('span.artist-name').html());
+//   $li.find('input.album-releaseDate').val($li.find('span.album-releaseDate').html());
+//   $li.addClass('edit');
+// });
+
+// $albums.delegate('.cancelEdit', 'click', function() {
+//   $(this).closest('li').removeClass('edit');
+// });
+
+// $albums.delegate('.saveEdit', 'click', function() {
+//   var $li = $(this).closest('li');
+//   var album = {
+//     artistName: $li.find('imput.artist-name').val(),
+//     name: $li.find('imput.album-name').val(),
+//     releaseDate: $li.find('imput.album-releaseDate').val()
+//     };
+
+//     $.ajax({
+//       type: 'PUT',
+//       url: '/api/albums' + $li.attr('data-album-id'),
+//       data: album,
+//       success: function (newAlbum) {
+//         $li.find('span.album-name').html(album.name);
+//         $li.find('span.artist-name').html(album.artistName);
+//         $li.find('span.artist-name').html(releaseDate);
+//         $li.removeClass('edit');
+
+//       },
+//       error: function() {
+//         alert('error updating album');
+//       }
+
+//     });
+// });
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

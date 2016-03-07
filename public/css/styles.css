@@ -13,4 +13,14 @@
   vertical-align: baseline;
   margin-right: 12px;
 }
+ul li .edit {
+ 	display: none;
+ }
 
+ul li.edit .edit {
+ 	display: initial;
+ }
+ 
+ul li.edit .noedit {
+ 	display: none;
+ }
