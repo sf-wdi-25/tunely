@@ -1,9 +1,82 @@
 .jumbotron {
-  background-image: url(/images/background1.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
+  margin-top: 0;
+  background:
+    linear-gradient(
+      rgba(238, 195, 27, 0.25),
+      rgba(255, 197, 11, 0.45)
+    ),
+    url(../images/giftly.png);
+  /*background-size: cover;*/
+  background-repeat: repeat;
   color: #EEE;
+  /*background-color: rgba(0, 0, 255, 0.3);*/
+
+  height: 300px;
+
 }
+
+#brand-top-left{
+  width: 70px;
+}
+
+.navbar-collapse{
+  /*background-color: #414042;*/
+  background-color: rgba(0, 0, 255, 0);
+  font-family: 'Open Sans', sans-serif;
+
+  margin-bottom: 0px;
+}
+
+.header{
+  display: inline-block;
+  margin: 0 auto;
+  text-align: center;
+
+}
+
+.container{
+  font-family: 'Open Sans', sans-serif;
+}
+
+body{
+  background-color: rgba(144, 213, 219, 0.1);
+  /*background:
+    linear-gradient(
+      rgba(144, 213, 219, 0.3),
+      rgba(144, 213, 219, 0.6)
+    ),
+    url(../images/giftly.png);*/
+}
+
+.panel-footer{
+  border: 0px;
+  background-color: white;
+}
+
+#title{
+  /*font-size: 100px;
+  font-family: 'Indie Flower', cursive;*/
+  margin: 0 auto;
+  text-align: center;
+  width: 200px;
+}
+
+#kid-cubby-font{
+  margin-top: 10px;
+}
+
+#subtitle{
+  font-family: 'Indie Flower', cursive;
+  text-align: center;
+  color: #414042;
+  margin-top: 20px;
+  font-size: 25px;
+}
+
+#bear-logo{
+  width: 100px;
+}
+
 .jumbotron .container {
   height: 350px;
 }
@@ -20,12 +93,12 @@ ul li .edit {
 ul li.edit .edit {
  	display: initial;
  }
- 
+
 ul li.edit .noedit {
  	display: none;
  }
 
 .panel-footer {
 	text-align: right;
-	
+
 }

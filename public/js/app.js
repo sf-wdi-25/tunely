@@ -15,6 +15,7 @@ $(document).ready(function() {
   $li.find('input.album-name').val($li.find('span.album-name').html());
   $li.find('input.artist-name').val($li.find('span.artist-name').html());
   $li.find('input.album-releaseDate').val($li.find('span.album-releaseDate').html());
+  $li.find('input.image-url').val($li.find('span.image-url').html());
   $li.addClass('edit');
   });
 
@@ -28,7 +29,8 @@ $(document).ready(function() {
     var album = {
       artistName: $li.find('input.artist-name').val(),
       name: $li.find('input.album-name').val(),
-      releaseDate: $li.find('input.album-releaseDate').val()
+      releaseDate: $li.find('input.album-releaseDate').val(),
+      imageUrl: $li.find('input.image-url').val()
       };
 
       $.ajax({
@@ -39,6 +41,7 @@ $(document).ready(function() {
           $li.find('span.album-name').html(album.name);
           $li.find('span.artist-name').html(album.artistName);
           $li.find('span.album-releaseDate').html(album.releaseDate);
+          // $li.find('span.image-url').html(album.image-url);
           $li.removeClass('edit');
 
         },
@@ -97,6 +100,7 @@ $(document).ready(function() {
     var $releaseDate = $('#releaseDate').val();
     var $genres = $('#genres').val();
     var $description = $('#description').val();
+    var $imageUrl = $('#imageUrl').val();
 
     // here we grab the info from the form to make a new album and create
     // a new object, newAlbum, with the input info
@@ -105,7 +109,8 @@ $(document).ready(function() {
       artistName: $artistName,
       releaseDate: $releaseDate,
       genres: $genres,
-      description: $description
+      description: $description,
+      imageUrl: $imageUrl
     };
 
     $.ajax({
@@ -203,7 +208,7 @@ function renderAlbum(album) {
   "              <!-- begin album internal row -->" +
   "                <div class='row'>" +
   "                  <div class='col-md-3 col-xs-12 thumbnail album-art'>" +
-  "                     <img src='" + "http://placehold.it/400x400'" +  " alt='album image'>" +
+  "                     <img id='imageUrl' class='image-url' src=" + album.imageUrl +  " alt='album image'>" +
   "                  </div>" +
   "                  <div class='col-md-9 col-xs-12'>" +
   "                    <ul class='list-group'>" +
@@ -223,7 +228,7 @@ function renderAlbum(album) {
   "                          <span class='album-releaseDate noedit'>" + album.releaseDate + "</span>" +
   "                          <input class='edit album-releaseDate'>" +
   "                        </p>" +
-  "                        <h4 class='inline-header'> Songs:</h4>" + 
+  "                        <h4 class='inline-header'> Songs:</h4>" +
   "                        <span class='songsSpan'>" + songStr + "</span>" +
   "                        <div class='panel-footer'>" +
   "                          <button class='editAlbum noedit btn btn-info'>Edit</button>" +
