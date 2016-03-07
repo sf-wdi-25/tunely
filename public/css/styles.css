@@ -3,6 +3,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   color: #EEE;
+  margin: -20px;
 }
 .jumbotron .container {
   height: 350px;
@@ -13,7 +14,6 @@
   vertical-align: baseline;
   margin-right: 12px;
 }
-
 
 
 @font-face {
@@ -35,3 +35,9 @@
 
 
 /*plain lighy brown #C5BCB0*/
+
+.container-fluid {
+ background-color: #5AFFF7;
+ border-color: #5AFFF7;
+}
+
