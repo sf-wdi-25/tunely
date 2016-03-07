@@ -5,53 +5,152 @@
  *
  */
 
-
-/* hard-coded data! */
-var sampleAlbums = [];
-sampleAlbums.push({
-             artistName: 'Ladyhawke',
-             name: 'Ladyhawke',
-             releaseDate: '2008, November 18',
-             genres: [ 'new wave', 'indie rock', 'synth pop' ]
-           });
-sampleAlbums.push({
-             artistName: 'The Knife',
-             name: 'Silent Shout',
-             releaseDate: '2006, February 17',
-             genres: [ 'synth pop', 'electronica', 'experimental' ]
-           });
-sampleAlbums.push({
-             artistName: 'Juno Reactor',
-             name: 'Shango',
-             releaseDate: '2000, October 9',
-             genres: [ 'electronic', 'goa trance', 'tribal house' ]
-           });
-sampleAlbums.push({
-             artistName: 'Philip Wesley',
-             name: 'Dark Night of the Soul',
-             releaseDate: '2008, September 12',
-             genres: [ 'piano' ]
-           });
-/* end of hard-coded data */
-
-
-
-
+//MAIN FUNCTION
 $(document).ready(function() {
-  console.log('app.js loaded!');
+  var $albums = $('#albums');
+
+
+  $albums.delegate('.editAlbum', 'click', function() {
+  var $li = $(this).closest('li');
+  $li.find('input.album-name').val($li.find('span.album-name').html());
+  $li.find('input.artist-name').val($li.find('span.artist-name').html());
+  $li.find('input.album-releaseDate').val($li.find('span.album-releaseDate').html());
+  $li.addClass('edit');
 });
 
+$albums.delegate('.cancelEdit', 'click', function() {
+  $(this).closest('li').removeClass('edit');
+});
+
+
+$albums.delegate('.saveEdit', 'click', function() {
+  var $li = $(this).closest('li');
+  var album = {
+    artistName: $li.find('input.artist-name').val(),
+    name: $li.find('input.album-name').val(),
+    releaseDate: $li.find('input.album-releaseDate').val()
+    };
+
+    $.ajax({
+      type: 'PUT',
+      url: '/api/albums/' + $li.attr('editAlbumId'),
+      data: album,
+      success: function (newAlbum) {
+        $li.find('span.album-name').html(album.name);
+        $li.find('span.artist-name').html(album.artistName);
+        $li.find('span.album-releaseDate').html(album.releaseDate);
+        $li.removeClass('edit');
+
+      },
+      error: function() {
+        alert('error updating album');
+      }
+
+    });
+});
+
+
+  //AJAX REQUEST TO ALBUMS API
+  // $.getJSON( "/api/albums", function( data ) {
+  //   //Data.albums is an array of all the albums
+  //   data.albums.forEach(function(album) {
+  //     //we are added an entire div to the Albums div with our data embedded in jQuery
+  //     renderAlbum(album);  
+  //   });
+  //     handleNewSongButtonClick(data.albums);
+  // });
+  
+
+
+
+  //this is the get call to occupy the index page with data from the db
+  $.ajax({
+    type: 'GET',
+    // we're pulling the data from our own api
+    url: '/api/albums',
+    // data here is the JSON of albums from '/api/albums'
+    success: function(data){
+      $.each(data.albums, function(i, album) {
+          renderAlbum(album);
+      });
+    },
+    error: function(err) {
+      alert("error loading " + err);
+    }
+  });
+
+  // DELETE method
+  $('#albums').delegate('.deleteBtn','click', function(){
+    // var $album = $(this).closest('.album');
+
+    var $albumId = $(this).attr('delete-album-id');
+
+    $.ajax({
+      type: 'DELETE',
+      url: '/api/albums/' + $albumId,
+      success: function(){
+        $('[data-album-id='+ $albumId + ']').remove();
+        console.log("YAY DELETE");
+      },
+      error: function(){
+        console.log("SOMETHING AINT WORKING");
+      }
+    });
+  });
+
+  // #singlebutton is the name of the submit button to make a new album
+  $('#singlebutton').on('click', function(event) {
+    event.preventDefault();
+
+    var $name = $('#name').val();
+    var $artistName = $('#artistName').val();
+    var $releaseDate = $('#releaseDate').val();
+    var $genres = $('#genres').val();
+    var $description = $('#description').val();
+
+    // here we grab the info from the form to make a new album and create
+    // a new object, newAlbum, with the input info
+    var newAlbum = {
+      name: $name, 
+      artistName: $artistName,
+      releaseDate: $releaseDate,
+      genres: $genres,
+      description: $description
+    };
+
+    $.ajax({
+      type: 'POST', 
+      url: '/api/albums',
+      data: newAlbum,
+      success: function(newAlbum){ 
+        renderAlbum(newAlbum);
+      },
+      error: function(err) {
+        alert("woah, hang on there a minute.  We've got an issue: " + err);
+      }
+    }); 
+  });
+
+//end of document ready
+});
 
 
 
 
 // this function takes a single album and renders it to the page
 function renderAlbum(album) {
-  console.log('rendering album:', album);
+  // This defines a songStr that we will fill with the name and track number of each song,
+  // we will then add this onto the end of the album information
+  var songStr = "";
+  // This loops through each song on the album and adds it to songStr
+  album.songs.forEach(function(song) {
+    songStr = songStr + "(" + song.trackNumber + ") " + song.name + " &ndash; ";
+  });
 
-  var albumHtml =
+  // albumTemplate is the layout for what will be rendered for new albums
+  var albumTemplate =
   "        <!-- one album -->" +
-  "        <div class='row album' data-album-id='" + "HARDCODED ALBUM ID" + "'>" +
+  "        <div class='row album' data-album-id='" + album._id + "'>" +
   "          <div class='col-md-10 col-md-offset-1'>" +
   "            <div class='panel panel-default'>" +
   "              <div class='panel-body'>" +
@@ -62,31 +161,186 @@ function renderAlbum(album) {
   "                  </div>" +
   "                  <div class='col-md-9 col-xs-12'>" +
   "                    <ul class='list-group'>" +
-  "                      <li class='list-group-item'>" +
-  "                        <h4 class='inline-header'>Album Name:</h4>" +
-  "                        <span class='album-name'>" + "HARDCODED ALBUM NAME" + "</span>" +
-  "                      </li>" +
-  "                      <li class='list-group-item'>" +
-  "                        <h4 class='inline-header'>Artist Name:</h4>" +
-  "                        <span class='artist-name'>" + "HARDCODED ARTIST NAME" + "</span>" +
-  "                      </li>" +
-  "                      <li class='list-group-item'>" +
-  "                        <h4 class='inline-header'>Released date:</h4>" +
-  "                        <span class='album-releaseDate'>" + "HARDCODED RELEASE DATE" + "</span>" +
+  "                      <li class='list-group-item' editAlbumId='"+ album._id + "''>" +
+  "                        <p>" +
+  "                          <h4 class='inline-header'>Album Name:</h4>" +
+  "                          <span class='album-name noedit'>" + album.name + "</span>" +
+  "                          <input class='edit album-name'>" +
+  "                        </p>" +
+  "                        <p>" +
+  "                          <h4 class='inline-header'>Artist Name:</h4>" +
+  "                          <span class='artist-name noedit'>" + album.artistName + "</span>" +
+  "                          <input class='edit artist-name'>" +
+  "                        </p>" +
+  "                        <p>" +
+  "                          <h4 class='inline-header'>Released date:</h4>" +
+  "                          <span class='album-releaseDate noedit'>" + album.releaseDate + "</span>" +
+  "                          <input class='edit album-releaseDate'>" +
+  "                        </p>" +
+  "                        <h4 class='inline-header'> Songs:</h4>" + 
+  "                        <span class='songsSpan'>" + songStr + "</span>" +
+  "                        <div class='panel-footer'>" +
+  "                          <button class='editAlbum noedit btn btn-info'>Edit</button>" +
+  "                          <button class='saveEdit btn btn-success edit'>Save</button>" +
+  "                          <button class='cancelEdit btn btn-warning edit'>Cancel</button>" +
+  "                          <button class='songModalButton btn btn-primary'> New Song </button>" +
+  "                          <input id='delete-button' delete-album-id=" + album._id + " class='deleteBtn btn btn-danger' value='Delete' type='submit'></input>" +
+  "                        </div>" +
   "                      </li>" +
   "                    </ul>" +
   "                  </div>" +
   "                </div>" +
   "                <!-- end of album internal row -->" +
-
   "              </div>" + // end of panel-body
-
-  "              <div class='panel-footer'>" +
-  "              </div>" +
-
   "            </div>" +
   "          </div>" +
   "          <!-- end one album -->";
 
-  // render to the page with jQuery
+  // Here we are appending the above template with album info filled in
+  $("#albums").append(albumTemplate);
+
+
+  // var $songs = $(".songsSpan");
+
+  // var modalBtn = $(".songModalButton");
+  // $songs.delegate('.songModalButton', 'click', function() {
+  //   $(this).modal();
+  // });
+  
+
+      // var $albumName = $(".album-name");
+      // var $artistName = $(".artist-name");
+      // var $albumReleaseDate = $(".album-releaseDate");
+
+      // var $deleteButton = "<input method='POST' action='/' type='submit' class='.btn-danger' value='Delete'></input>";
+
+      // $albumName.last().html(album.name);
+      // $artistName.last().html(album.artistName);
+      // $albumReleaseDate.last().html(album.releaseDate);
 }
+
+
+//this will build out our songs in each album and append it to the list
+
+// function buildSongsHtml (songs) {
+//   var songStr = "";
+
+//   // console.log(songs);
+//   songs.forEach(function(song) {
+//     songStr = songStr + "(" + song.trackNumber + ") " + song.name + "&ndash; ";
+//   });
+//     var songHtml =
+//       "<li class='list-group-item'>" +
+//         "<h4 class='inline-header'> Songs:</h4>" +
+//         "<span>" + songStr + "</span>" +
+//       "</li>";
+//     return songHtml;
+// }
+
+
+
+// function handleNewSongButtonClick(albums) {
+//   $('#albums').on('click', '.add-song', function(e) {
+
+//     var id= $(this).parents('.album').data('album-id'); // "5665ff1678209c64e51b4e7b"
+
+//     $('#songModal').attr('album-id', id);
+//     $('#songModal').modal();
+
+//     handleNewSongSubmit(albums, id);
+
+//   });
+// }
+
+
+// function handleNewSongSubmit(albums, id) {
+//   $('#saveSong').on('click', function(event) {
+//     event.preventDefault();
+
+//     var album = albums.filter(function(selectedAlbum){
+
+//       if(id == selectedAlbum._id){
+//         return selectedAlbum;
+//         // console.log(selectedAlbum._id);
+//       }
+//     });
+
+
+//     console.log(album[0].songs);
+
+
+//     var $songName = $("#songName").val();
+//     var $trackNumber = $("#trackNumber").val();
+
+//     var songObject = {
+//       name: $songName,
+//       trackNumber: $trackNumber
+//     };
+//     // console.log(songObject);
+//     // $.postJSON( "/api/albums", function( data ) {
+//       album[0].songs.push(songObject);
+//     // });
+//   });
+// }
+
+
+//edit
+
+// $albums.delegate('.editAlbum', 'click', function() {
+//   var $li = $(this).closest('li');
+//   $li.find('input.album-name').val($li.find('span.album-name').html());
+//   $li.find('input.artist-name').val($li.find('span.artist-name').html());
+//   $li.find('input.album-releaseDate').val($li.find('span.album-releaseDate').html());
+//   $li.addClass('edit');
+// });
+
+// $albums.delegate('.cancelEdit', 'click', function() {
+//   $(this).closest('li').removeClass('edit');
+// });
+
+// $albums.delegate('.saveEdit', 'click', function() {
+//   var $li = $(this).closest('li');
+//   var album = {
+//     artistName: $li.find('imput.artist-name').val(),
+//     name: $li.find('imput.album-name').val(),
+//     releaseDate: $li.find('imput.album-releaseDate').val()
+//     };
+
+//     $.ajax({
+//       type: 'PUT',
+//       url: '/api/albums' + $li.attr('data-album-id'),
+//       data: album,
+//       success: function (newAlbum) {
+//         $li.find('span.album-name').html(album.name);
+//         $li.find('span.artist-name').html(album.artistName);
+//         $li.find('span.artist-name').html(releaseDate);
+//         $li.removeClass('edit');
+
+//       },
+//       error: function() {
+//         alert('error updating album');
+//       }
+
+//     });
+// });
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
