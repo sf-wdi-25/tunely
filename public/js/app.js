@@ -65,7 +65,7 @@ $(document).ready(function() {
 
    $('#genres').on('click', '.edit-genre', EditGenre);
 
-  $('#genres').on('click', '.put-genre', SaveGenre);
+  $('#').on('click', '.put-genre', SaveGenre);
 
   //update method
   function getAlbumRowById(id) {
@@ -258,7 +258,7 @@ function renderAlbum(album) {
   "              <!-- begin album internal row -->" +
   "                <div class='row'>" +
   "                  <div class='col-md-3 col-xs-12 thumbnail album-art'>" +
-  "                     <img src='" + "http://placehold.it/400x400'" +  " alt='album image'>" +
+  "                     <img src='  " + "    album.coverImage'   " +  "   alt='album image'>" +
   "                  </div>" +
   "                  <div class='col-md-9 col-xs-12'>" +
   "                    <ul class='list-group'>" +
@@ -274,6 +274,10 @@ function renderAlbum(album) {
   "                        <h4 class='inline-header'>Released date:</h4>" +
   "                        <span class='album-release-date'>" + album.releaseDate + "</span>" +
   "                      </li>" +
+  // "                      <li class='list-group-item'>" +
+  // "                        <h4 class='inline-header'>Cover Image:</h4>" +
+  // "                        <span class='cover-image'>" + album.coverImage + "</span>" +
+  // "                      </li>" +
   "                    </ul>" +
   "                  </div>" +
   "                </div>" +
@@ -282,9 +286,9 @@ function renderAlbum(album) {
   "              </div>" + // end of panel-body
 
   "              <div class='panel-footer'>" +
-  "                <button class='btn btn-info edit-album'>Edit Album</button>" +
-  "                <button class='btn btn-success put-album default-hidden'>Save Changes</button>" +
-  "                <button class='btn btn-danger delete-album'>Delete Album</button>" +
+  "                <button class='btn btn-color edit-album'>Edit Album</button>" +
+  "                <button class='btn btn-color put-album default-hidden'>Save Changes</button>" +
+  "                <button class='btn btn-color delete-album'>Delete Album</button>" +
   "              </div>" +
 
   "            </div>" +
@@ -320,9 +324,9 @@ function renderGenre(genre){
   "              </div>" + // end of panel-body
 
   "              <div class='panel-footer'>" +
-  "                <button class='btn btn-info edit-genre'>Edit Album</button>" +
-  "                <button class='btn btn-success put-genre default-hidden'>Save Changes</button>" +
-  "                <button class='btn btn-danger delete-genre'>Delete Genre</button>" +
+  "                <button class='btn btn-color edit-genre'>Edit Album</button>" +
+  "                <button class='btn btn-color put-genre default-hidden'>Save Changes</button>" +
+  "                <button class='btn btn-color delete-genre'>Delete Genre</button>" +
   "              </div>" +
 
   "            </div>" +
