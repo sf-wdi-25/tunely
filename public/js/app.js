@@ -33,6 +33,8 @@ sampleAlbums.push({
 /* end of hard-coded data */
 
 $(document).ready(function() {
+
+  //splash page fadein
   console.log('app.js loaded!');
 
   if($(".splash").is(":visible"))
@@ -42,12 +44,9 @@ $(document).ready(function() {
   $("#vinyl").click(function()
   {
     $(".splash").slideUp("800", function() {
-        $(".wrapper").delay(100).animate({"opacity":"1.0"},800);
+        $(".wrapper").delay(200).animate({"opacity":"1.0"},800);
      });
   });
-
-
-
 
 // AJAX album methods
   //get method
