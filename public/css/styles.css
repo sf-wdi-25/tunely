@@ -41,3 +41,12 @@
  border-color: #5AFFF7;
 }
 
+.navbar-brand {
+	padding: 0px;
+	padding-left: 10px;
+	padding-top: 8px;
+}
+
+.navbar-brand > img {
+	height: 32px;
+}
