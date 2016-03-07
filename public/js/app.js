@@ -35,10 +35,6 @@ sampleAlbums.push({
 $(document).ready(function() {
   console.log('app.js loaded!');
 
-//   $('#vinyl').click(function () {
-//     $('#splashscreen').fadeOut(4000);   
-// });
-
   if($(".splash").is(":visible"))
   {
     $(".wrapper").css({"opacity":"0"});
