@@ -5,6 +5,7 @@ var AlbumSchema = mongoose.Schema({
 	name: String,
 	releaseDate: String,
 	genres: [ String ],
+	imageUrl: String,
 	description: String,
 	songs: [Song.schema]
 });
@@ -12,8 +13,3 @@ var AlbumSchema = mongoose.Schema({
 var Album = mongoose.model('Album', AlbumSchema);
 
 module.exports = Album;
-
-
-
-
-

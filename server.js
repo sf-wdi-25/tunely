@@ -74,9 +74,10 @@ app.post('/api/albums', function create (req, res) {
   var releaseDate = req.body.releaseDate;
   var genres = req.body.genres;
   var description = req.body.description;
+  var imageUrl = req.body.imageUrl;
 
   Album.create({name: name, artistName: artistName, releaseDate: releaseDate,
-    genres: genres, description: description}, function(err, album){
+    genres: genres, description: description, imageUrl: imageUrl}, function(err, album){
     if(err){
       console.log("OH FUCK AN ERROR! ", err);
     } else {
@@ -90,7 +91,7 @@ app.post('/api/albums', function create (req, res) {
 
 //CREATE SONGS
 app.post('/api/albums', function create_song (req, res) {
-  
+
   var name = req.body.name;
   var trackNumber = req.body.trackNumber;
 
@@ -124,6 +125,8 @@ app.put('/api/albums/:id', function update_api_album (req, res){
     album.name = req.body.name;
     album.artistName = req.body.artistName;
     album.releaseDate = req.body.releaseDate;
+    album.imageUrl = req.body.imageUrl; //Not implemented yet in other functions
+
     album.save(function(err, saved) {
       if (err) {
         console.log(err);

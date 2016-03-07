@@ -11,25 +11,29 @@ var albumsList =[
     artistName: 'Nine Inch Nails',
     name: 'The Downward Spiral',
     releaseDate: '1994, March 8',
-    genres: [ 'industrial', 'industrial metal' ]
+    genres: [ 'industrial', 'industrial metal' ],
+		imageUrl: "images/400x400.png"
   },
 	{
     artistName: 'Metallica',
     name: 'Metallica',
     releaseDate: '1991, August 12',
-    genres: [ 'heavy metal' ]
+    genres: [ 'heavy metal' ],
+		imageUrl: "images/400x400.png"
   },
 	{
     artistName: 'The Prodigy',
     name: 'Music for the Jilted Generation',
     releaseDate: '1994, July 4',
-    genres: [ 'electronica', 'breakbeat hardcore', 'rave', 'jungle' ]
+    genres: [ 'electronica', 'breakbeat hardcore', 'rave', 'jungle' ],
+		imageUrl: "images/400x400.png"
   },
 	{
     artistName: 'Johnny Cash',
     name: 'Unchained',
     releaseDate: '1996, November 5',
-    genres: [ 'country', 'rock' ]
+    genres: [ 'country', 'rock' ],
+		imageUrl: "images/400x400.png"
   }
 ];
 
@@ -65,8 +69,8 @@ albumsList.forEach(function(album) {
 Album.remove({}, function(err, albums){
 
   Album.create(albumsList, function(err, albums){
-    if (err) { 
-      return console.log('ERROR', err); 
+    if (err) {
+      return console.log('ERROR', err);
     } else {
       console.log("all albums:", albums);
       console.log("created", albums.length, "albums");
@@ -76,4 +80,3 @@ Album.remove({}, function(err, albums){
   });
 
 });
-
