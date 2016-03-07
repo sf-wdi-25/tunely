@@ -162,56 +162,40 @@ function renderAlbum(album) {
   "                  <div class='col-md-9 col-xs-12'>" +
   "                    <ul class='list-group'>" +
   "                      <li class='list-group-item' editAlbumId='"+ album._id + "''>" +
-  "                      <p>" +
-  "                        <h4 class='inline-header'>Album Name:</h4>" +
-  "                        <span class='album-name noedit'>" + album.name + "</span>" +
-  "                        <input class='edit album-name'>" +
-  "                      </p>" +
-  "                      <p>" +
-  "                        <h4 class='inline-header'>Artist Name:</h4>" +
-  "                        <span class='artist-name noedit'>" + album.artistName + "</span>" +
-  "                        <input class='edit artist-name'>" +
-  "                      </p>" +
-  "                      <p>" +
-  "                        <h4 class='inline-header'>Released date:</h4>" +
-  "                        <span class='album-releaseDate noedit'>" + album.releaseDate + "</span>" +
-  "                        <input class='edit album-releaseDate'>" +
-  "                      </p>" +
-
-  "                       <button class='editAlbum noedit'>Edit</button>" +
-  "                       <button class='saveEdit edit'>Save</button>" +
-  "                       <button class='cancelEdit edit'>Cancel</button>" +
-  "                        <span class='album-releaseDate'>" + album.releaseDate + "</span>" +
-  "                      </li>" +
-  "                      <li class='list-group-item'>" +
+  "                        <p>" +
+  "                          <h4 class='inline-header'>Album Name:</h4>" +
+  "                          <span class='album-name noedit'>" + album.name + "</span>" +
+  "                          <input class='edit album-name'>" +
+  "                        </p>" +
+  "                        <p>" +
+  "                          <h4 class='inline-header'>Artist Name:</h4>" +
+  "                          <span class='artist-name noedit'>" + album.artistName + "</span>" +
+  "                          <input class='edit artist-name'>" +
+  "                        </p>" +
+  "                        <p>" +
+  "                          <h4 class='inline-header'>Released date:</h4>" +
+  "                          <span class='album-releaseDate noedit'>" + album.releaseDate + "</span>" +
+  "                          <input class='edit album-releaseDate'>" +
+  "                        </p>" +
   "                        <h4 class='inline-header'> Songs:</h4>" + 
   "                        <span class='songsSpan'>" + songStr + "</span>" +
-  "                        <button class='songModalButton'> New Song </button>" +
+  "                        <div class='panel-footer'>" +
+  "                          <button class='editAlbum noedit btn btn-info'>Edit</button>" +
+  "                          <button class='saveEdit btn btn-success edit'>Save</button>" +
+  "                          <button class='cancelEdit btn btn-warning edit'>Cancel</button>" +
+  "                          <button class='songModalButton btn btn-primary'> New Song </button>" +
+  "                          <input id='delete-button' delete-album-id=" + album._id + " class='deleteBtn btn btn-danger' value='Delete' type='submit'></input>" +
+  "                        </div>" +
   "                      </li>" +
   "                    </ul>" +
   "                  </div>" +
   "                </div>" +
   "                <!-- end of album internal row -->" +
-
   "              </div>" + // end of panel-body
-
-  "              <div class='panel-footer'>" +
-  "                 <div class='col-md-4'>" +
-  "                     <input id='delete-button' delete-album-id=" + album._id + " class='deleteBtn btn btn-primary' value='Delete' type='submit'></input>" +
-  "                  </div>" +
-  "              </div>" +
-
   "            </div>" +
   "          </div>" +
   "          <!-- end one album -->";
 
-
-      // getting album div in order to append the HTML
-      // var $albumDiv = $("#albums");
-
-      // $albumDiv.append(albumHtml);
-  // getting album div in order to append the HTML
-  // var $albumDiv = $("#albums");
   // Here we are appending the above template with album info filled in
   $("#albums").append(albumTemplate);
 
