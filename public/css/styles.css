@@ -24,3 +24,8 @@ ul li.edit .edit {
 ul li.edit .noedit {
  	display: none;
  }
+
+.panel-footer {
+	text-align: right;
+	
+}
