@@ -44,7 +44,7 @@ $(document).ready(function() {
   $("#vinyl").click(function()
   {
     $(".splash").slideUp("800", function() {
-        $(".wrapper").delay(200).animate({"opacity":"1.0"},800);
+        $(".wrapper").delay(200).animate({"opacity":"1.0"});
      });
   });
 
