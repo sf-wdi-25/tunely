@@ -41,7 +41,7 @@ $(document).ready(function() {
           $li.find('span.album-name').html(album.name);
           $li.find('span.artist-name').html(album.artistName);
           $li.find('span.album-releaseDate').html(album.releaseDate);
-          $li.find('span.image-url').html(album.image-url);
+          // $li.find('span.image-url').html(album.image-url);
           $li.removeClass('edit');
 
         },

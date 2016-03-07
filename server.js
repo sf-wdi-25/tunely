@@ -125,7 +125,7 @@ app.put('/api/albums/:id', function update_api_album (req, res){
     album.name = req.body.name;
     album.artistName = req.body.artistName;
     album.releaseDate = req.body.releaseDate;
-    album.imageUrl = req.body.imageUrl; //Not implemented yet in other functions
+    // album.imageUrl = req.body.imageUrl; //Not implemented yet in other functions
 
     album.save(function(err, saved) {
       if (err) {
