@@ -3,6 +3,7 @@
   background-size: cover;
   background-repeat: no-repeat;
   color: #EEE;
+  margin: -20px;
 }
 
 .jumbotron .container {
@@ -73,4 +74,19 @@
     -webkit-animation-iteration-count: infinite;
     -webkit-animation-timing-function: linear;
     cursor: pointer;
+}
+
+.container-fluid {
+ background-color: #5AFFF7;
+ border-color: #5AFFF7;
+}
+
+.navbar-brand {
+	padding: 0px;
+	padding-left: 10px;
+	padding-top: 8px;
+}
+
+.navbar-brand > img {
+	height: 32px;
 }
