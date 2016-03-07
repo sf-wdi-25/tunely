@@ -66,7 +66,7 @@ app.get('/api/albums', function album_index (req, res) {
   });
 });
 
-//CREATE
+//CREATE ALBUM
 app.post('/api/albums', function create (req, res) {
 
   var name = req.body.name;
@@ -82,6 +82,30 @@ app.post('/api/albums', function create (req, res) {
     } else {
       // res.render(__dirname + '/views/index');
       res.json(album);
+
+      // res.redirect('/');
+    }
+  });
+});
+
+//CREATE SONGS
+app.post('/api/albums', function create_song (req, res) {
+  
+  var name = req.body.name;
+  var trackNumber = req.body.trackNumber;
+
+  console.log(trackNumber);
+
+  console.log(Album.songs);
+
+  Album.songs.create({name: name, trackNumber: trackNumber}, function(err, song){
+    if(err){
+      console.log("OH FUCK AN ERROR! ", err);
+    } else {
+      // res.render(__dirname + '/views/index');
+
+      console.log(song);
+      res.json(song);
 
       // res.redirect('/');
     }
@@ -110,7 +134,7 @@ app.put('/api/albums/:id', function update_api_album (req, res){
   });
 
 });
-  
+
 //SHOW INDIVIDUAL ALBUM
 app.get('/api/albums/:id', function show_api_album (req, res){
   var id = req.params.id;
