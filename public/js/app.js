@@ -65,7 +65,7 @@ $(document).ready(function() {
 
    $('#genres').on('click', '.edit-genre', EditGenre);
 
-  $('#').on('click', '.put-genre', SaveGenre);
+  $('#genres').on('click', '.put-genre', SaveGenre);
 
   //update method
   function getAlbumRowById(id) {
@@ -258,7 +258,7 @@ function renderAlbum(album) {
   "              <!-- begin album internal row -->" +
   "                <div class='row'>" +
   "                  <div class='col-md-3 col-xs-12 thumbnail album-art'>" +
-  "                     <img src='  " + "    album.coverImage'   " +  "   alt='album image'>" +
+  "                     <img src='" + album.coverImage + "' alt='album image'>" +
   "                  </div>" +
   "                  <div class='col-md-9 col-xs-12'>" +
   "                    <ul class='list-group'>" +
