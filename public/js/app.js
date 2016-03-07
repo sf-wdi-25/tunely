@@ -35,6 +35,24 @@ sampleAlbums.push({
 $(document).ready(function() {
   console.log('app.js loaded!');
 
+//   $('#vinyl').click(function () {
+//     $('#splashscreen').fadeOut(4000);   
+// });
+
+  if($(".splash").is(":visible"))
+  {
+    $(".wrapper").css({"opacity":"0"});
+  }
+  $("#vinyl").click(function()
+  {
+    $(".splash").slideUp("800", function() {
+        $(".wrapper").delay(100).animate({"opacity":"1.0"},800);
+     });
+  });
+
+
+
+
 // AJAX album methods
   //get method
   $.get('/api/albums').success(function (albums) {
@@ -336,5 +354,13 @@ function renderGenre(genre){
 
   $("#genres").append(genreHtml);
 }
+
+$(window).scroll(function() {
+      $(window).off("scroll");
+    $(".splash").slideUp("800", function() {
+    $("html, body").animate({"scrollTop":"0px"},100);
+    $(".wrapper").delay(100).animate({"opacity":"1.0"},800);
+ });
+ });
 
 
