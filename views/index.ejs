@@ -23,6 +23,7 @@
   <body>
     <div class="jumbotron">
 
+   
    <!--    Start Form -->
      <section id='album-form' class="container">
       <div class="row">
@@ -32,11 +33,11 @@
           <fieldset>
 
             <!-- Form Name -->
-            <legend>Add New Album</legend>
+            <legend class ="legend2">Add New Album</legend>
 
             <!-- Text input-->
             <div class="form-group">
-              <label class="col-md-4 control-label" for="name">Album Name</label>
+              <label class="aFonts col-md-4 control-label" for="name">Album Name</label>
               <div class="col-md-6">
               <input id="name" name="name" type="text" placeholder="" class="form-control input-md" required="">
 
@@ -45,7 +46,7 @@
 
             <!-- Text input-->
             <div class="form-group">
-              <label class="col-md-4 control-label" for="artistName">Artist Name</label>
+              <label class=" aFonts col-md-4 control-label" for="artistName">Artist Name</label>
               <div class="col-md-6">
               <input id="textinput" name="artistName" type="text" placeholder="" class="form-control input-md">
 
@@ -54,7 +55,7 @@
 
             <!-- Text input-->
             <div class="form-group">
-              <label class="col-md-4 control-label" for="releaseDate">Release Date</label>
+              <label class="aFonts col-md-4 control-label" for="releaseDate">Release Date</label>
               <div class="col-md-6">
               <input id="releaseDate" name="releaseDate" type="text" placeholder="1992" class="form-control input-md">
 
@@ -63,7 +64,7 @@
 
             <!-- Textarea -->
             <div class="form-group">
-              <label class="col-md-4 control-label" for="genres">Genres (separated by commas)</label>
+              <label class=" aFonts col-md-4 control-label" for="genres">Genres (separated by commas)</label>
               <div class="col-md-6">
                 <textarea class="form-control" id="genres" name="genres">rock, pop</textarea>
               </div>
@@ -71,7 +72,7 @@
 
             <!-- Text input-->
             <div class="form-group">
-              <label class="col-md-4 control-label" for="coverImage">Cover Image</label>
+              <label class="aFonts col-md-4 control-label" for="coverImage">Cover Image</label>
               <div class="col-md-6">
               <input id="coverImage" name="coverImage" type="text" placeholder="URL" class="form-control input-md">
 
@@ -79,14 +80,11 @@
             </div>
 
 
-
-
-
             <!-- Button -->
             <div class="form-group">
-              <label class="col-md-4 control-label" for="singlebutton">Save Album</label>
+              <label class="aFonts col-md-4 control-label" for="singlebutton">Save Album</label>
               <div class="col-md-4">
-                <button id="singlebutton" class="btn btn-primary" name="singlebutton">Submit</button>
+                <button id="singlebutton" class="mainbtn btn " name="singlebutton">Submit</button>
               </div>
             </div>
           </fieldset>
@@ -96,8 +94,8 @@
     </section>
    <!--  End Form -->
       <div class="container">
-        <h1 class="vaporfont">Welcome to tunely</h1>
-        <p>Your music binder!</p>
+        <h1 class="vaporfont">Welcome to Tune.ly</h1>
+        <p>Not your ordinary music!</p>
       </div>
     </div>
 
@@ -111,6 +109,8 @@
       <div id='albums'>
 
       </div>
+
+      <img class= "statue" src="./images/vstatue1.png" alt="picture">
     </section>
 
     <!-- begin songModal: this is not visible until you call .modal() on it -->
