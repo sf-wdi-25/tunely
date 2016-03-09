@@ -8,6 +8,21 @@ var bodyParser = require('body-parser');
 var db = require('./models');
 var Album = require('./models/album');
 var path = require('path');
+var expressSession = require('express-session');
+var cookieParser   = require("cookie-parser");
+
+var passport = require('passport');
+var User = require('./models/user');
+
+// Middleware
+app.use( cookieParser() );
+app.use(expressSession({secret: 'mySecretKey'}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Setting up the Passport Strategies
+require("./config/passport")(passport);
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -33,12 +48,34 @@ app.use(express.static(__dirname + '/public'));
  * HTML Endpoints
  */
 
-//
+
+
+//LOGIN
+// app.get('/login', function homepage (req, res) {
+//   res.render('login', {user: req.user});
+// });
+
+//authenticate with facebook
+app.get('/auth/facebook', passport.authenticate('facebook', { scope: 'email'} ));
+//redirect to index if logged in
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', {
+    successRedirect: '/',
+    failureRedirect: '/'
+  })
+);
+
+
+//ROOT
 app.get('/', function homepage (req, res) {
-  res.render(__dirname + '/views/index.ejs');
+  res.render(__dirname + '/views/index.ejs', {user: req.user});
 });
 
-
+//LOGOUT
+app.get("/logout", function logout(req, res){
+  req.logout();
+  res.redirect("/")
+});
 
 /*
  * JSON API Endpoints
