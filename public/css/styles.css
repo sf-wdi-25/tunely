@@ -15,6 +15,12 @@
 
 }
 
+.username{
+  float: right;
+  margin-top: 15px;
+  font-weight: bolder;
+}
+
 #brand-top-left{
   width: 70px;
 }
