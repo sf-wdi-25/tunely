@@ -5,53 +5,50 @@
  *
  */
 
+// var Album = require('./models/album');
 
 /* hard-coded data! */
-var sampleAlbums = [];
-sampleAlbums.push({
-             artistName: 'Ladyhawke',
-             name: 'Ladyhawke',
-             releaseDate: '2008, November 18',
-             genres: [ 'new wave', 'indie rock', 'synth pop' ]
-           });
-sampleAlbums.push({
-             artistName: 'The Knife',
-             name: 'Silent Shout',
-             releaseDate: '2006, February 17',
-             genres: [ 'synth pop', 'electronica', 'experimental' ]
-           });
-sampleAlbums.push({
-             artistName: 'Juno Reactor',
-             name: 'Shango',
-             releaseDate: '2000, October 9',
-             genres: [ 'electronic', 'goa trance', 'tribal house' ]
-           });
-sampleAlbums.push({
-             artistName: 'Philip Wesley',
-             name: 'Dark Night of the Soul',
-             releaseDate: '2008, September 12',
-             genres: [ 'piano' ]
-           });
+// var sampleAlbums = [];
+// sampleAlbums.push({
+//              artistName: 'Ladyhawke',
+//              name: 'Ladyhawke',
+//              releaseDate: '2008, November 18',
+//              genres: [ 'new wave', 'indie rock', 'synth pop' ]
+//            });
+// sampleAlbums.push({
+//              artistName: 'The Knife',
+//              name: 'Silent Shout',
+//              releaseDate: '2006, February 17',
+//              genres: [ 'synth pop', 'electronica', 'experimental' ]
+//            });
+// sampleAlbums.push({
+//              artistName: 'Juno Reactor',
+//              name: 'Shango',
+//              releaseDate: '2000, October 9',
+//              genres: [ 'electronic', 'goa trance', 'tribal house' ]
+//            });
+// sampleAlbums.push({
+//              artistName: 'Philip Wesley',
+//              name: 'Dark Night of the Soul',
+//              releaseDate: '2008, September 12',
+//              genres: [ 'piano' ]
+//            });
 /* end of hard-coded data */
 
 
-
-
 $(document).ready(function() {
-  console.log('app.js loaded!');
+ 
+  renderAlbum(albums);
 });
-
-
-
 
 
 // this function takes a single album and renders it to the page
 function renderAlbum(album) {
-  console.log('rendering album:', album);
+ 
 
   var albumHtml =
   "        <!-- one album -->" +
-  "        <div class='row album' data-album-id='" + "HARDCODED ALBUM ID" + "'>" +
+  "        <div class='row album' data-album-id='" + "'>" +
   "          <div class='col-md-10 col-md-offset-1'>" +
   "            <div class='panel panel-default'>" +
   "              <div class='panel-body'>" +
@@ -64,15 +61,15 @@ function renderAlbum(album) {
   "                    <ul class='list-group'>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Album Name:</h4>" +
-  "                        <span class='album-name'>" + "HARDCODED ALBUM NAME" + "</span>" +
+  "                        <span class='album-name'>" + "</span>" +
   "                      </li>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Artist Name:</h4>" +
-  "                        <span class='artist-name'>" + "HARDCODED ARTIST NAME" + "</span>" +
+  "                        <span class='artist-name'>" + "</span>" +
   "                      </li>" +
   "                      <li class='list-group-item'>" +
   "                        <h4 class='inline-header'>Released date:</h4>" +
-  "                        <span class='album-releaseDate'>" + "HARDCODED RELEASE DATE" + "</span>" +
+  "                        <span class='album-releaseDate'>" + "</span>" +
   "                      </li>" +
   "                    </ul>" +
   "                  </div>" +
@@ -88,5 +85,46 @@ function renderAlbum(album) {
   "          </div>" +
   "          <!-- end one album -->";
 
-  // render to the page with jQuery
+
+
+
+//   $.get( "ajax/test.html", function( data ) {
+//   $( ".result" ).html( data );
+//   alert( "Load was performed." );
+// });
+
+$.getJSON( "/api/albums", function( data ) {
+    console.log("here are my albums:", data.albums);
+
+
+    data.albums.forEach(function(album) {
+    
+
+      console.log(album);
+      var $albumDiv = $("#albums");
+      
+      $albumDiv.append(albumHtml);
+      
+      var $albumName = $(".album-name");
+      var $artistName = $(".artist-name");
+      var $albumReleaseDate = $(".album-releaseDate");
+
+      $albumName.last().html(album.name);
+      $artistName.last().html(album.artistName);
+
+      $albumReleaseDate.last().html(album.releaseDate); 
+
+    });
+
+});
+    
+
+
+
+
+
+  
 }
+
+
+// $.ajax('/api/albums');
