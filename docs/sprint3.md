@@ -1,75 +1,82 @@
-# Sprint 3
+# Tune.ly Sprint 3
 
 ## Overview
 
 This sprint we will:
-* add an embedded Song model to our Album model
-* change the UI to allow users to see songs in the embedded model
+* add a Song resource
+* update the `Album` model to include embedded songs
+* change the UI to allow users to see songs in an album
 
+> Note: if you get stuck going through this, make use of the hints, your neighbors, and the solutions for sprint 3.
 
-> Note: as we go through this if you get stuck make use of the hints, your neighbors and the solutions.
+> You must complete all of the previous sprint before starting this sprint (excluding stretch challenges).
 
-> You must complete all of the previous sprint before starting this sprint. (excludes stretch challenges)
-
-In this step we'll be changing our Album schema to have an embedded schema that contains songs.
+In this step, we'll be changing our album schema to have an embedded array of songs.
 
 The data from the database will look a little like this:
 
 ```js
 { genres: [ 'new wave', 'indie rock', 'synth pop' ],
     songs:
-     [ { _id: 5665ff1678209c64e51b4e6a,
+     [ { _id: a665ff1678209c64e51b4e6a,
          trackNumber: 1,
          name: 'Swamped' },
-       { _id: 5665ff1678209c64e51b4e64,
+       { _id: a665ff1678209c64e51b4e64,
          trackNumber: 7,
          name: 'Tight Rope' } ],
-    _id: 5665ff1678209c64e51b4e63,
+    _id: a665ff1678209c64e51b4e63,
     releaseDate: '2008, November 18',
     name: 'Comalies',
     artistName: 'Lacuna Coil',
     __v: 0 },
 ```
 
-* note that `songs` has been added and is an array of other records!
+> In the output above, you can see that `songs` has been added and is an array of MongoDB documents!
 
 
-## Step 1: Create the new model
+## Step 1: Create the new model.
 
-1. Create a `models/song.js`
+We're going to create an embedded model for songs and embed it in albums.  We've chosen to embed songs because albums usually have unique songs on them.  
 
-1. Open the file and create a model with properties like:
+1. Create a `models/song.js` file.
 
-```js
-  name: String,
-  trackNumber: Number
-```
+1. Open the file and create a song schema with properties including:
 
-1. Export the module and require it in `models/index.js`
+  ```js
+    name: String,
+    trackNumber: Number
+  ```
 
-1. Require `./song.js` in `./albums.js`
+1. Use your schema to create a `Song` model.
 
-1. Alter the schema of Album to have a songs array that uses the `Song.schema`
+1. Export the `Song` model, and require it in `models/index.js`.
 
-## Step 2: Seeding
+1. Require `./song.js` in `./albums.js`.
 
-Let's add seeds.  Some basic data is [provided for you](/docs/code_samples/sprint3_song_seeds.js).
-We're going to use this data for all albums for now, even though it's not accurate.
+1. Alter the `AlbumSchema` to have a `songs` array that uses the song schema (available through the model as `Song.schema`).
 
-1. Copy the sample songs into `seed.js`
+> You may have seen embedded models defined in the same file as the model that it's embedded in; that's OK.  Here we're building it in a separate file.
 
-1. Write a `forEach` loop that adds the sample songs to each sampleAlbum in `seed.js`.  Compare your work to the sample above.
+## Step 2: Seeding Songs
+
+Let's add song seeds.  Some basic data is provided for you in a [code sample](/docs/code_samples/sprint3_song_seeds.js).
+
+
+We're going to use this same data for all albums for now, even though obviously not all albums actually have the same list of songs.
+
+1. Copy the sample songs into `seed.js`.
+
+1. Write a `forEach` call to add the sample songs to every sample album in the array in `seed.js`.  
 
 1. Run `node seed.js`
 
-1. Fix any issues you encounter, until you can see that it's also adding songs for each album.
+1. Fix any issues you encounter, until you can see that your seed file is also adding songs for each album.  
 
-## Step 3: display
+## Step 3: Display Songs
 
-Let's go back to `app.js` and our html.  If you check the output of your AJAX call, you should see that we're already retrieving songs with each album.  Double-check this before you proceed.  
+Let's go back to `app.js` and our HTML.  If you check the output of your AJAX call, you should see that we're already retrieving songs with each album just because of the embedded structure we've set up on the back-end.  Before you proceed, double-check this by logging the response in the browser console.  
 
-We'll change the client to add another `<li>` after the ones that are already being generated for each album.  We'll list our songs in there.
-For now we're just going to make this super simple and output something like:
+We'd like to list songs along with each album.  For now, keep this simple using HTML something like:
 
 ```html
 <li class="list-group-item">
@@ -78,179 +85,187 @@ For now we're just going to make this super simple and output something like:
 </li>
 ```
 
+1. Modify the HTML template string to include a section listing all the songs in the album. To simplify this process, consider building up your list of songs outside of the template.
 
-1. In `app.js`, create a new function `function buildSongsHtml(songs) {}`
+  Hint: You can use the array method `.join()` to quickly combine all the song names, but a better solution would probably involve first using `.map` to build up an array of HTML strings (e.g. `["- (1) Swamped", "- (2) Heaven's a Lie"]`) before joining them together.
 
-1. Make buildSongsHtml return the HTML shown above (or similar).  It should take in an **array of songs**.  It should return an **HTML string**.
-
-<details><summary>Hint: making a long dash &ndash; </summary>
-Use `&ndash;`
-</details>
-
-<details><summary>Hint: `function buildSongsHtml(songs) {}`</summary>
-```js  
-function buildSongsHtml(songs) {
-  var songText = "	&ndash; ";
-  songs.forEach(function(song) {
-     songText = songText + "(" + song.trackNumber + ") " + song.name + " &ndash; ";
-  });
-  var songsHtml  =
-  "                      <li class='list-group-item'>" +
-  "                        <h4 class='inline-header'>Songs:</h4>" +
-  "                         <span>" + songText + "</span>" +
-  "                      </li>";
-  return songsHtml;
-}
-```
-</details>
-
-1. Now call `buildSongsHtml` from inside `renderAlbum`. Use it to add the 4th `<li>` to each album.
-
+1. Test to make sure this is working. Once your template is set, you should see the songs listed under each album on the page.
 
 ## Step 4: Create Songs
 
-Now let's create the functionality to add new songs.  To do this we're going to use a button to open a bootstrap modal.
-Fortunately, the modal is already setup for you in `index.html`.  We will have to add a button to trigger it.  Also since the modal will be used for creating a song for any album we'll have to track that.  
+Now let's create the functionality to add new songs.  To do this, we're going to use a button to open a modal with some inputs. A "modal" section of the page is one that can be shown or hidden with a button and usually pops up over the rest of the content.
+
+The Bootstrap modal is already set up for you in `index.html` - but **check that the CDN bringing in Bootstrap is up to date**.  
+
+We will have to add a button to each album to trigger its modal.  Also, since the same modal will be used for creating a song for _any_ album, we'll have to track which album we're supposed to be adding a song too.
 
 
-We're going to do this by setting a data-attribute called `album-id` on the modal itself.  We will set this attribute when we display the modal.  
+We're going to track this by setting a `data` attribute called `album-id` on the modal itself.  We will set this attribute every time we display the modal.  
 
-
-Let's pseudo-code this.
+Here's pseudocode:
 
 ```
 // this function will be called when someone clicks a button to create a new song
-//   it has to determine what album (in the DB) the song will go to
+//   it has to determine which album (in the DB) the song will go to
 function handleNewSongButtonClick() {
   // get the current album's id from the row the button is in
-  // set the album-id data attribute on the modal (jquery)
+  // set the album-id data attribute on the modal (jQuery)
   // display the modal
 }
 ```
 
 
-First we need to make sure we have the album id so we can use it later.  We'll set a data-attribute on each album row first so that each row has it's ID listed.
+First, we need to make sure we have the album id so we can use it later.  To get started, we'll set a `data` attribute on each album row with its ID.
 
-1. On the HTML for each album add a new data-album-id attribute to the top `<div class='row album'>`.
+1. In the album template string, add a new `data-album-id` attribute to the top `<div class='row album'>`.
 
 1. Set the value of that attribute to `album._id`.
 
-1. Refresh the page and inspect the HTML in the browser.  Make sure the attribute is set and different for each one.
+1. Refresh the page and inspect the HTML in the browser.  Make sure the attribute is set and is different for each album. Here's an example:
 
-1. Add a button inside the panel-footer.
+  ![example](assets/images/sprint3_album_id_example.png)
 
-<detail><summary>button code</summary>
-```js
-<div class='panel-footer'>
-  <button class='btn btn-primary add-song'>Add Song</button>
-</div>
-```
-</detail>
+1. Add a button inside the panel footer:
 
-1. Use jQuery to bind to these buttons' click events.
+  [button inside panel footer](assets/images/sprint3_add_song_button.png).
 
-1. In your click event-handler get the current album row's data-album-id attribute.  
+	<details><summary> click to see button code</summary>
+	```js
+	<div class='panel-footer'>
+	  <button class='btn btn-primary add-song'>Add Song</button>
+	</div>
+	```
 
-> Hint: you may want to read the jQuery documentation for `parents` and `data`
+    > CSS IDs must be unique, so we'll target each of these buttons with a compound CSS selector including the `add-song` class.
 
-```js
-$('#albums').on('click', '.add-song', function(e) {
-    console.log('asdfasdfasdf');
-    var id= $(this).parents('.album').data('album-id'); // "5665ff1678209c64e51b4e7b"
-    console.log('id',id);
-});
-```
-
-> The above code might be new to you.  We've added a second CSS-locator in the 'on' arguments.
-> Because the .add-song component is not be on the page at document-ready our event-listener cannot bind to it.  
-> Instead we'll bind to something above it like `body` or `#albums`.  As long as it's on the page when we add our event-listener
->  we will be able to capture the click and if it's on the '.add-song' handle it in our function.
+	</details>
 
 
-1.  Set the data-attribute `album-id` on the `#songModal`.
 
-<detail><summary>Hint: setting data-album-id</summary>
+1. Use jQuery to bind an event handler to these buttons' click events.  Test it by having it `console.log` when there's a click.
 
-```js
-$('#songModal').data('album-id', currentAlbumId);
-```
+1. In your click event handler, get the current album row's `data-album-id` attribute.
 
-</detail>
+  ```js
+  $('#albums').on('click', '.add-song', function(e) {
+      console.log('add-song clicked!');
+      var id= $(this).closest('.album').data('album-id'); // "5665ff1678209c64e51b4e7b"
+      console.log('id',id);
+  });
+  ```
 
-1. You can open a bootstrap modal by selecting it in jQuery and calling the `.modal()` function.  After setting the data-album-id attribute in your function, open the modal.
 
-> Suggested reading: [See the bootstrap docs](http://getbootstrap.com/javascript/#modals-usage)
+  > This code might be new to you.  You may want to read the jQuery documentation for `parents` or `closest` and `data`.
+  > We've added a  CSS selector as a second argument to the `on` method. Because the `.add-song` element is not going to be on the page at document-ready, our event listener cannot bind to it at that time.  Instead, we'll bind to something above it in the DOM tree, like `body` or `#albums`. As long as that element is on the page when we add our event listener, we will be able to capture the click. Then, if it's on an element with class `.add-song`, jQuery will trigger this event handler.
 
-## Step 5:
 
-So we should now have a working modal, but it doesn't do anything yet.
-Let's add a function to handle the submit on the modal and POST the form data as a new song.
+1.  Set the data attribute `album-id` on the `#songModal`.  We'll use this to keep track of which album the modal is referring to at any time.
 
-```pseudo
-// call this when the button on the modal is clicked
-function handleNewSongSubmit(e) {
-  e.preventDefault();
-  // get data from modal fields
-  // POST to SERVER
-  // clear form
-  // close modal
-  // update the correct album to show the new song
-}
-```
+  <details><summary>Hint: setting `data-album-id`</summary>
 
-1. Create the `handleNewSongSubmit` function.  
+  ```js
+  $('#songModal').data('album-id', id);
+  ```
 
-1. We'll need the album-id in order to build the correct URL for the AJAX POST.  Our URL will eventually be like `http://localhost:3000/api/albums/:album_id/songs`.  In the `handleNewSongSubmit` function get the correct id from the modal.  Build the URL and save it as a variable.
+  </details>
 
-1. Prepare the AJAX POST.  For data make sure you get the `.val` from the input fields.  Don't forget to call handleNewSongSubmit when the modal button is clicked.
+1. You can open a Bootstrap modal by selecting it in jQuery and calling Bootstrap's `.modal()` function.  After setting the `data-album-id` attribute in your function, click your button to trigger the modal.  It should appear on screen!
 
-> Hint: The modal doesn't actually have a form.  Use .val to get the data from the input fields and construct an object for your POST data.
+  > Suggested reading: [Bootstrap docs on modal usage](http://getbootstrap.com/javascript/#modals-usage)
 
-## Step 6:
+## Step 5:  Use input from modal.
 
-Now we need to add the POST route on the server.  We're going to be using request-params (URL parameters) this time.  
+We should now have a working modal that opens and closes, but it doesn't do anything else yet.
 
-1. Build the `app.post` callback method for '/api/albums/:album_id/songs'.  Get the id from the request and find the correct album in the database.
+Let's add a function to handle saving a new song modal -- `POST` the input data as a new song. Here's pseudocode:
 
-1. Create the new Song and add it to the Album.  
+	```
+  // pseudocode!
+	// call this when the save new song button is clicked
+	function handleNewSongSubmit(e) {
+	  e.preventDefault();
+	  // get data from modal fields
+	  // get album ID
+	  // POST to SERVER
+	  // clear form
+	  // close modal
+	  // update the correct album to show the new song
+	}
+	```
 
-1. Save your results and respond to the client with JSON.
+	> You don't have to fill in all of the code here yet, just think through the pseudocode above and move forward.
 
-> Hint: when connecting to the database make sure that Song has been exported in `models/index.js`
+  > Note that this modal doesn't actually contain a form. It's generally better practice to use a full form and handle the submit event.
 
-## Step 7:
+1. Create the `handleNewSongSubmit` function with pseudocode comments and a `console.log` message. Test that it triggers when you expect it to. We'll fill it in over the next few steps.
 
-Display the created song on the page.
+1. We'll need the `album-id` in order to build the correct URL for the AJAX POST.  Our URL will eventually be like `http://localhost:3000/api/albums/:album_id/songs` -- we want to make sure we're adding each song to the right album.  In the `handleNewSongSubmit` function, get the correct id from the modal.  Build the path and save it as a variable.
 
-1. Add a `GET /api/albums/:id` route and use that to re-render the altered album.
+1. Prepare the POST request with an AJAX call.  For data, make sure you get the `.val` from the input fields.  Don't forget to call `handleNewSongSubmit` when the modal button is clicked.
 
-1. Make sure you remove the old copy from the page.
+## Step 6: Route and controller for adding songs.
 
-1. Close the modal afterward.
+Of course, we need to add the POST route on the server.  We're going to be using `request.params` (URL parameters) this time since we'll need to add the song to a specific album.
 
-## Challenges
+1. In `controllers/albumsSongsController.js`, start building the `create` method. Get the album id from the request, and find the correct album in the database.
 
-1. Add the remaining GET and POST routes to **Create** and **Read**.
 
-```
-GET /api/albums/:album_id/songs/:id
-GET /api/albums/:album_id/songs
-```
+1. Configure the `POST` `'/api/albums/:album_id/songs'` route in `server.js` to use the  `create` function as its callback.
 
-1. Add imageUrl as a property on Albums.  Update everything to use it!
+1. In your new  method, create the new  song with the data from the request, and add it to the proper album.  
 
-1. Add track length as a field for each album.  
+1. Save your changes to the database, and respond to the client with JSON.
+
+> Hint: when adding songs to the database, make sure that the `Song` model has been exported in `models/index.js`.
+
+## Step 7: Display the newly created song on the page.
+
+1. Add a `GET /api/albums/:album_id` route (to go with the `show` controller method in the albums controller). It should respond with the requested album including its songs.  Depending on your choice below, you may or may not need this right away.
+
+	> You can easily test this route by finding a valid ID and then using postman, curl, or your browser console.
+
+  To get back and display the created song on the page, you have a couple of options:
+
+  **A)** Have `POST /api/albums/:album_id/songs` respond with only the newly created song, then make a request to `GET /api/albums/:album_id` to get the entire album and render that on the page.  (You'll need to add the `show` function in `albumsController` and the route above in `server.js`.)
+  > This is a very common approach and probably the most standard.  
+  > The solutions will take this route (and you're encouraged to as well).
+
+  **OR**
+
+  **B)** Have your `POST /api/albums/:album_id/songs` route return the entire album instead of just the song.  Then re-render the album on the page.
+
+  > This has the advantage of reducing the number of requests from client to server.  But _usually_ the response to a request creating a resource would contain just the newly created document (not its parent).
+
+
+1.  Close the modal automatically after the new song request has been made.
+
+  > Hint: `$('#id-to-modal').modal('hide');`
+  > [Bootstrap modal docs](http://getbootstrap.com/javascript/#modals)
+
+
+## Stretch Challenges
+
+1. Add `imageUrl` as an attribute of your albums.  Update everything to use it!
+
+1. Add the remaining JSON API routes to **Read** songs:
+
+  ```
+  GET /api/albums/:album_id/songs/:id  (show)
+  GET /api/albums/:album_id/songs      (index)
+  ```
+
+1. Add track length as a field for each song.  
 
 
 ## Conclusion
 
-You should now have the following API routes:
+You should now have the following API routes at a minimum:
 
 ```
 GET /api/albums
 POST /api/albums
 GET /api/albums/:id
-POST /api/albums/:id/songs
+POST /api/albums/:album_id/songs
 ```
 
 You should also have a working app!  Congratulations!

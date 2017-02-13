@@ -1,56 +1,73 @@
-# Sprint 5
+# Tune.ly Sprint 5
 
 ## Overview
 
-Now let's allow our users to edit the Album info.  
+Let's allow users to edit album information.  
 
 This sprint we will:
-* make it so users can edit each Album
+
+* make it so users can edit each album  
 * add a `PUT /api/albums/:id` route to the server
 
-> Note: as we go through this if you get stuck make use of the hints, your neighbors and the solutions.
 
-> You must complete all of the previous sprint before starting this sprint. (excludes stretch challenges)
+> Note: if you get stuck going through this, make use of the hints, your neighbors, and the solutions for sprint 5.
 
-## Step 1
+> You must complete all of the previous sprint before starting this sprint (excluding stretch challenges).
+
+> In this sprint, you will probably notice the instructions are more succinct; we're hoping that you're starting to feel more comfortable and developing more resourcefulness and independence.  Still, if you get stuck, it's ok to ask for help.
+
+## Step 1: Edit Button
 
 We're going to add a button that allows our users to edit an album.
 
-1. Add a new button to each panel-footer
+1. Add a new button to each `panel-footer` in the album template string.
 
-```html
-<button class='btn btn-info edit-album'>Edit Album</button>`
-```
+  ```html
+  <button class='btn btn-info edit-album'>Edit Album</button>
+  ```
 
-1. Use jQuery to react to clicks on these buttons and determine the correct `Album._id`.  `console.log` it.
+1. Use jQuery to react to clicks on these buttons and determine the correct `album-id`.  Then `console.log` it.
 
-1. Replace the `Edit` button with a `Save Changes` button when clicked.
+1. When the `Edit` button is clicked, replace it with a `Save Changes` button. Remember to reverse this change when the edit is finished.
 
-1. Also replace the major fields on the Album with `input` elements.
+1. Also replace the major fields on the album with `input` elements.
+
 
 > Hint: you could have 2 buttons in place already, 1) "Edit", 2) "Save changes" and simply toggle their visibility with [$.toggle](http://api.jquery.com/toggle/)
 
-## Step 2
+> Note: this step could be a little tricky, especially if you want to display the current values in the input fields.  You'll have to get the text from the page, then replace the text with input elements.  
 
-1. When `Save Changes` is clicked, react to it.  
+
+## Step 2: Client Side JavaScript
+
+1. When `Save Changes` is clicked, handle that event on the client side.
 
 1. Prepare an AJAX call to the server at `PUT /api/albums/:id`.
 
 
-## Step 3
+## Step 3: Route
 
-1. Add the `app.put` method on the server.  
+1. Add the `app.put` method for the `/api/albums/:id` path on the server.  
 
-1. Connect it to the database.
+1. Use the album controller's `update` method as the callback. Ensure that it updates the album in the database.
 
-1. Make any final changes to your AJAX and test everything.
+#### Step 3.5: Display updated data.
+
+
+1. Make any final changes to your AJAX, and test everything.
+
+1. Make sure you are removing the form fields and replacing them with updated data from the server.
+  * You should do this when you get a response to your PUT request.
+  * Use the response data from the PUT request.
+
+> Hint: you already have a render function, ね(ne)?
 
 
 
-## Challenges
+## Stretch Challenges
 
-1. When an edit is in progress disable or hide the other buttons.
+1. When one album edit is in progress, disable or hide the other edit buttons.
 
-1. Add a new modal instead of making changes directly in the album row.
+1. Add a new modal for editing instead of letting the user make changes directly in the album row.
 
-1. Add a cancel button for the edits
+1. Add a cancel button for the edits.
