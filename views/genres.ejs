@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>tunely</title>
+
+    <!-- STYLESHEETS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+
+    <!-- VENDOR SCRIPTS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <!-- APPLICATION SCRIPTS -->
+    <script src="../js/app.js"></script>
+
+  </head>
+
+  <% include ./partials/header %>
+
+  <body>
+    <div class="jumbotron">
+      <!--    Start Form -->
+       <section id='genre-form' class="container">
+        <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+
+          <form method="post" action="/api/genres/index" class="form-horizontal">
+            <fieldset>
+
+              <!-- Form Name -->
+              <legend>Add New Genre</legend>
+
+              <!-- Text input-->
+              <div class="form-group">
+                <label class=" aFonts col-md-4 control-label" for="name">Genre Name</label>
+                <div class="col-md-6">
+                <input id="name" name="name" type="text" placeholder="" class="form-control input-md" required="">
+
+                </div>
+              </div>
+
+
+               <!-- Text input-->
+            <div class="form-group">
+              <label class="aFonts col-md-4 control-label" for="coverImage">Cover Image</label>
+              <div class="col-md-6">
+              <input id="genreImage" name="coverImage" type="text" placeholder="URL" class="form-control input-md">
+
+              </div>
+            </div>
+
+              <!-- Button -->
+              <div class="form-group">
+                <label class="aFonts col-md-4 control-label" for="singlebutton">Save Genre</label>
+                <div class="col-md-4">
+                  <button class="mainbtn" id="singlebutton" class="btn btn-primary" name="singlebutton">Submit</button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+        </div>
+
+              <img class= "statue2" src="/images/vstatueg.png" alt="picture">
+
+      </section>
+      </div>
+      
+      <section class="container">
+        <div class="row">
+          <div class="col-md-10 col-md-offset-1">
+            <h2>Genres</h2>
+          </div>
+        </div>
+        
+        <!-- genres! -->
+        <div id="genres">
+        
+        </div>
+      </section>
+
+  </body>
+</html>
